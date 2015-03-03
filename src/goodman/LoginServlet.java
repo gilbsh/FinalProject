@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Servlet implementation class LoginServlet
@@ -42,6 +47,14 @@ public class LoginServlet extends HttpServlet {
 	        response.sendRedirect("Home.jsp"); //logged-in page
 		}
 		else{
+			 try
+	         {
+	          Class.forName("com.mysql.jdbc.Driver");
+	          System.out.println("working");
+	         }
+	         catch(Exception e){
+	          System.out.print("coudn't load driver\n");
+	         }
 	        response.sendRedirect("Login.jsp"); //logged-in page
 		}
 	}
