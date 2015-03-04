@@ -22,6 +22,13 @@ public class DataLayer {
 		this.connectionString = new String(url+"/"+dataBaseName);
 		
 	}
+	public DataLayer(){
+		this.url= "jdbc:mysql://sql3.freemysqlhosting.net:3306";
+		this.userName="sql369467";
+		this.dataBaseName="sql369467";
+		this.password="eY5%hG8*";
+		this.connectionString = new String(url+"/"+dataBaseName);
+	}
 	
 	public boolean connect(){
 		try
@@ -31,7 +38,7 @@ public class DataLayer {
 			return true;
         }
         catch(Exception ex){
-        	System.out.print(ex.getMessage());
+        	System.out.print("connect - " + ex.getMessage());
         	return false;
         }
 	}
