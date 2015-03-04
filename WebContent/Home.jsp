@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,10 +21,7 @@
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
-			<%@include file="Progress.html" %>
-			<%@include file="Header.html" %>
-			<%@include file="Nav.html" %>
-			
+			<%@include file="Header.jsp" %>			
 			<h3>
 				Welcome To Goodman corporation not official Website.
 			</h3>

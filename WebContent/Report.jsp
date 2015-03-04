@@ -23,10 +23,7 @@
 	<div class="container">
 		<div class="row clearfix">
 			<div class="col-md-12 column">
-				<%@include file="Progress.html" %>
-				<%@include file="Header.html" %>
-				<%@include file="Nav.html" %>
-				
+				<%@include file="Header.jsp" %>				
 				<h3>
 					Welcome To Goodman corporation reports
 				</h3>

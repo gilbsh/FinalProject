@@ -7,11 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * Servlet implementation class LoginServlet
@@ -41,22 +36,24 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		if(email.equals("gilbsh@gmail.com") && password.equals("1234")){
-			HttpSession session = request.getSession(true);	    
-	        //session.setAttribute("currentSessionUser",user); 
-	        response.sendRedirect("Home.jsp"); //logged-in page
+		DataLayer dl = new DataLayer("jdbc:mysql://localhost:3306","root","","FinalProject");
+		if(dl.connect())
+		{
+			User user = dl.getUser(email);
+			if(user.password.equals(password)){
+				HttpSession session = request.getSession(true);	    
+		        session.setAttribute("currentSessionUser",user); 
+		        response.sendRedirect("Home.jsp"); //logged-in page			
+			}
+			else
+			{
+				response.sendRedirect("Login.jsp"); //logged-in page
+			}
 		}
 		else{
-			 try
-	         {
-	          Class.forName("com.mysql.jdbc.Driver");
-	          System.out.println("working");
-	         }
-	         catch(Exception e){
-	          System.out.print("coudn't load driver\n");
-	         }
-	        response.sendRedirect("Login.jsp"); //logged-in page
+			
+			response.sendRedirect("Login.jsp"); //logged-in page
 		}
+	    
 	}
-
 }
