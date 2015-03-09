@@ -36,11 +36,11 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		DataLayer dl = new DataLayer("jdbc:mysql://localhost:3306","root","","FinalProject");
+		DataLayer dl = new DataLayer();
 		if(dl.connect())
 		{
 			User user = dl.getUser(email);
-			if(user.password.equals(password)){
+			if(user!=null && user.password.equals(password)){
 				HttpSession session = request.getSession(true);	    
 		        session.setAttribute("currentSessionUser",user); 
 		        response.sendRedirect("Home.jsp"); //logged-in page			

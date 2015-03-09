@@ -28,6 +28,51 @@
 			<p>
 				Here we need to write some things about the company and the website...
 			</p>
+				<div class="carousel slide" id="carousel-946942">
+				<ol class="carousel-indicators">
+					<li data-slide-to="0" data-target="#carousel-946942">
+					</li>
+					<li data-slide-to="1" data-target="#carousel-946942" class="active">
+					</li>
+					<li data-slide-to="2" data-target="#carousel-946942">
+					</li>
+				</ol>
+				<div class="carousel-inner">
+					<div class="item">
+						<img alt="" src="http://www.srtraining.co.uk/Resources/topbannertemp.jpg">
+						<div class="carousel-caption">
+							<h4>
+								First Thumbnail label
+							</h4>
+							<p>
+								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+							</p>
+						</div>
+					</div>
+					<div class="item active">
+						<img alt="" src="http://clophusdemolition.com/wp-content/uploads/2014/10/header.jpg">
+						<div class="carousel-caption">
+							<h4>
+								Second Thumbnail label
+							</h4>
+							<p>
+								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+							</p>
+						</div>
+					</div>
+					<div class="item">
+						<img alt="" src="http://layout3orange.ebizequipment.com/wp-content/uploads/sites/22/2014/12/Home-Slide-1.jpg">
+						<div class="carousel-caption">
+							<h4>
+								Third Thumbnail label
+							</h4>
+							<p>
+								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+							</p>
+						</div>
+					</div>
+				</div> <a class="left carousel-control" href="#carousel-946942" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-946942" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+			</div>
 			<%@include file="Address.html" %>
 		</div>
 	</div>
