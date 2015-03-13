@@ -1,4 +1,4 @@
-package goodman;
+package goodman.Controllers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

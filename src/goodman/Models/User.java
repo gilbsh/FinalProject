@@ -1,4 +1,4 @@
-package goodman;
+package goodman.Models;
 
 public class User {
 	String firstName;

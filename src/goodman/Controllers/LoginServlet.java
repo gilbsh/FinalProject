@@ -1,6 +1,10 @@
-package goodman;
+package goodman.Controllers;
+
+import goodman.Models.DataLayer;
+import goodman.Models.User;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 		if(dl.connect())
 		{
 			User user = dl.getUser(email);
-			if(user!=null && user.password.equals(password)){
+			if(user!=null && user.getPassword().equals(password)){
 				HttpSession session = request.getSession(true);	    
 		        session.setAttribute("currentSessionUser",user); 
 		        response.sendRedirect("Home.jsp"); //logged-in page			

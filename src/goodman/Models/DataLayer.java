@@ -1,4 +1,4 @@
-package goodman;
+package goodman.Models;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
