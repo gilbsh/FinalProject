@@ -23,10 +23,10 @@ public class DataLayer {
 		
 	}
 	public DataLayer(){
-		this.url= "jdbc:mysql://sql3.freemysqlhosting.net:3306";
-		this.userName="sql369467";
-		this.dataBaseName="sql369467";
-		this.password="eY5%hG8*";
+		this.url= "jdbc:mysql://finalprojectdb.ctsvfo0gnwiz.us-west-2.rds.amazonaws.com:3306";
+		this.userName="shahar";
+		this.dataBaseName="finalprojectdb";
+		this.password="finalprojectdb";
 		this.connectionString = new String(url+"/"+dataBaseName);
 	}
 	
