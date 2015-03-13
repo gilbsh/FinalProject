@@ -13,6 +13,7 @@
 	<div class="container">
 		<div class="row clearfix">
 			<%@include  file="Headline.html" %>
+			<div>${message}</div>
 			<div class="span8 offset2">
 				<h3 class="text-muted">
 					Please Enter your email and password
@@ -24,7 +25,7 @@
 					<div class="form-group">
 						 <label for="password">Password</label><input name = "password" type="password" class="form-control" id="exampleInputPassword1" required />
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-default">Log In</button>
 				</form>
 			</div>
 		</div>
