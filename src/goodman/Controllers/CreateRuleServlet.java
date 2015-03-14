@@ -36,7 +36,8 @@ public class CreateRuleServlet extends HttpServlet {
 		String ruleName = request.getParameter("ruleName");
 		String ruleDescription = request.getParameter("ruleDescription");
 		System.out.print(ruleName+"\n");
-		System.out.print(ruleDescription+"\n");		
+		System.out.print(ruleDescription+"\n");
+		
 		String[] customers = request.getParameterValues("customers[]");
 		
 		for (int i=0;i<customers.length;i++){

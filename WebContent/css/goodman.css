@@ -1,5 +1,9 @@
 body{
-	background-image: url("../img/background.jpg");
+	background-image: url("../img/light_blue_background_for_website.jpg");
+}
+
+#chart {
+	background:white;
 }
 
 .errorMessage{

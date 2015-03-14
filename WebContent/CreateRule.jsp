@@ -23,110 +23,120 @@
 	<!--  <script type="text/javascript" src="js/scripts.js"></script>-->
 </head>
 <body>
-<div class="container">
-
-	<script type="text/javascript">
-	    $(document).ready(function() {	    	
-	        $('.multiSelection').each(
-	        	function(){
-	        		$(this).multiselect({
-	           		includeSelectAllOption: true,
-	            	enableFiltering: true
-	       		 })
-	       		});
-	        
-	        $('.selectpicker').selectpicker({
-	            size: 4
-	        });
-	    });
-	</script>
-
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<%@include file="Header.jsp"%>
-			<form role ="form" action="CreateRuleServlet" method="post">		
-				<div class="row clearfix">
-						<div class="col-md-3 column">
-							<h3>
-								Rule Details
-							</h3>
-							<div class="form-group">
-								 <label for="ruleName">Rule Name</label><input required class="form-control" id="ruleName" name="ruleName">
+<script type="text/javascript">
+    $(document).ready(function() {	    	
+        $('.multiSelection').each(
+        	function(){
+        		$(this).multiselect({
+           		includeSelectAllOption: true,
+            	enableFiltering: true
+       		 })
+       		});
+        
+        $('.selectpicker').selectpicker({
+            size: 4
+        });
+    });
+</script>
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<%@include file="Header.jsp"%>
+				<form role ="form" action="CreateRuleServlet" method="post">		
+					<div class="row clearfix">
+							<div class="col-md-3 column">
+								<h3>
+									Rule Details
+								</h3>
+								<div class="form-group">
+									 <label for="ruleName">Rule Name</label><input required class="form-control" id="ruleName" name="ruleName">
+								</div>
+								<div class="form-group">
+									 <label for="ruleDescription">Rule Description</label><input required class="form-control" id="ruleDescription" name="ruleDescription">
+								</div>
 							</div>
-							<div class="form-group">
-								 <label for="ruleDescription">Rule Description</label><input required class="form-control" id="ruleDescription" name="ruleDescription">
+							<div class="col-md-4 column">
+								<h3>
+									Population Filter
+								</h3>
+								    <div class="form-group">
+								        <label class="control-label">Choose Customer</label>
+								        <div>
+								            <select id="chooseCustomer" name="customers[]" multiple="multiple" class="multiSelection">
+								            	<c:forEach items="${customers}" var ="customer">
+								            		<option value="${customer.id}">${customer.firstName} ${customer.lastName}</option>
+								            	</c:forEach>
+								            </select>
+								        </div>
+								    </div>				  
 							</div>
-						</div>
-						<div class="col-md-4 column">
-							<h3>
-								Population Filter
-							</h3>
-							    <div class="form-group">
-							        <label class="control-label">Choose Customer</label>
-							        <div>
-							            <select id="chooseCustomer" name="customers[]" multiple="multiple" class="multiSelection">
-							            	<c:forEach items="${customers}" var ="customer">
-							            		<option>${customer.firstName} ${customer.lastName}</option>
-							            	</c:forEach>
-							            </select>
-							        </div>
-							    </div>				  
-						</div>
-						<div class="col-md-5 column">
-							<h3>
-								Rule Conditions
-							</h3>
-							<div class="tabbable" id="tabs-420867">
-								<ul class="nav nav-tabs">
-									<li class="active">
-										<a href="#dtcRules" data-toggle="tab">Parameter Rules</a>
-									</li>
-									<li>
-										<a href="#parameterRules" data-toggle="tab">DTC Rules</a>
-									</li>
-								</ul>
-								<div class="tab-content">
-									<div class="tab-pane active" id="dtcRules">
-										<br>
-										<div class="form-group">
-											<label for="ruleParameter">Rule Parameter</label><br>																				
-											<select class="selectpicker">
-												<c:forEach items="${parameters}" var ="parameter">
-							            			<option>${parameter.parameterName}</option>
-							            		</c:forEach>
-											</select>
+							<div class="col-md-5 column">
+								<h3>
+									Rule Conditions
+								</h3>
+								<div class="tabbable" id="tabs-420867">
+									<ul class="nav nav-tabs">
+										<li class="active">
+											<a href="#dtcRules" data-toggle="tab">Parameter Rules</a>
+										</li>
+										<li>
+											<a href="#parameterRules" data-toggle="tab">DTC Rules</a>
+										</li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="dtcRules">
+											<br>
+											<div class="form-group">
+												<label for="ruleParameter">Rule Parameter</label><br>																				
+												<select class="selectpicker">
+													<c:forEach items="${parameters}" var ="parameter">
+								            			<option>${parameter.parameterName}</option>
+								            		</c:forEach>
+												</select>
+											</div>
+											<div class="form-group">					
+												<label for="ruleCondition">Rule Condition</label><br>
+												<select class="selectpicker">
+													<option>Between</option>
+													<option>Not Between</option>
+													<option>></option>
+													<option>&lt</option>
+												</select>
+											</div>
+											<div class="row clearfix">
+												<div class="col-md-4 column">
+													<div class="form-group">
+											 			<label for="ruleValuen">Value</label><input required type="number" class="form-control" name="ruleValue">
+													</div>
+												</div>
+												<div class="col-md-4 column">
+													<div class="form-group">
+											 			<label for="ruleValuen">Value</label><input required type="number" class="form-control" name="ruleValue">
+													</div>
+												</div>
+											</div>						
 										</div>
-										<div class="form-group">					
-											<label for="ruleCondition">Rule Condition</label><br>
-											<select class="selectpicker">
-												<option>Between</option>
-												<option>Not Between</option>
-												<option>></option>
-												<option>&lt</option>
-											</select>
-										</div>									
-									</div>
-									<div class="tab-pane" id="parameterRules"><br>
-										<div class="form-group">
-							      		  <label class="control-label">Choose Dtc</label>
-									        <div>
-									            <select id="chooseDtc" name="dtc[]" multiple="multiple" class="multiSelection">
-									            	<c:forEach items="${customers}" var ="customer">
-									            		<option>${customer.firstName} ${customer.lastName}</option>
-									            	</c:forEach>
-									            </select>
-									        </div>
-									    </div>			
+										<div class="tab-pane" id="parameterRules"><br>
+											<div class="form-group">
+								      		  <label class="control-label">Choose Dtc</label>
+										        <div>
+										            <select id="chooseDtc" name="dtc[]" multiple="multiple" class="multiSelection">
+										            	<c:forEach items="${customers}" var ="customer">
+										            		<option value="${customer.id}">${customer.firstName} ${customer.lastName}</option>
+										            	</c:forEach>
+										            </select>
+										        </div>
+										    </div>			
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				</form>
-			<%@include file="Address.html" %>
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+				<%@include file="Address.html" %>
+			</div>
 		</div>
 	</div>
-</div>
 </body>
 </html>
