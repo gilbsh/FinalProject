@@ -94,4 +94,25 @@ public class DataLayer {
 			return null;
 		}
 	}
+	
+	public Parameter[] getParameters(){
+		try{
+			Statement stmt = con.createStatement();
+			String query = "SELECT ParameterId,ParameterName,ParameterDescription FROM Parameters";
+			ResultSet rs = stmt.executeQuery(query);
+			List<Parameter> parameters = new ArrayList<Parameter>();
+			while(rs.next()){
+				String parameterId = rs.getString("ParameterId");
+				String parameterName = rs.getString("ParameterName");
+				String parameterDescription = rs.getString("ParameterDescription");
+				Parameter parameter = new Parameter(parameterId,parameterName,parameterDescription);
+				parameters.add(parameter);				
+				}			
+			return (Parameter[])parameters.toArray(new Parameter[parameters.size()]);
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
 }

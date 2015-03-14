@@ -26,11 +26,14 @@
 <div class="container">
 
 	<script type="text/javascript">
-	    $(document).ready(function() {
-	        $('#example-post').multiselect({
-	            includeSelectAllOption: true,
-	            enableFiltering: true
-	        });
+	    $(document).ready(function() {	    	
+	        $('.multiSelection').each(
+	        	function(){
+	        		$(this).multiselect({
+	           		includeSelectAllOption: true,
+	            	enableFiltering: true
+	       		 })
+	       		});
 	        
 	        $('.selectpicker').selectpicker({
 	            size: 4
@@ -61,7 +64,7 @@
 							    <div class="form-group">
 							        <label class="control-label">Choose Customer</label>
 							        <div>
-							            <select id="example-post" name="customers[]" multiple="multiple">
+							            <select id="chooseCustomer" name="customers[]" multiple="multiple" class="multiSelection">
 							            	<c:forEach items="${customers}" var ="customer">
 							            		<option>${customer.firstName} ${customer.lastName}</option>
 							            	</c:forEach>
@@ -88,9 +91,9 @@
 										<div class="form-group">
 											<label for="ruleParameter">Rule Parameter</label><br>																				
 											<select class="selectpicker">
-												<option>Gil</option>
-												<option>Shahar</option>
-												<option>Omer</option>
+												<c:forEach items="${parameters}" var ="parameter">
+							            			<option>${parameter.parameterName}</option>
+							            		</c:forEach>
 											</select>
 										</div>
 										<div class="form-group">					
@@ -103,26 +106,17 @@
 											</select>
 										</div>									
 									</div>
-									<div class="tab-pane" id="parameterRules">
-										<p>
-											Choose Wanted DTC's
-										</p>
-										<div class="btn-group">
-											 <button class="btn btn-default">DTC</button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">DTC</a>
-												</li>
-												<li class="disabled">
-													<a href="#">Another action</a>
-												</li>
-												<li class="divider">
-												</li>
-												<li>
-													<a href="#">Something else here</a>
-												</li>
-											</ul>
-										</div>
+									<div class="tab-pane" id="parameterRules"><br>
+										<div class="form-group">
+							      		  <label class="control-label">Choose Dtc</label>
+									        <div>
+									            <select id="chooseDtc" name="dtc[]" multiple="multiple" class="multiSelection">
+									            	<c:forEach items="${customers}" var ="customer">
+									            		<option>${customer.firstName} ${customer.lastName}</option>
+									            	</c:forEach>
+									            </select>
+									        </div>
+									    </div>			
 									</div>
 								</div>
 							</div>
