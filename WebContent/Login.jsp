@@ -13,11 +13,12 @@
 	<div class="container">
 		<div class="row clearfix">
 			<%@include  file="Headline.html" %>
-			<div>${message}</div>
+			
 			<div class="span8 offset2">
 				<h3 class="text-muted">
 					Please Enter your email and password
 				</h3>
+				<div class="error message" >${message}</div>
 				<form role="form" action="LoginServlet" method="post">
 					<div class="form-group">
 						 <label for="rmail">Email address</label><input name="email" type="email" class="form-control" id="exampleInputEmail1" required />
