@@ -53,7 +53,6 @@ public class LoginServlet extends HttpServlet {
 			{
 				request.setAttribute("message", "Email or password are incorrect. Please Try Again");
 				request.getRequestDispatcher("Login.jsp").forward(request, response);
-				response.sendRedirect("Login.jsp"); //logged-in page
 			}
 		}
 		else{
