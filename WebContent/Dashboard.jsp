@@ -20,20 +20,18 @@
 <body>
 	<div class="container">
 	<div class="row clearfix">
+		<%@include file="Header.jsp" %>
 		<div class="col-md-12 column">
-			<h3>
-				Dashboard
-			</h3>
 			<div class="tabbable" id="tabs-430508">
 				<ul class="nav nav-tabs">
 					<li>
-						<a href="#panel-1" data-toggle="tab">fAULT TOOLS</a>
+						<a href="#panel-1" data-toggle="tab">Fault Tools</a>
 					</li>
 					<li class="active">
-						<a href="#panel-2" data-toggle="tab">WAITING TOOLS</a>
+						<a href="#panel-2" data-toggle="tab">Waiting Tools</a>
 					</li>
 					<li class="active">
-						<a href="#panel-3" data-toggle="tab">TOOLS IN WORK</a>
+						<a href="#panel-3" data-toggle="tab">Tools In Work</a>
 					</li>
 				</ul>
 				<div class="tab-content">
@@ -349,7 +347,7 @@
 					</div>
 				</div>
 			</div>
-			
+			<%@include file="Address.html" %>
 		</div>
 	</div>
 </div>
