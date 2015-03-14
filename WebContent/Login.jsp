@@ -18,7 +18,6 @@
 				<h3 class="text-muted">
 					Please Enter your email and password
 				</h3>
-				<div class="error message" >${message}</div>
 				<form role="form" action="LoginServlet" method="post">
 					<div class="form-group">
 						 <label for="rmail">Email address</label><input name="email" type="email" class="form-control" id="exampleInputEmail1" required />
@@ -28,6 +27,7 @@
 					</div>
 					<button type="submit" class="btn btn-default">Log In</button>
 				</form>
+				<div class="errorMessage" >${message}</div>
 			</div>
 		</div>
 	</div>

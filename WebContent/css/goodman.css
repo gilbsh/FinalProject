@@ -3,7 +3,6 @@ body{
 	min-width:1180px;
 }
 
-error message{
+.errorMessage{
 	color: red;
 }
-
