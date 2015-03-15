@@ -1,0 +1,7 @@
+body{
+	background-image: url("../img/imeges");
+}
+
+.errorMessage{
+	color: red;
+}
