@@ -1,13 +1,9 @@
 body{
-<<<<<<< HEAD
-	background-image: url("../img/light_blue_background_for_website.jpg");
+	background-image: url("../img/background.jpg");
 }
 
 #chart {
 	background:white;
-=======
-	background-image: url("../img/imeges");
->>>>>>> origin/develop
 }
 
 .errorMessage{
