@@ -101,6 +101,7 @@
 													<option>Not Between</option>
 													<option>></option>
 													<option>&lt</option>
+													<option>%</option>
 												</select>
 											</div>
 											<div class="row clearfix">
