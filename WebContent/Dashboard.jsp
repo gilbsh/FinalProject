@@ -24,18 +24,18 @@
 		<div class="col-md-12 column">
 			<div class="tabbable" id="tabs-430508">
 				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="#panel-1" data-toggle="tab">Machine Fault</a>
+					</li>
 					<li>
-						<a href="#panel-1" data-toggle="tab">Fault Tools</a>
+						<a href="#panel-2" data-toggle="tab">Maintenance Needed</a>
 					</li>
-					<li class="active">
-						<a href="#panel-2" data-toggle="tab">Waiting Tools</a>
-					</li>
-					<li class="active">
-						<a href="#panel-3" data-toggle="tab">Tools In Work</a>
+					<li>
+						<a href="#panel-3" data-toggle="tab">Machine In Work</a>
 					</li>
 				</ul>
 				<div class="tab-content">
-					<div class="tab-pane" id="panel-1">
+					<div class="tab-pane active" id="panel-1">
 						<p>
 							<table class="table table-striped table-hover">
 								<thead>
@@ -47,13 +47,13 @@
 											Fault
 										</th>
 										<th>
-											Engine hours
+											Date
 										</th>
 										<th>
-											VehicleId
+											Level
 										</th>
 										<th>
-											Model
+											Type
 										</th>
 										<th>
 											Customer
@@ -62,45 +62,44 @@
 								</thead>
 								<tbody>
 									<tr>
+									<tr class="danger">
 										<td>
 											1
 										</td>
 										<td>
-											TB - Monthly
+											Fuel System
 										</td>
 										<td>
 											01/04/2012
 										</td>
 										<td>
-											Default
+											Hard
+										</td>
+										<td>
+											Engine
+										</td>
+										<td>
+											Moshe Laviv
 										</td>
 									</tr>
-									<tr class="active">
-										<td>
-											1
-										</td>
-										<td>
-											TB - Monthly
-										</td>
-										<td>
-											01/04/2012
-										</td>
-										<td>
-											Approved
-										</td>
-									</tr>
-									<tr class="success">
+									<tr class="danger">
 										<td>
 											2
 										</td>
 										<td>
-											TB - Monthly
+											Fuel System
 										</td>
 										<td>
-											02/04/2012
+											01/04/2012
 										</td>
 										<td>
-											Declined
+											Hard
+										</td>
+										<td>
+											Engine
+										</td>
+										<td>
+											Moshe Laviv
 										</td>
 									</tr>
 									<tr class="warning">
@@ -108,34 +107,66 @@
 											3
 										</td>
 										<td>
-											TB - Monthly
+											Fuel System
 										</td>
 										<td>
-											03/04/2012
+											01/04/2012
 										</td>
 										<td>
-											Pending
+											Hard
+										</td>
+										<td>
+											Engine
+										</td>
+										<td>
+											Moshe Laviv
 										</td>
 									</tr>
-									<tr class="danger">
+									<tr class="success">
 										<td>
 											4
 										</td>
 										<td>
-											TB - Monthly
+											Fuel System
 										</td>
 										<td>
-											04/04/2012
+											01/04/2012
 										</td>
 										<td>
-											Call in to confirm
+											Hard
+										</td>
+										<td>
+											Engine
+										</td>
+										<td>
+											Moshe Laviv
+										</td>
+									</tr>
+									<tr class="active">
+										<td>
+											5
+										</td>
+										<td>
+											Fuel System
+										</td>
+										<td>
+											01/04/2012
+										</td>
+										<td>
+											Hard
+										</td>
+										<td>
+											Engine
+										</td>
+										<td>
+											Moshe Laviv
 										</td>
 									</tr>
 								</tbody>
 							</table>
 						</p>
 					</div>
-					<div class="tab-pane active" id="panel-2">
+					<div class="tab-pane" id="panel-2">
 						<p>
 							<table class="table table-striped table-hover">
 								<thead>
@@ -144,63 +175,62 @@
 											#
 										</th>
 										<th>
-											VehicleId
-										</th>
-										<th>
 											Model
 										</th>
 										<th>
-											Hours till next treatment  
+											VehicleId
 										</th>
 										<th>
-											treatment type
+											Customer  
 										</th>
 										<th>
-											Customer
+											Next Service
+										</th>
+										<th>
+											Service type
 										</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
+									<tr class="danger">
 										<td>
 											1
 										</td>
 										<td>
-											TB - Monthly
+											Volvo L120F
 										</td>
 										<td>
-											01/04/2012
+											48-515-39
 										</td>
 										<td>
-											Default
+											Nir Brosh
+										</td>
+											<td>
+											213 hours
+										</td>
+										<td>
+											2000
 										</td>
 									</tr>
-									<tr class="active">
-										<td>
-											1
-										</td>
-										<td>
-											TB - Monthly
-										</td>
-										<td>
-											01/04/2012
-										</td>
-										<td>
-											Approved
-										</td>
-									</tr>
-									<tr class="success">
+									<tr class="danger">
 										<td>
 											2
 										</td>
 										<td>
-											TB - Monthly
+											Volvo L120F
 										</td>
 										<td>
-											02/04/2012
+											48-515-39
 										</td>
 										<td>
-											Declined
+											Nir Brosh
+										</td>
+											<td>
+											213 hours
+										</td>
+										<td>
+											2000
 										</td>
 									</tr>
 									<tr class="warning">
@@ -208,27 +238,59 @@
 											3
 										</td>
 										<td>
-											TB - Monthly
+											Volvo L120F
 										</td>
 										<td>
-											03/04/2012
+											48-515-39
 										</td>
 										<td>
-											Pending
+											Nir Brosh
+										</td>
+											<td>
+											213 hours
+										</td>
+										<td>
+											2000
 										</td>
 									</tr>
-									<tr class="danger">
+									<tr class="success">
 										<td>
 											4
 										</td>
 										<td>
-											TB - Monthly
+											Volvo L120F
 										</td>
 										<td>
-											04/04/2012
+											48-515-39
 										</td>
 										<td>
-											Call in to confirm
+											Nir Brosh
+										</td>
+											<td>
+											213 hours
+										</td>
+										<td>
+											2000
+										</td>
+									</tr>
+									<tr class="active">
+										<td>
+											5
+										</td>
+										<td>
+											Volvo L120F
+										</td>
+										<td>
+											48-515-39
+										</td>
+										<td>
+											Nir Brosh
+										</td>
+											<td>
+											213 hours
+										</td>
+										<td>
+											2000
 										</td>
 									</tr>
 								</tbody>
@@ -244,44 +306,60 @@
 											#
 										</th>
 										<th>
-											VehicleId
+											Customer
 										</th>
 										<th>
 											Model
 										</th>
 										<th>
-											Fault
+											VehicleId
 										</th>
 										<th>
-											Engine TMP
+											Engine hours 
 										</th>
 										<th>
-											Engine hours
+											Engine RPM	r/min										
 										</th>
 										<th>
-											fuel consumption
+											fuel consumption L/H
+										</th>
+										<th>
+											Engine Temp C
 										</th>
 										<th>
 											Location
-										</th>
-										<th>
-											Customer
 										</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
+									<tr class="active">
 										<td>
 											1
 										</td>
 										<td>
-											TB - Monthly
+											Reut Bone
 										</td>
 										<td>
-											01/04/2012
+											Volvo A30F
 										</td>
 										<td>
-											Default
+											42-799-64
+										</td>
+										<td>
+											2035
+										</td>
+											<td>
+											1450
+										</td>
+										<td>
+											9.4
+										</td>
+										<td>
+											86
+										</td>
+										<td>
+											Eilat, Israel
 										</td>
 									</tr>
 									<tr class="active">
@@ -289,55 +367,84 @@
 											1
 										</td>
 										<td>
-											TB - Monthly
+											Reut Bone
 										</td>
 										<td>
-											01/04/2012
+											Volvo A30F
 										</td>
 										<td>
-											Approved
-										</td>
-									</tr>
-									<tr class="success">
-										<td>
-											2
+											42-799-64
 										</td>
 										<td>
-											TB - Monthly
+											2035
+										</td>
+											<td>
+											1450
 										</td>
 										<td>
-											02/04/2012
+											9.4
 										</td>
 										<td>
-											Declined
-										</td>
-									</tr>
-									<tr class="warning">
-										<td>
-											3
+											86
 										</td>
 										<td>
-											TB - Monthly
+											Eilat, Israel
+										</td>
+									<tr class="active">
+										<td>
+											1
 										</td>
 										<td>
-											03/04/2012
+											Reut Bone
 										</td>
 										<td>
-											Pending
-										</td>
-									</tr>
-									<tr class="danger">
-										<td>
-											4
+											Volvo A30F
 										</td>
 										<td>
-											TB - Monthly
+											42-799-64
 										</td>
 										<td>
-											04/04/2012
+											2035
+										</td>
+											<td>
+											1450
 										</td>
 										<td>
-											Call in to confirm
+											9.4
+										</td>
+										<td>
+											86
+										</td>
+										<td>
+											Eilat, Israel
+										</td>
+									<tr class="active">
+										<td>
+											1
+										</td>
+										<td>
+											Reut Bone
+										</td>
+										<td>
+											Volvo A30F
+										</td>
+										<td>
+											42-799-64
+										</td>
+										<td>
+											2035
+										</td>
+											<td>
+											1450
+										</td>
+										<td>
+											9.4
+										</td>
+										<td>
+											86
+										</td>
+										<td>
+											Eilat, Israel
 										</td>
 									</tr>
 								</tbody>

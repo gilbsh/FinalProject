@@ -125,4 +125,28 @@ public class DataLayer {
 			System.out.print("Coudln't close connections");
 		}
 	}
+	
+	public VehicleFault[] getVehicleFault(){
+		try{
+			Statement stmt = con.createStatement();
+			String query = "SELECT DateTime,DeciveId,Dtc,DtcStatus,Level,Type FROM VehicleFault";
+			ResultSet rs = stmt.executeQuery(query);
+			List<VehicleFault> vehicleFaults = new ArrayList<VehicleFault>();
+			while(rs.next()){
+				Date dateTime = new Date(rs.getString("DateTime"));
+				String deviceId = rs.getString("DeviceId");
+				String dtc = rs.getString("Dtc");
+				String dtcStatus = rs.getString("DtcStatus");
+				String level = rs.getString("Level");
+				String type = rs.getString("Type");
+				VehicleFault vehicleFault = new VehicleFault(dtc,deviceId,level,dateTime,type,dtcStatus);
+				vehicleFaults.add(vehicleFault);				
+				}			
+			return (VehicleFault[])vehicleFaults.toArray(new VehicleFault[vehicleFaults.size()]);
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
 }
