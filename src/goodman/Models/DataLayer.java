@@ -115,4 +115,14 @@ public class DataLayer {
 			return null;
 		}
 	}
+	
+	
+	public void close(){
+		try{
+		this.con.close();
+		}
+		catch(Exception ex){
+			System.out.print("Coudln't close connections");
+		}
+	}
 }
