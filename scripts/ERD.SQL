@@ -1,289 +1,250 @@
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RuleAlerts]') AND type in (N'U'))
-    DROP TABLE [dbo].[RuleAlerts]
-GO
-CREATE TABLE [dbo].[RuleAlerts] (
-[DateTime] DATETIME  NOT NULL  
-, [Value] VARCHAR(50)  NULL  
-, [VehicleId] VARCHAR(50)  NOT NULL  
-, [RuleId] VARCHAR(50)  NULL  
-, [ParameterName] VARCHAR(50)  NULL  
-)
-GO
+use finalprojectdb;
 
-ALTER TABLE [dbo].[RuleAlerts] ADD CONSTRAINT [RuleAlerts_PK] PRIMARY KEY CLUSTERED (
-[DateTime]
-, [VehicleId]
-)
-GO
-GO
+DROP TABLE IF EXISTS MilegeData;
+DROP TABLE IF EXISTS VehicleFaults;
+DROP TABLE IF EXISTS DTCs;
+DROP TABLE IF EXISTS DeviceRules;
+DROP TABLE IF EXISTS Devices;
+DROP TABLE IF EXISTS TreatmentActions;
+DROP TABLE IF EXISTS PIDData;
+DROP TABLE IF EXISTS Treatments;
+DROP TABLE IF EXISTS Customers;
+DROP TABLE IF EXISTS GPSData;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS RuleConditions;
+DROP TABLE IF EXISTS Rules;
+DROP TABLE IF EXISTS Vehicles;
+DROP TABLE IF EXISTS Parameters;
+DROP TABLE IF EXISTS RuleAlerts;
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Parameters]') AND type in (N'U'))
-    DROP TABLE [dbo].[Parameters]
-GO
-CREATE TABLE [dbo].[Parameters] (
-[ParameterName] VARCHAR(50)  NOT NULL  
-, [ParameterDescription] VARCHAR(5000)  NULL  
-)
-GO
 
-ALTER TABLE [dbo].[Parameters] ADD CONSTRAINT [Parameters_PK] PRIMARY KEY CLUSTERED (
-[ParameterName]
-)
-GO
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Vehicles]') AND type in (N'U'))
-    DROP TABLE [dbo].[Vehicles]
-GO
-CREATE TABLE [dbo].[Vehicles] (
-[VehicleId] VARCHAR(50)  NOT NULL  
-, [Manufacturer] VARCHAR(50)  NULL  
-, [Model] VARCHAR(50)  NULL  
-, [Engine] VARCHAR(50)  NULL  
-, [Year] VARCHAR(50)  NULL  
-, [CustomerId] VARCHAR(50)  NULL  
-)
-GO
+CREATE TABLE RuleAlerts (
+DateTime DATETIME  NOT NULL  
+, Value VARCHAR(50)  NULL  
+, VehicleId VARCHAR(50)  NOT NULL  
+, RuleId int  NULL  
+, ParameterName VARCHAR(50)  NULL  
+);
 
-ALTER TABLE [dbo].[Vehicles] ADD CONSTRAINT [Vehicles_PK] PRIMARY KEY CLUSTERED (
-[VehicleId]
-)
-GO
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Rules]') AND type in (N'U'))
-    DROP TABLE [dbo].[Rules]
-GO
-CREATE TABLE [dbo].[Rules] (
-[RuleId] VARCHAR(50)  NOT NULL  
-, [UserEmail] VARCHAR(50)  NULL  
-, [RuleName] VARCHAR(50)  NULL  
-, [RuleCondition] VARCHAR(100)  NULL  
-)
-GO
+ALTER TABLE RuleAlerts ADD CONSTRAINT RuleAlerts_PK PRIMARY KEY CLUSTERED (
+DateTime
+, VehicleId
+);
 
-ALTER TABLE [dbo].[Rules] ADD CONSTRAINT [Rules_PK] PRIMARY KEY CLUSTERED (
-[RuleId]
-)
-GO
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RuleConditions]') AND type in (N'U'))
-    DROP TABLE [dbo].[RuleConditions]
-GO
-CREATE TABLE [dbo].[RuleConditions] (
-[RuleId] VARCHAR(50)  NOT NULL  
-, [ParameterName] VARCHAR(50)  NOT NULL  
-, [AggregationType] VARCHAR(50)  NOT NULL  
-, [Condition] VARCHAR(50)  NULL  
-, [DtcName] VARCHAR(50)  NULL  
-)
-GO
+CREATE TABLE Parameters (
+ParameterName VARCHAR(50)  NOT NULL  
+, ParameterDescription VARCHAR(5000)  NULL  
+);
 
-ALTER TABLE [dbo].[RuleConditions] ADD CONSTRAINT [RuleConditions_PK] PRIMARY KEY CLUSTERED (
-[RuleId]
-, [ParameterName]
-, [AggregationType]
-)
-GO
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND type in (N'U'))
-    DROP TABLE [dbo].[Users]
-GO
-CREATE TABLE [dbo].[Users] (
-[UserEmail] VARCHAR(50)  NOT NULL  
-, [FirstName] VARCHAR(50)  NULL  
-, [LastName] VARCHAR(50)  NULL  
-, [Password] VARCHAR(50)  NULL  
-)
-GO
+ALTER TABLE Parameters ADD CONSTRAINT Parameters_PK PRIMARY KEY CLUSTERED (
+ParameterName
+);
 
-ALTER TABLE [dbo].[Users] ADD CONSTRAINT [Users_PK] PRIMARY KEY CLUSTERED (
-[UserEmail]
-)
-GO
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GFSData]') AND type in (N'U'))
-    DROP TABLE [dbo].[GFSData]
-GO
-CREATE TABLE [dbo].[GFSData] (
-[ID] VARCHAR(50)  NOT NULL  
-, [Time] DATETIME  NULL  
-, [Speed] REAL  NULL  
-, [LatLng] CHAR(10)  NULL  
-, [VehicleId] VARCHAR(50)  NULL  
-)
-GO
+CREATE TABLE Vehicles (
+VehicleId VARCHAR(50)  NOT NULL  
+, Manufacturer VARCHAR(50)  NULL  
+, Model VARCHAR(50)  NULL  
+, Engine VARCHAR(50)  NULL  
+, Year VARCHAR(50)  NULL  
+, CustomerId VARCHAR(50)  NULL  
+);
 
-ALTER TABLE [dbo].[GFSData] ADD CONSTRAINT [GFSData_PK] PRIMARY KEY CLUSTERED (
-[ID]
-)
-GO
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Customers]') AND type in (N'U'))
-    DROP TABLE [dbo].[Customers]
-GO
-CREATE TABLE [dbo].[Customers] (
-[CustomerId] VARCHAR(50)  NOT NULL  
-, [FirstName] VARCHAR(50)  NULL  
-, [LastName] VARCHAR(50)  NULL  
-, [Email] VARCHAR(50)  NULL  
-, [PhoneNumber] VARCHAR(50)  NULL  
-)
-GO
+ALTER TABLE Vehicles ADD CONSTRAINT Vehicles_PK PRIMARY KEY CLUSTERED (
+VehicleId
+);
 
-ALTER TABLE [dbo].[Customers] ADD CONSTRAINT [Customers_PK] PRIMARY KEY CLUSTERED (
-[CustomerId]
-)
-GO
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Treatments]') AND type in (N'U'))
-    DROP TABLE [dbo].[Treatments]
-GO
-CREATE TABLE [dbo].[Treatments] (
-[Date] DATETIME  NOT NULL  
-, [VehicleId] VARCHAR(50)  NOT NULL  
-, [Description] VARCHAR(5000)  NULL  
-, [VehicleTotalEngineHours] VARCHAR(50)  NULL  
-, [TreatmentType] VARCHAR(50)  NULL  
-)
-GO
 
-ALTER TABLE [dbo].[Treatments] ADD CONSTRAINT [Treatments_PK] PRIMARY KEY CLUSTERED (
-[Date]
-, [VehicleId]
-)
-GO
-GO
+CREATE TABLE Rules (
+RuleId INTEGER NOT NULL AUTO_INCREMENT 
+, UserEmail VARCHAR(50)  NULL  
+, RuleName VARCHAR(50)  NULL  
+, RuleDescription VARCHAR(100)  NULL,
+PRIMARY KEY (RuleId)  
+);
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PIDData]') AND type in (N'U'))
-    DROP TABLE [dbo].[PIDData]
-GO
-CREATE TABLE [dbo].[PIDData] (
-[MessageId] VARCHAR(50)  NOT NULL  
-, [Value] VARCHAR(50)  NULL  
-, [Time] DATETIME  NULL  
-, [DeviceId] VARCHAR(50)  NULL  
-, [ParameterName] VARCHAR(50)  NULL  
-)
-GO
+ALTER TABLE Rules ADD CONSTRAINT Rules_PK PRIMARY KEY CLUSTERED (
+RuleId
+);
 
-ALTER TABLE [dbo].[PIDData] ADD CONSTRAINT [PIDData_PK] PRIMARY KEY CLUSTERED (
-[MessageId]
-)
-GO
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TreatmentActions]') AND type in (N'U'))
-    DROP TABLE [dbo].[TreatmentActions]
-GO
-CREATE TABLE [dbo].[TreatmentActions] (
-[Date] DATETIME  NOT NULL  
-, [VehicleId] VARCHAR(50)  NOT NULL  
-, [Action] VARCHAR(50)  NULL  
-, [Description] VARCHAR(5000)  NULL  
-)
-GO
+CREATE TABLE RuleConditions (
+RuleId int  NOT NULL  
+, ParameterName VARCHAR(50)  NOT NULL  
+, ConditionOperator VARCHAR(50)  NULL  
+, HighValue INT NULL
+, LowValue INT NULL
+);
 
-ALTER TABLE [dbo].[TreatmentActions] ADD CONSTRAINT [TreatmentActions_PK] PRIMARY KEY CLUSTERED (
-[Date]
-, [VehicleId]
-)
-GO
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Devices]') AND type in (N'U'))
-    DROP TABLE [dbo].[Devices]
-GO
-CREATE TABLE [dbo].[Devices] (
-[DeviceId] VARCHAR(50)  NOT NULL  
-, [PurchaseDate] VARCHAR(50)  NULL  
-, [VehicleId] VARCHAR(50)  NULL  
-, [InitialEngineHours] REAL  NULL  
-, [InitialMileage] DOUBLE  NULL  
-)
-GO
+ALTER TABLE RuleConditions ADD CONSTRAINT RuleConditions_PK PRIMARY KEY CLUSTERED (
+RuleId
+, ParameterName
+);
 
-ALTER TABLE [dbo].[Devices] ADD CONSTRAINT [Devices_PK] PRIMARY KEY CLUSTERED (
-[DeviceId]
-)
-GO
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DeviceRules]') AND type in (N'U'))
-    DROP TABLE [dbo].[DeviceRules]
-GO
-CREATE TABLE [dbo].[DeviceRules] (
-[DeviceId] VARCHAR(50)  NOT NULL  
-, [RuleId] VARCHAR(50)  NOT NULL  
-)
-GO
 
-ALTER TABLE [dbo].[DeviceRules] ADD CONSTRAINT [DeviceRules_PK] PRIMARY KEY CLUSTERED (
-[RuleId]
-, [DeviceId]
-)
-GO
-GO
+CREATE TABLE Users (
+Email VARCHAR(50)  NOT NULL  
+, FirstName VARCHAR(50)  NULL  
+, LastName VARCHAR(50)  NULL  
+, Password VARCHAR(50)  NULL  
+);
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DTCs]') AND type in (N'U'))
-    DROP TABLE [dbo].[DTCs]
-GO
-CREATE TABLE [dbo].[DTCs] (
-[DtcName] VARCHAR(50)  NOT NULL  
-, [DtcCategory] VARCHAR(50)  NULL  
-, [DtcArea] VARCHAR(50)  NULL  
-, [DtcFaultCode] VARCHAR(50)  NULL  
-)
-GO
 
-ALTER TABLE [dbo].[DTCs] ADD CONSTRAINT [DTCs_PK] PRIMARY KEY CLUSTERED (
-[DtcName]
-)
-GO
-GO
+ALTER TABLE Users ADD CONSTRAINT Users_PK PRIMARY KEY CLUSTERED (
+Email
+);
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[VehicleFaults]') AND type in (N'U'))
-    DROP TABLE [dbo].[VehicleFaults]
-GO
-CREATE TABLE [dbo].[VehicleFaults] (
-[FaultId] VARCHAR(50)  NOT NULL  
-, [DtcS] VARCHAR(50)  NOT NULL  
-, [DeviceId] VARCHAR(50)  NULL  
-, [Level] CHAR(10)  NULL  
-, [DateTime] DATETIME  NULL  
-, [Type] VARCHAR(50)  NULL  
-, [DTCStatus] CHAR(10)  NULL  
-)
-GO
 
-ALTER TABLE [dbo].[VehicleFaults] ADD CONSTRAINT [VehicleFaults_PK] PRIMARY KEY CLUSTERED (
-[FaultId]
-)
-GO
-GO
+CREATE TABLE GPSData (
+Id INT  NOT NULL  
+, Time DATETIME  NULL  
+, Speed REAL  NULL  
+, Latlng CHAR(10)  NULL
+, Location VARCHAR(200) NULL
+, DeviceId VARCHAR(50)  NULL  
+);
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[MilegeData]') AND type in (N'U'))
-    DROP TABLE [dbo].[MilegeData]
-GO
-CREATE TABLE [dbo].[MilegeData] (
-[IgnitionOn] DATETIME  NULL  
-, [IgnitionOff] DATETIME  NULL  
-, [Milege ] REAL  NULL  
-, [FuelConsumption] REAL  NULL  
-, [StartLatLng] VARCHAR(100)  NULL  
-, [EndLatLng] VARCHAR(100)  NULL  
-, [DeviceId] VARCHAR(50)  NULL  
-, [ID] VARCHAR(100)  NOT NULL  
-)
-GO
 
-ALTER TABLE [dbo].[MilegeData] ADD CONSTRAINT [MilegeData_PK] PRIMARY KEY CLUSTERED (
-[ID]
+ALTER TABLE GPSData ADD CONSTRAINT GPSData_PK PRIMARY KEY CLUSTERED (
+ID
+);
+
+
+CREATE TABLE Customers (
+CustomerId VARCHAR(50)  NOT NULL  
+, FirstName VARCHAR(50)  NULL  
+, LastName VARCHAR(50)  NULL  
+, Email VARCHAR(50)  NULL  
+, PhoneNumber VARCHAR(50)  NULL  
+);
+
+
+ALTER TABLE Customers ADD CONSTRAINT Customers_PK PRIMARY KEY CLUSTERED (
+CustomerId
+);
+
+
+CREATE TABLE Treatments (
+Date DATETIME  NOT NULL  
+, VehicleId VARCHAR(50)  NOT NULL  
+, Description VARCHAR(5000)  NULL  
+, VehicleTotalEngineHours VARCHAR(50)  NULL  
+, TreatmentType VARCHAR(50)  NULL  
+);
+
+
+ALTER TABLE Treatments ADD CONSTRAINT Treatments_PK PRIMARY KEY CLUSTERED (
+Date
+, VehicleId
+);
+
+
+CREATE TABLE PIDData (
+MessageId VARCHAR(50)  NOT NULL 
+, DeviceId VARCHAR(50)  NULL 
+, ParameterName VARCHAR(50)  NULL  
+, Time DATETIME  NULL   
+, Value VARCHAR(50)  NULL  
+);
+
+
+ALTER TABLE PIDData ADD CONSTRAINT PIDData_PK PRIMARY KEY CLUSTERED (
+MessageId
+);
+
+
+CREATE TABLE TreatmentActions (
+Date DATETIME  NOT NULL  
+, VehicleId VARCHAR(50)  NOT NULL  
+, Action VARCHAR(50)  NULL  
+, Description VARCHAR(5000)  NULL  
+);
+
+
+ALTER TABLE TreatmentActions ADD CONSTRAINT TreatmentActions_PK PRIMARY KEY CLUSTERED (
+Date
+, VehicleId
+);
+
+
+CREATE TABLE Devices (
+DeviceId VARCHAR(50)  NOT NULL  
+, PurchaseDate VARCHAR(50)  NULL  
+, VehicleId VARCHAR(50)  NULL  
+, InitialEngineHours REAL  NULL  
+, InitialMileage DOUBLE  NULL  
+);
+
+
+ALTER TABLE Devices ADD CONSTRAINT Devices_PK PRIMARY KEY CLUSTERED (
+DeviceId
+);
+
+
+CREATE TABLE DeviceRules (
+DeviceId VARCHAR(50)  NOT NULL  
+, RuleId VARCHAR(50)  NOT NULL  
+);
+
+
+ALTER TABLE DeviceRules ADD CONSTRAINT DeviceRules_PK PRIMARY KEY CLUSTERED (
+RuleId
+, DeviceId
+);
+
+
+CREATE TABLE DTCs (
+Dtc VARCHAR(50)  NULL
+, DtcCategory VARCHAR(50)  NULL  
+, DtcArea VARCHAR(50)  NULL  
+, DtcPriority int
+, DtcCssClass VARCHAR(50)
+);
+
+
+ALTER TABLE DTCs ADD CONSTRAINT DTCs_PK PRIMARY KEY CLUSTERED (
+Dtc
+);
+
+CREATE TABLE VehicleFaults (
+FaultId VARCHAR(50)  NOT NULL  
+, Dtc VARCHAR(50)  NOT NULL  
+, DeviceId VARCHAR(50)  NULL  
+, Level CHAR(10)  NULL  
+, DateTime DATETIME  NULL  
+, Type VARCHAR(50)  NULL  
+, DTCStatus CHAR(10)  NULL  
+);
+
+
+ALTER TABLE VehicleFaults ADD CONSTRAINT VehicleFaults_PK PRIMARY KEY CLUSTERED (
+FaultId
+);
+
+
+CREATE TABLE MilegeData (
+ Id INT NOT NULL  
+,IgnitionOn DATETIME  NULL  
+, IgnitionOff DATETIME  NULL  
+, Milege  REAL  NULL  
+, FuelConsumption REAL  NULL  
+, StartLatlng VARCHAR(100)  NULL  
+, EndLatlng VARCHAR(100)  NULL  
+, DeviceId VARCHAR(50)  NULL  
+);
+
+
+
+ALTER TABLE MilegeData ADD CONSTRAINT MilegeData_PK PRIMARY KEY CLUSTERED (
+ID
 )
 GO
 GO

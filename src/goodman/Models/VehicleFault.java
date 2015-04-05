@@ -5,48 +5,41 @@ import java.util.Date;
 
 public class VehicleFault {
 	
-	String dtc;
-	String deviceId;
+	DTC dtc;
 	String level;
 	Date dateTime;
 	String type;
 	String dtcStatus;
-	
-	public VehicleFault(String dtc, String deviceId, String level,
-			Date dateTime, String type, String dtcStatus) {
-		super();
-		this.dtc = dtc;
-		this.deviceId = deviceId;
-		this.level = level;
-		this.dateTime = dateTime;
-		this.type = type;
-		this.dtcStatus = dtcStatus;
-	}
+	Device device;	
 
-	
-	private VehicleFault() {
-		super();
+	public VehicleFault() {
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public String getDtc() {
+
+
+	public DTC getDtc() {
 		return dtc;
 	}
 
 
-	public void setDtc(String dtc) {
+
+
+	public void setDtc(DTC dtc) {
 		this.dtc = dtc;
 	}
 
 
-	public String getDeviceId() {
-		return deviceId;
+
+
+	public Device getDevice() {
+		return device;
 	}
 
 
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
+	public void setDevice(Device device) {
+		this.device = device;
 	}
 
 

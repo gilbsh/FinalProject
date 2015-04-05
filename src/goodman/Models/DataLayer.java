@@ -55,7 +55,7 @@ public class DataLayer {
 	public User getUser(String email){
 		try{
 			Statement stmt = con.createStatement();
-			String query = "SELECT * FROM Users where Email='"+email+"'";
+			String query = "SELECT * FROM Users where UserEmail='"+email+"'";
 			ResultSet rs = stmt.executeQuery(query);
 			User user = null;
 			if(rs.next()){
@@ -116,6 +116,49 @@ public class DataLayer {
 		}
 	}
 	
+	public VehicleFault[] getVehicleFaults(){
+		try{
+			Statement stmt = con.createStatement();
+			String query = "SELECT VF.FaultId,VF.DateTime,VF.Dtc,VF.DTCStatus,VF.Level,V.VehicleId,C.CustomerId,C.FirstName,C.LastName,DTCs.DtcPriority,DTCs.DtcCssClass "
+					+ "FROM VehicleFaults VF "
+					+ "JOIN Devices D on VF.DeviceId=D.DeviceId "
+					+ "JOIN Vehicles V on D.VehicleId = V.VehicleId "
+					+ "JOIN Customers C on V.CustomerId=C.CustomerId "
+					+ "JOIN DTCs on DTCs.Dtc = VF.Dtc "
+					+ "ORDER BY DTCs.DtcPriority";
+			ResultSet rs = stmt.executeQuery(query);
+			List<VehicleFault> vehicleFaults = new ArrayList<>();
+			while(rs.next()){
+				Device device= new Device();
+				Customer customer = new Customer();
+				Vehicle vehicle = new Vehicle();
+				VehicleFault vehicleFault = new VehicleFault();
+				DTC dtc = new DTC();
+				customer.setId(rs.getString("CustomerId"));
+				customer.setFirstName(rs.getString("FirstName"));
+				customer.setLastName(rs.getString("LastName"));
+				vehicle.setVehicleId(rs.getString("VehicleId"));
+				vehicle.setCustomer(customer);
+				device.setVehicle(vehicle);
+				dtc.setDtcCssClass(rs.getString("DtcCssClass"));
+				dtc.setDtcPriority(Integer.parseInt(rs.getString("DtcPriority")));
+				dtc.setDtc(rs.getString("Dtc"));
+				vehicleFault.setDtc(dtc);
+				vehicleFault.setDevice(device);
+				vehicleFault.setDateTime(rs.getDate("DateTime"));
+				vehicleFault.setLevel(rs.getString("Level"));
+				vehicleFault.setDtcStatus(rs.getString("DTCStatus"));
+				vehicleFaults.add(vehicleFault);
+				}	
+			return (VehicleFault[])vehicleFaults.toArray(new VehicleFault[vehicleFaults.size()]);
+			//return (Parameter[])parameters.toArray(new Parameter[parameters.size()]);
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
+	
 	
 	public void close(){
 		try{
@@ -123,30 +166,6 @@ public class DataLayer {
 		}
 		catch(Exception ex){
 			System.out.print("Coudln't close connections");
-		}
-	}
-	
-	public VehicleFault[] getVehicleFault(){
-		try{
-			Statement stmt = con.createStatement();
-			String query = "SELECT DateTime,DeciveId,Dtc,DtcStatus,Level,Type FROM VehicleFault";
-			ResultSet rs = stmt.executeQuery(query);
-			List<VehicleFault> vehicleFaults = new ArrayList<VehicleFault>();
-			while(rs.next()){
-				Date dateTime = new Date(rs.getString("DateTime"));
-				String deviceId = rs.getString("DeviceId");
-				String dtc = rs.getString("Dtc");
-				String dtcStatus = rs.getString("DtcStatus");
-				String level = rs.getString("Level");
-				String type = rs.getString("Type");
-				VehicleFault vehicleFault = new VehicleFault(dtc,deviceId,level,dateTime,type,dtcStatus);
-				vehicleFaults.add(vehicleFault);				
-				}			
-			return (VehicleFault[])vehicleFaults.toArray(new VehicleFault[vehicleFaults.size()]);
-		}
-		catch(Exception ex){
-			System.out.print(ex.getMessage());
-			return null;
 		}
 	}
 }

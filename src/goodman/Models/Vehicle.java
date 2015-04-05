@@ -6,24 +6,16 @@ public class Vehicle {
 	String model;
 	String engine;
 	String year;
-	String customerId;
+	Customer customer;
+
 	
-	
-	public Vehicle(String vehicleId, String manufacturer, String model,
-			String engine, String year, String customerId) {
-		super();
-		this.vehicleId = vehicleId;
-		this.manufacturer = manufacturer;
-		this.model = model;
-		this.engine = engine;
-		this.year = year;
-		this.customerId = customerId;
-	}
+	public Vehicle(){}
+
 	
 	public String getVehicleId() {
 		return vehicleId;
 	}
-	public void setvehicleId(String vehicleId) {
+	public void setVehicleId(String vehicleId) {
 		this.vehicleId = vehicleId;
 	}
 	public String getManufacturer() {
@@ -50,11 +42,11 @@ public class Vehicle {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return this.customer;
 	}
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	
 	

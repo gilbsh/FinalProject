@@ -17,6 +17,10 @@ public class Customer extends Person {
 		this.id = new String(id);
 		this.phone = new String(phone);
 	}
+	
+	public Customer(){
+		
+	}
 
 	public String getId() {
 		return id;

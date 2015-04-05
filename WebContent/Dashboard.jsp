@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -40,128 +41,15 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>
-											#
-										</th>
-										<th>
-											Fault
-										</th>
-										<th>
-											Date
-										</th>
-										<th>
-											Level
-										</th>
-										<th>
-											Type
-										</th>
-										<th>
-											Customer
-										</th>
+										<th>DTC</th><th>Date</th><th>Level</th><th>Status</th><th>Customer</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-									<tr class="danger">
-										<td>
-											1
-										</td>
-										<td>
-											Fuel System
-										</td>
-										<td>
-											01/04/2012
-										</td>
-										<td>
-											Hard
-										</td>
-										<td>
-											Engine
-										</td>
-										<td>
-											Moshe Laviv
-										</td>
-									</tr>
-									<tr class="danger">
-										<td>
-											2
-										</td>
-										<td>
-											Fuel System
-										</td>
-										<td>
-											01/04/2012
-										</td>
-										<td>
-											Hard
-										</td>
-										<td>
-											Engine
-										</td>
-										<td>
-											Moshe Laviv
-										</td>
-									</tr>
-									<tr class="warning">
-										<td>
-											3
-										</td>
-										<td>
-											Fuel System
-										</td>
-										<td>
-											01/04/2012
-										</td>
-										<td>
-											Hard
-										</td>
-										<td>
-											Engine
-										</td>
-										<td>
-											Moshe Laviv
-										</td>
-									</tr>
-									<tr class="success">
-										<td>
-											4
-										</td>
-										<td>
-											Fuel System
-										</td>
-										<td>
-											01/04/2012
-										</td>
-										<td>
-											Hard
-										</td>
-										<td>
-											Engine
-										</td>
-										<td>
-											Moshe Laviv
-										</td>
-									</tr>
-									<tr class="active">
-										<td>
-											5
-										</td>
-										<td>
-											Fuel System
-										</td>
-										<td>
-											01/04/2012
-										</td>
-										<td>
-											Hard
-										</td>
-										<td>
-											Engine
-										</td>
-										<td>
-											Moshe Laviv
-										</td>
-									</tr>
+									<c:forEach items="${vehicleFaults}" var ="vehicleFault">
+										<tr class='${vehicleFault.dtc.dtcCssClass}'>
+											<td>${vehicleFault.dtc.dtc}</td><td>${vehicleFault.dateTime}</td><td>${vehicleFault.level}</td><td>${vehicleFault.dtcStatus}</td><td>${vehicleFault.device.vehicle.customer.firstName} ${vehicleFault.device.vehicle.customer.lastName}</td>
+										</tr>
+								    </c:forEach>
 								</tbody>
 							</table>
 						</p>
@@ -449,7 +337,6 @@
 									</tr>
 								</tbody>
 							</table>
-
 						</p>
 					</div>
 				</div>
