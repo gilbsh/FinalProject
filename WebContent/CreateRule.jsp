@@ -20,7 +20,7 @@
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 	<script type="text/javascript" src="js/bootstrap-select.js"></script>
-	<!--  <script type="text/javascript" src="js/scripts.js"></script>-->
+	<script type="text/javascript" src="js/scripts.js"></script>
 </head>
 <body>
 <script type="text/javascript">
@@ -55,6 +55,8 @@
 									 <label for="ruleDescription">Rule Description</label><input required class="form-control" id="ruleDescription" name="ruleDescription">
 								</div>
 							</div>
+							<div class="col-md-1 column">
+							</div>
 							<div class="col-md-4 column">
 								<h3>
 									Population Filter
@@ -70,25 +72,16 @@
 								        </div>
 								    </div>				  
 							</div>
-							<div class="col-md-5 column">
+							<div class="col-md-4 column">
 								<h3>
 									Rule Conditions
 								</h3>
 								<div class="tabbable" id="tabs-420867">
-									<ul class="nav nav-tabs">
-										<li class="active">
-											<a href="#dtcRules" data-toggle="tab">Parameter Rules</a>
-										</li>
-										<li>
-											<a href="#parameterRules" data-toggle="tab">DTC Rules</a>
-										</li>
-									</ul>
 									<div class="tab-content">
 										<div class="tab-pane active" id="dtcRules">
-											<br>
 											<div class="form-group">
 												<label for="ruleParameter">Rule Parameter</label><br>																				
-												<select class="selectpicker">
+												<select class="selectpicker" name="parameter">
 													<c:forEach items="${parameters}" var ="parameter">
 								            			<option>${parameter.parameterName}</option>
 								            		</c:forEach>
@@ -96,7 +89,7 @@
 											</div>
 											<div class="form-group">					
 												<label for="ruleCondition">Rule Condition</label><br>
-												<select class="selectpicker">
+												<select class="selectpicker" Id="condition" onchange="disableValues.call(this, event)">
 													<option>Between</option>
 													<option>Not Between</option>
 													<option>></option>
@@ -107,12 +100,14 @@
 											<div class="row clearfix">
 												<div class="col-md-4 column">
 													<div class="form-group">
-											 			<label for="ruleValuen">Value</label><input required type="number" class="form-control" name="ruleValue">
+											 			<label for="ruleValuen" ID="ruleLowValueLable">Low Value</label>
+											 			<input required type="number" class="form-control" ID="ruleLowValue" min="0">
 													</div>
 												</div>
 												<div class="col-md-4 column">
 													<div class="form-group">
-											 			<label for="ruleValuen">Value</label><input required type="number" class="form-control" name="ruleValue">
+											 			<label for="ruleValuen" ID="ruleHighValueLable">High Value</label>
+											 			<input required type="number" class="form-control" ID="ruleHighValue" min="0">
 													</div>
 												</div>
 											</div>						

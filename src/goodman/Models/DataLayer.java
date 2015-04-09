@@ -3,6 +3,7 @@ package goodman.Models;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -98,14 +99,13 @@ public class DataLayer {
 	public Parameter[] getParameters(){
 		try{
 			Statement stmt = con.createStatement();
-			String query = "SELECT ParameterId,ParameterName,ParameterDescription FROM Parameters";
+			String query = "SELECT ParameterName,ParameterDescription FROM Parameters";
 			ResultSet rs = stmt.executeQuery(query);
 			List<Parameter> parameters = new ArrayList<Parameter>();
 			while(rs.next()){
-				String parameterId = rs.getString("ParameterId");
 				String parameterName = rs.getString("ParameterName");
 				String parameterDescription = rs.getString("ParameterDescription");
-				Parameter parameter = new Parameter(parameterId,parameterName,parameterDescription);
+				Parameter parameter = new Parameter(parameterName,parameterDescription);
 				parameters.add(parameter);				
 				}			
 			return (Parameter[])parameters.toArray(new Parameter[parameters.size()]);
@@ -159,6 +159,46 @@ public class DataLayer {
 		}
 	}
 	
+	public Rule createRule(Rule rule){
+		
+		try{
+			PreparedStatement statement = con.prepareStatement("INSERT INTO Rules(UserEmail,RuleName,RuleDescription) VALUES(?,?,?)");
+			statement.setString(1,  rule.getRuleUser().getEmail());
+			statement.setString(2,  rule.getRuleName());
+			statement.setString(3,  rule.getRuleDescription());
+			statement.execute();
+			Statement stmt = con.createStatement();
+			String query = "select MAX(RuleId) as RuleId from Rules";
+			ResultSet rs = stmt.executeQuery(query);
+			if(rs.next())
+				{
+				String ruleId= rs.getString("RuleId");
+				rule.setRuleId(ruleId);
+				}
+			return rule;
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
+	
+	public void createRuleCondition(Rule createdRule, RuleCondition condition ) {
+		try{
+			PreparedStatement statement = con.prepareStatement("INSERT INTO RuleConditions(RuleId,ParameterName,ConditionOperator,LowValue,HighValue) VALUES(?,?,?,?,?)");
+			statement.setString(1,  createdRule.getRuleId());
+			statement.setString(3,  condition.getParameterName());
+			statement.setString(2,  condition.getConditionOperator());
+			statement.setString(4,  condition.getLowValue());
+			statement.setString(5,  condition.getHighValue());
+			statement.execute();
+			
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+				}
+		
+	}
 	
 	public void close(){
 		try{
@@ -168,4 +208,6 @@ public class DataLayer {
 			System.out.print("Coudln't close connections");
 		}
 	}
+	
+	
 }
