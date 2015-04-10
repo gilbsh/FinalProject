@@ -6,9 +6,7 @@ import goodman.Models.Parameter;
 import goodman.Models.Rule;
 import goodman.Models.RuleCondition;
 import goodman.Models.User;
-
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,23 +42,21 @@ public class CreateRuleServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String ruleName = request.getParameter("ruleName");
 		String ruleDescription = request.getParameter("ruleDescription");
-		String[] customers = request.getParameterValues("customers[]");
+		String[] vehicls = request.getParameterValues("vehicls[]");
 		String parameter = request.getParameter("parameter");
 		String condition = request.getParameter("condition");
 		String ruleLowValue = request.getParameter("ruleLowValue");
 		String ruleHighValue = request.getParameter("ruleHighValue");
 		
-		System.out.print(ruleName+"\n");
+		/*System.out.print(ruleName+"\n");
 		System.out.print(ruleDescription+"\n");
 		System.out.print(parameter+"\n");
 		System.out.print(condition+"\n");
 		System.out.print(ruleLowValue+"\n");
 		System.out.print(ruleHighValue+"\n");
-		for (int i=0;i<customers.length;i++){
-			System.out.print(customers[i]+"\n");
-		}
-		
-		
+		for (int i=0;i<vehicls.length;i++){
+			System.out.print(vehicls[i]+"\n");
+		}*/
 		
 		Rule rule=new Rule();
 		rule.setRuleName(ruleName);
@@ -76,13 +72,10 @@ public class CreateRuleServlet extends HttpServlet {
         	Condition.setLowValue(ruleLowValue);
         	Condition.setHighValue(ruleHighValue);
         	dl.createRuleCondition(createdRule, Condition);
+        	dl.createDeviceRule(rule,vehicls);
         }
         else {
         	System.out.print("coudn't create rule");
         }
-		
-	
-		
 	}
-
 }

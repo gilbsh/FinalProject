@@ -3,6 +3,7 @@ package goodman.Models;
 public class Customer extends Person {
 	String id;
 	String phone;
+	Vehicle[] vehicles;
 	
 	public String getPhone() {
 		return phone;
@@ -28,5 +29,13 @@ public class Customer extends Person {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Vehicle[] getVehicles() {
+		return vehicles;
+	}
+
+	public void setVehicles(Vehicle[] vehicles) {
+		this.vehicles = vehicles;
 	}
 }

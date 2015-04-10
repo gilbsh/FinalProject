@@ -6,7 +6,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Home Page</title>
-	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
 	<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
 	<link rel="stylesheet" href="css/bootstrap-select.css" type="text/css"/>
@@ -23,21 +23,6 @@
 	<script type="text/javascript" src="js/scripts.js"></script>
 </head>
 <body>
-<script type="text/javascript">
-    $(document).ready(function() {	    	
-        $('.multiSelection').each(
-        	function(){
-        		$(this).multiselect({
-           		includeSelectAllOption: true,
-            	enableFiltering: true
-       		 })
-       		});
-        
-        $('.selectpicker').selectpicker({
-            size: 4
-        });
-    });
-</script>
 	<div class="container">
 		<div class="row clearfix">
 			<div class="col-md-12 column">
@@ -64,11 +49,14 @@
 								    <div class="form-group">
 								        <label class="control-label">Choose Customer</label>
 								        <div>
-								            <select id="chooseCustomer" name="customers[]" multiple="multiple" class="multiSelection">
+								           <select required id="chooseVehicle" multiple="multiple" name="vehicls[]">
 								            	<c:forEach items="${customers}" var ="customer">
-								            		<option value="${customer.id}">${customer.firstName} ${customer.lastName}</option>
+								            		<optgroup label="${customer.firstName} ${customer.lastName}"></optgroup>
+								            			<c:forEach items="${customer.vehicles}" var ="vehicle">
+								            				<option value="${vehicle.vehicleId}">${vehicle.manufacturer}-${vehicle.model}-${vehicle.year}</option>
+								            			</c:forEach>
 								            	</c:forEach>
-								            </select>
+											</select>
 								        </div>
 								    </div>				  
 							</div>
@@ -89,7 +77,7 @@
 											</div>
 											<div class="form-group">					
 												<label for="ruleCondition">Rule Condition</label><br>
-												<select class="selectpicker" Id="condition" onchange="disableValues.call(this, event)">
+												<select class="selectpicker" Id="condition" name="condition" onchange="disableValues.call(this, event)">
 													<option>Between</option>
 													<option>Not Between</option>
 													<option>></option>
@@ -101,13 +89,13 @@
 												<div class="col-md-4 column">
 													<div class="form-group">
 											 			<label for="ruleValuen" ID="ruleLowValueLable">Low Value</label>
-											 			<input required type="number" class="form-control" ID="ruleLowValue" min="0">
+											 			<input required type="number" class="form-control" name="ruleLowValue" ID="ruleLowValue" min="0" value="0">
 													</div>
 												</div>
 												<div class="col-md-4 column">
 													<div class="form-group">
-											 			<label for="ruleValuen" ID="ruleHighValueLable">High Value</label>
-											 			<input required type="number" class="form-control" ID="ruleHighValue" min="0">
+											 			<label for="ruleValuen" ID="ruleHighValueLable" >High Value</label>
+											 			<input required type="number" class="form-control" ID="ruleHighValue" name="ruleHighValue" min="0" value="0">
 													</div>
 												</div>
 											</div>						

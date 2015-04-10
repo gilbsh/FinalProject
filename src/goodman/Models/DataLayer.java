@@ -85,7 +85,9 @@ public class DataLayer {
 				String id = rs.getString("CustomerId");
 				String phone = rs.getString("PhoneNumber");
 				String email = rs.getString("Email");
+				Vehicle[] vehicles=getVehicles(id);
 				Customer customer = new Customer(id,firstName,lastName,email,phone);
+				customer.setVehicles(vehicles);
 				customers.add(customer);				
 				}			
 			return (Customer[])customers.toArray(new Customer[customers.size()]);
@@ -159,6 +161,38 @@ public class DataLayer {
 		}
 	}
 	
+	public Vehicle[] getVehicles( String customerId){
+		try{
+			Statement stmt = con.createStatement();
+			String query = "SELECT V.VehicleId, V.Manufacturer, V.Model, V.Engine, V.Year, V.HoursToTreatment, V.LastTreatment, V.CustomerId, C.FirstName, C.LastName "
+					+ "FROM Vehicles V JOIN Customers C "
+					+ "ON V.CustomerId=C.CustomerId "
+					+ "WHERE V.CustomerId in ('" + customerId +"')";
+			ResultSet rs = stmt.executeQuery(query);
+			List<Vehicle> vehicles = new ArrayList<>();
+			while(rs.next()){
+				Customer customer = new Customer();
+				Vehicle vehicle = new Vehicle();
+				customer.setId(rs.getString("CustomerId"));
+				customer.setFirstName(rs.getString("FirstName"));
+				customer.setLastName(rs.getString("LastName"));
+				vehicle.setVehicleId(rs.getString("VehicleId"));
+				vehicle.setManufacturer(rs.getString("Manufacturer"));
+				vehicle.setModel(rs.getString("Model"));
+				vehicle.setEngine(rs.getString("Engine"));
+				vehicle.setYear(rs.getString("Year"));
+				vehicle.setCustomer(customer);
+				vehicles.add(vehicle);
+				
+				}	
+			return (Vehicle[])vehicles.toArray(new Vehicle[vehicles.size()]);
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
+	
 	public Rule createRule(Rule rule){
 		
 		try{
@@ -198,6 +232,28 @@ public class DataLayer {
 			System.out.print(ex.getMessage());
 				}
 		
+	}
+	
+
+	public void createDeviceRule(Rule rule, String[] vehicls) {
+		try{
+			Statement stmt = con.createStatement();
+			for (int i=0;i<vehicls.length;i++){
+				String query = "select DeviceId,VehicleId from Devices "
+				+ "where VehicleId='"+ vehicls[i] +"'";
+				ResultSet rs = stmt.executeQuery(query);
+				if(rs.next())
+					{
+					PreparedStatement statement = con.prepareStatement("INSERT INTO DeviceRules(DeviceId,RuleId)  VALUES(?,?)");
+					statement.setString(1,  rs.getString("DeviceId"));
+					statement.setString(2,  rule.RuleId);
+					statement.execute();
+					}
+			}
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+				}
 	}
 	
 	public void close(){
