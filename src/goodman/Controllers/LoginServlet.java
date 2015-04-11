@@ -50,22 +50,17 @@ public class LoginServlet extends HttpServlet {
 			User user = dl.getUser(email);
 			if(user!=null && user.getPassword().equals(password)){
 				HttpSession session = request.getSession(true);
-				VehicleFault[] vehicleFaults = dl.getVehicleFaults();
-				VehicleMaintenance[] vehiclesMaintenance = dl.getMaintenanceReport();
-		        session.setAttribute("currentSessionUser",user); 
-		        request.setAttribute("vehicleFaults", vehicleFaults);
-		        request.setAttribute("vehiclesMaintenance",vehiclesMaintenance);
-	            RequestDispatcher dispatcher = request.getRequestDispatcher("Dashboard.jsp");
-	            dispatcher.forward(request, response);	
+				session.setAttribute("currentSessionUser",user); 
+				response.sendRedirect("Dashboard");
 			}
 			else
 			{
 				request.setAttribute("message", "Email or password are incorrect. Please Try Again");
 				request.getRequestDispatcher("Login.jsp").forward(request, response);
 			}
+			dl.close();
 		}
-		else{
-			
+		else{			
 			response.sendRedirect("Login.jsp"); //logged-in page
 		}
 	    

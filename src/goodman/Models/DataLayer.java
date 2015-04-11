@@ -127,7 +127,8 @@ public class DataLayer {
 					+ "JOIN Vehicles V on D.VehicleId = V.VehicleId "
 					+ "JOIN Customers C on V.CustomerId=C.CustomerId "
 					+ "JOIN DTCs on DTCs.Dtc = VF.Dtc "
-					+ "ORDER BY DTCs.DtcPriority";
+					+ "ORDER BY DTCs.DtcPriority "
+					+ "LIMIT 30";
 			ResultSet rs = stmt.executeQuery(query);
 			List<VehicleFault> vehicleFaults = new ArrayList<>();
 			while(rs.next()){
@@ -224,8 +225,8 @@ public class DataLayer {
 		try{
 			PreparedStatement statement = con.prepareStatement("INSERT INTO RuleConditions(RuleId,ParameterName,ConditionOperator,LowValue,HighValue) VALUES(?,?,?,?,?)");
 			statement.setString(1,  createdRule.getRuleId());
-			statement.setString(3,  condition.getParameterName());
-			statement.setString(2,  condition.getConditionOperator());
+			statement.setString(2,  condition.getParameterName());
+			statement.setString(3,  condition.getConditionOperator());
 			statement.setString(4,  condition.getLowValue());
 			statement.setString(5,  condition.getHighValue());
 			statement.execute();

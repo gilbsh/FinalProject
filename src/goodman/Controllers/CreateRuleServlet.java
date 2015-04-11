@@ -46,17 +46,7 @@ public class CreateRuleServlet extends HttpServlet {
 		String parameter = request.getParameter("parameter");
 		String condition = request.getParameter("condition");
 		String ruleLowValue = request.getParameter("ruleLowValue");
-		String ruleHighValue = request.getParameter("ruleHighValue");
-		
-		/*System.out.print(ruleName+"\n");
-		System.out.print(ruleDescription+"\n");
-		System.out.print(parameter+"\n");
-		System.out.print(condition+"\n");
-		System.out.print(ruleLowValue+"\n");
-		System.out.print(ruleHighValue+"\n");
-		for (int i=0;i<vehicls.length;i++){
-			System.out.print(vehicls[i]+"\n");
-		}*/
+		String ruleHighValue = request.getParameter("ruleHighValue");		
 		
 		Rule rule=new Rule();
 		rule.setRuleName(ruleName);
@@ -77,5 +67,7 @@ public class CreateRuleServlet extends HttpServlet {
         else {
         	System.out.print("coudn't create rule");
         }
+        
+        response.sendRedirect("PrepareCreateARule");
 	}
 }
