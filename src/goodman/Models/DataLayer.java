@@ -119,7 +119,7 @@ public class DataLayer {
 	public VehicleFault[] getVehicleFaults(){
 		try{
 			Statement stmt = con.createStatement();
-			String query = "SELECT VF.FaultId,VF.DateTime,VF.Dtc,VF.DTCStatus,VF.Level,V.VehicleId,C.CustomerId,C.FirstName,C.LastName,DTCs.DtcPriority,DTCs.DtcCssClass "
+			String query = "SELECT VF.FaultId,VF.DateTime,VF.Dtc,VF.DTCStatus,VF.Level,VF.Details,VF.Type,V.VehicleId,V.Manufacturer,V.Model,C.CustomerId,C.FirstName,C.LastName,DTCs.DtcPriority,DTCs.DtcCssClass "
 					+ "FROM VehicleFaults VF "
 					+ "JOIN Devices D on VF.DeviceId=D.DeviceId "
 					+ "JOIN Vehicles V on D.VehicleId = V.VehicleId "
@@ -139,15 +139,19 @@ public class DataLayer {
 				customer.setLastName(rs.getString("LastName"));
 				vehicle.setVehicleId(rs.getString("VehicleId"));
 				vehicle.setCustomer(customer);
+				vehicle.setManufacturer(rs.getString("Manufacturer"));
+				vehicle.setModel(rs.getString("Model"));
 				device.setVehicle(vehicle);
 				dtc.setDtcCssClass(rs.getString("DtcCssClass"));
 				dtc.setDtcPriority(Integer.parseInt(rs.getString("DtcPriority")));
 				dtc.setDtc(rs.getString("Dtc"));
 				vehicleFault.setDtc(dtc);
 				vehicleFault.setDevice(device);
-				vehicleFault.setDateTime(rs.getDate("DateTime"));
+				vehicleFault.setDateTime(rs.getTime("DateTime"));
 				vehicleFault.setLevel(rs.getString("Level"));
 				vehicleFault.setDtcStatus(rs.getString("DTCStatus"));
+				vehicleFault.setType(rs.getString("Type"));
+				vehicleFault.setDetails(rs.getString("Details"));
 				vehicleFaults.add(vehicleFault);
 				}	
 			return (VehicleFault[])vehicleFaults.toArray(new VehicleFault[vehicleFaults.size()]);

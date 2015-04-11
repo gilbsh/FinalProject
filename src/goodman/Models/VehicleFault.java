@@ -1,5 +1,6 @@
 package goodman.Models;
 
+import java.sql.Time;
 import java.util.Date;
 
 
@@ -7,10 +8,21 @@ public class VehicleFault {
 	
 	DTC dtc;
 	String level;
-	Date dateTime;
+	Time dateTime;
 	String type;
 	String dtcStatus;
-	Device device;	
+	String details;
+	
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+
+	Device device;
 
 	public VehicleFault() {
 		// TODO Auto-generated constructor stub
@@ -58,7 +70,7 @@ public class VehicleFault {
 	}
 
 
-	public void setDateTime(Date dateTime) {
+	public void setDateTime(Time dateTime) {
 		this.dateTime = dateTime;
 	}
 
