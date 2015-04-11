@@ -59,12 +59,12 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>Customer</th><th>VehicleId</th><th>Model</th><th>Total hours</th><th>Hours to treatment</th></tr>
+										<th>Customer</th><th>VehicleId</th><th>Model</th><th>Total Hours</th><th>Hours To Treatment</th><th>Treatment Type</th></tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${vehiclesMaintanece}" var ="vehiclesMaintanece">
-										<tr class='${vehiclesMaintanece.customer.vehicle}'>
-											<td>${vehiclesMaintanece.customer.firstName} ${vehiclesMaintanece.customer.LastName}</td><td>${vehiclesMaintanece.vehicle.vehicleId}</td><td>${vehiclesMaintanece.vehicle.Model}</td><td>${vehiclesMaintanece.totalHours}</td><td>${vehicleFault.device.vehicle.customer.firstName} ${vehiclesMaintanece.hoersToTreatment}</td>
+									<c:forEach items="${vehiclesMaintenance}" var ="vehicleMaintenance">
+										<tr class='${vehicleMaintenance.cssClass}'>
+											<td>${vehicleMaintenance.customer.firstName} ${vehicleMaintenance.customer.lastName}</td><td>${vehicleMaintenance.vehicle.vehicleId}</td><td>${vehicleMaintenance.vehicle.manufacturer} ${vehicleMaintenance.vehicle.model}</td><td>${vehicleMaintenance.totalHours}</td><td>${vehicleMaintenance.hoursLeftForNextTreatment}</td><td>${vehicleMaintenance.treatmentType}</td>
 										</tr>
 								    </c:forEach>
 								</tbody>

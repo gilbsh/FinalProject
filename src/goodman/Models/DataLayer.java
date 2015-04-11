@@ -283,8 +283,8 @@ public class DataLayer {
 				vehicleMaintenance.setTreatmentType(rs.getString("TreatmentType"));
 				vehicleMaintenance.setTotalHours(rs.getInt("TotalHours"));
 				int hoursLeftForNextTreatment= rs.getInt("HoursLeftForNextTreatment");
-				vehicleMaintenance.setHoursLeftForNextTreatment(rs.getInt("HoursLeftForNextTreatment"));
-				String cssClass= hoursLeftForNextTreatment < 0 ? "danger" : hoursLeftForNextTreatment <50 ? "warning" : "active";				
+				vehicleMaintenance.setHoursLeftForNextTreatment(hoursLeftForNextTreatment);
+				String cssClass = hoursLeftForNextTreatment < 0 ? "danger" : hoursLeftForNextTreatment <50 ? "warning" : "success";				
 				vehicleMaintenance.setCssClass(cssClass);
 				vehiclesMaintenance.add(vehicleMaintenance);
 			}
