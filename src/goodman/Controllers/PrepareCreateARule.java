@@ -37,6 +37,7 @@ public class PrepareCreateARule extends HttpServlet {
         	
         	Parameter[] parameters = dl.getParameters();
         	request.setAttribute("parameters", parameters);
+        	
             RequestDispatcher dispatcher = request.getRequestDispatcher("CreateRule.jsp");
             dispatcher.forward(request, response);
         }

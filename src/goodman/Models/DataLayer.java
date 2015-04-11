@@ -3,6 +3,7 @@ package goodman.Models;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -84,7 +85,9 @@ public class DataLayer {
 				String id = rs.getString("CustomerId");
 				String phone = rs.getString("PhoneNumber");
 				String email = rs.getString("Email");
+				Vehicle[] vehicles=getVehicles(id);
 				Customer customer = new Customer(id,firstName,lastName,email,phone);
+				customer.setVehicles(vehicles);
 				customers.add(customer);				
 				}			
 			return (Customer[])customers.toArray(new Customer[customers.size()]);
@@ -98,14 +101,13 @@ public class DataLayer {
 	public Parameter[] getParameters(){
 		try{
 			Statement stmt = con.createStatement();
-			String query = "SELECT ParameterId,ParameterName,ParameterDescription FROM Parameters";
+			String query = "SELECT ParameterName,ParameterDescription FROM Parameters";
 			ResultSet rs = stmt.executeQuery(query);
 			List<Parameter> parameters = new ArrayList<Parameter>();
 			while(rs.next()){
-				String parameterId = rs.getString("ParameterId");
 				String parameterName = rs.getString("ParameterName");
 				String parameterDescription = rs.getString("ParameterDescription");
-				Parameter parameter = new Parameter(parameterId,parameterName,parameterDescription);
+				Parameter parameter = new Parameter(parameterName,parameterDescription);
 				parameters.add(parameter);				
 				}			
 			return (Parameter[])parameters.toArray(new Parameter[parameters.size()]);
@@ -163,6 +165,100 @@ public class DataLayer {
 		}
 	}
 	
+	public Vehicle[] getVehicles( String customerId){
+		try{
+			Statement stmt = con.createStatement();
+			String query = "SELECT V.VehicleId, V.Manufacturer, V.Model, V.Engine, V.Year, V.HoursToTreatment, V.LastTreatment, V.CustomerId, C.FirstName, C.LastName "
+					+ "FROM Vehicles V JOIN Customers C "
+					+ "ON V.CustomerId=C.CustomerId "
+					+ "WHERE V.CustomerId in ('" + customerId +"')";
+			ResultSet rs = stmt.executeQuery(query);
+			List<Vehicle> vehicles = new ArrayList<>();
+			while(rs.next()){
+				Customer customer = new Customer();
+				Vehicle vehicle = new Vehicle();
+				customer.setId(rs.getString("CustomerId"));
+				customer.setFirstName(rs.getString("FirstName"));
+				customer.setLastName(rs.getString("LastName"));
+				vehicle.setVehicleId(rs.getString("VehicleId"));
+				vehicle.setManufacturer(rs.getString("Manufacturer"));
+				vehicle.setModel(rs.getString("Model"));
+				vehicle.setEngine(rs.getString("Engine"));
+				vehicle.setYear(rs.getString("Year"));
+				vehicle.setCustomer(customer);
+				vehicles.add(vehicle);
+				
+				}	
+			return (Vehicle[])vehicles.toArray(new Vehicle[vehicles.size()]);
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
+	
+	public Rule createRule(Rule rule){
+		
+		try{
+			PreparedStatement statement = con.prepareStatement("INSERT INTO Rules(UserEmail,RuleName,RuleDescription) VALUES(?,?,?)");
+			statement.setString(1,  rule.getRuleUser().getEmail());
+			statement.setString(2,  rule.getRuleName());
+			statement.setString(3,  rule.getRuleDescription());
+			statement.execute();
+			Statement stmt = con.createStatement();
+			String query = "select MAX(RuleId) as RuleId from Rules";
+			ResultSet rs = stmt.executeQuery(query);
+			if(rs.next())
+				{
+				String ruleId= rs.getString("RuleId");
+				rule.setRuleId(ruleId);
+				}
+			return rule;
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
+	
+	public void createRuleCondition(Rule createdRule, RuleCondition condition ) {
+		try{
+			PreparedStatement statement = con.prepareStatement("INSERT INTO RuleConditions(RuleId,ParameterName,ConditionOperator,LowValue,HighValue) VALUES(?,?,?,?,?)");
+			statement.setString(1,  createdRule.getRuleId());
+			statement.setString(3,  condition.getParameterName());
+			statement.setString(2,  condition.getConditionOperator());
+			statement.setString(4,  condition.getLowValue());
+			statement.setString(5,  condition.getHighValue());
+			statement.execute();
+			
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+				}
+		
+	}
+	
+
+	public void createDeviceRule(Rule rule, String[] vehicls) {
+		try{
+			Statement stmt = con.createStatement();
+			for (int i=0;i<vehicls.length;i++){
+				String query = "select DeviceId,VehicleId from Devices "
+				+ "where VehicleId='"+ vehicls[i] +"'";
+				ResultSet rs = stmt.executeQuery(query);
+				if(rs.next())
+					{
+					PreparedStatement statement = con.prepareStatement("INSERT INTO DeviceRules(DeviceId,RuleId)  VALUES(?,?)");
+					statement.setString(1,  rs.getString("DeviceId"));
+					statement.setString(2,  rule.RuleId);
+					statement.execute();
+					}
+			}
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+				}
+	}
 	
 	public void close(){
 		try{
@@ -172,4 +268,6 @@ public class DataLayer {
 			System.out.print("Coudln't close connections");
 		}
 	}
+	
+	
 }

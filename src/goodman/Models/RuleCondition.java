@@ -1,54 +1,56 @@
 package goodman.Models;
 
 public class RuleCondition {
-	String Condition;
+	
 	String RuleId;
-	String DtcName;
-	String ParameterId;
-	String AggregationType;
-	
-	
-	
-	public RuleCondition(String condition, String ruleId, String dtcName,
-			String parameterId, String aggregationType) {
-		super();
-		Condition = condition;
-		RuleId = ruleId;
-		DtcName = dtcName;
-		ParameterId = parameterId;
-		AggregationType = aggregationType;
-	}
-	public String getCondition() {
-		return Condition;
-	}
-	public void setCondition(String condition) {
-		Condition = condition;
-	}
+	String ParameterName;
+	String ConditionOperator;
+	String LowValue;
+	String HighValue;
+
+	public RuleCondition() {
+		}
+
 	public String getRuleId() {
 		return RuleId;
 	}
+
 	public void setRuleId(String ruleId) {
 		RuleId = ruleId;
 	}
-	public String getDtcName() {
-		return DtcName;
+
+	public String getParameterName() {
+		return ParameterName;
 	}
-	public void setDtcName(String dtcName) {
-		DtcName = dtcName;
+
+	public void setParameterName(String parameterName) {
+		ParameterName = parameterName;
 	}
-	public String getParameterId() {
-		return ParameterId;
+
+	public String getConditionOperator() {
+		return ConditionOperator;
 	}
-	public void setParameterId(String parameterId) {
-		ParameterId = parameterId;
+
+	public void setConditionOperator(String conditionOperator) {
+		ConditionOperator = conditionOperator;
 	}
-	public String getAggregationType() {
-		return AggregationType;
+
+	public String getLowValue() {
+		return LowValue;
 	}
-	public void setAggregationType(String aggregationType) {
-		AggregationType = aggregationType;
+
+	public void setLowValue(String lowValue) {
+		LowValue = lowValue;
 	}
-	
+
+	public String getHighValue() {
+		return HighValue;
+	}
+
+	public void setHighValue(String highValue) {
+		HighValue = highValue;
+	}
+
 	
 
 }
