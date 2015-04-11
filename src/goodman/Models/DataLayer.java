@@ -197,8 +197,7 @@ public class DataLayer {
 		}
 	}
 	
-	public Rule createRule(Rule rule){
-		
+	public Rule createRule(Rule rule){		
 		try{
 			PreparedStatement statement = con.prepareStatement("INSERT INTO Rules(UserEmail,RuleName,RuleDescription) VALUES(?,?,?)");
 			statement.setString(1,  rule.getRuleUser().getEmail());
@@ -258,6 +257,43 @@ public class DataLayer {
 		catch(Exception ex){
 			System.out.print(ex.getMessage());
 				}
+	}
+	
+	public VehicleMaintenance[] getMaintenanceReport(){
+		
+		List<VehicleMaintenance> vehiclesMaintenance = new ArrayList<VehicleMaintenance>();
+		try{
+			Statement stmt = con.createStatement();
+			String query ="call GetMaintenanceReport()";
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()){
+				Customer customer = new Customer();
+				Vehicle vehicle = new Vehicle();
+				VehicleMaintenance vehicleMaintenance = new VehicleMaintenance();
+				customer.setId(rs.getString("CustomerId"));
+				customer.setFirstName(rs.getString("FirstName"));
+				customer.setLastName(rs.getString("LastName"));
+				vehicle.setVehicleId(rs.getString("VehicleId"));
+				vehicle.setManufacturer(rs.getString("Manufacturer"));
+				vehicle.setModel(rs.getString("Model"));
+				vehicle.setLastTreatment(rs.getInt("LastTreatment"));
+				vehicleMaintenance.setCustomer(customer);
+				vehicleMaintenance.setVehicle(vehicle);
+				vehicleMaintenance.setHoursFromLastTreatment(rs.getInt("HoursFromLastTreatment"));
+				vehicleMaintenance.setTreatmentType(rs.getString("TreatmentType"));
+				vehicleMaintenance.setTotalHours(rs.getInt("TotalHours"));
+				int hoursLeftForNextTreatment= rs.getInt("HoursLeftForNextTreatment");
+				vehicleMaintenance.setHoursLeftForNextTreatment(rs.getInt("HoursLeftForNextTreatment"));
+				String cssClass= hoursLeftForNextTreatment < 0 ? "danger" : hoursLeftForNextTreatment <50 ? "warning" : "active";				
+				vehicleMaintenance.setCssClass(cssClass);
+				vehiclesMaintenance.add(vehicleMaintenance);
+			}
+			return (VehicleMaintenance[])vehiclesMaintenance.toArray(new VehicleMaintenance[vehiclesMaintenance.size()]);
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
 	}
 	
 	public void close(){

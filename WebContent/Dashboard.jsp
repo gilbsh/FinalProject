@@ -32,7 +32,7 @@
 						<a href="#panel-2" data-toggle="tab">Maintenance Needed</a>
 					</li>
 					<li>
-						<a href="#panel-3" data-toggle="tab">Machine In Work</a>
+						<a href="#panel-3" data-toggle="tab">Rule Alerts</a>
 					</li>
 				</ul>
 				<div class="tab-content">
