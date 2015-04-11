@@ -2,7 +2,9 @@ package goodman.Controllers;
 
 import goodman.Models.DataLayer;
 import goodman.Models.User;
+import goodman.Models.Vehicle;
 import goodman.Models.VehicleFault;
+import goodman.Models.VehicleMaintenance;
 
 import java.io.IOException;
 
@@ -49,8 +51,10 @@ public class LoginServlet extends HttpServlet {
 			if(user!=null && user.getPassword().equals(password)){
 				HttpSession session = request.getSession(true);
 				VehicleFault[] vehicleFaults = dl.getVehicleFaults();
+				VehicleMaintenance[] vehiclesMaintenance = dl.getMaintenanceReport();
 		        session.setAttribute("currentSessionUser",user); 
 		        request.setAttribute("vehicleFaults", vehicleFaults);
+		        request.setAttribute("vehiclesMaintenance",vehiclesMaintenance);
 	            RequestDispatcher dispatcher = request.getRequestDispatcher("Dashboard.jsp");
 	            dispatcher.forward(request, response);	
 			}

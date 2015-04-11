@@ -6,12 +6,26 @@ public class Vehicle {
 	String model;
 	String engine;
 	String year;
+	int hoursToTreatment;
 	Customer customer;
-
+	double lastTreatment;
 	
+	public double getLastTreatment() {
+		return lastTreatment;
+	}
+
+	public void setLastTreatment(double lastTreatment) {
+		this.lastTreatment = lastTreatment;
+	}
+
 	public Vehicle(){}
 
-	
+	public int getHoursToTreatment() {
+		return hoursToTreatment;
+	}
+	public void setHoursToTreatment(int hoursToTreatment) {
+		this.hoursToTreatment = hoursToTreatment;
+	}
 	public String getVehicleId() {
 		return vehicleId;
 	}

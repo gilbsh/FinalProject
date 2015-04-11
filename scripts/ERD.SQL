@@ -50,8 +50,10 @@ VehicleId VARCHAR(50)  NOT NULL
 , Manufacturer VARCHAR(50)  NULL  
 , Model VARCHAR(50)  NULL  
 , Engine VARCHAR(50)  NULL  
-, Year VARCHAR(50)  NULL  
-, CustomerId VARCHAR(50)  NULL  
+, Year VARCHAR(50)  NULL
+, HoursToTreatment INT
+, CustomerId VARCHAR(50)  NULL
+, LastMaintenance 
 );
 
 
@@ -69,11 +71,6 @@ RuleId INTEGER NOT NULL AUTO_INCREMENT
 PRIMARY KEY (RuleId)  
 );
 
-ALTER TABLE Rules ADD CONSTRAINT Rules_PK PRIMARY KEY CLUSTERED (
-RuleId
-);
-
-
 CREATE TABLE RuleConditions (
 RuleId int  NOT NULL  
 , ParameterName VARCHAR(50)  NOT NULL  
@@ -87,7 +84,6 @@ ALTER TABLE RuleConditions ADD CONSTRAINT RuleConditions_PK PRIMARY KEY CLUSTERE
 RuleId
 , ParameterName
 );
-
 
 
 CREATE TABLE Users (
@@ -104,7 +100,7 @@ Email
 
 
 CREATE TABLE GPSData (
-Id INT  NOT NULL  
+Id INTEGER NOT NULL AUTO_INCREMENT 
 , Time DATETIME  NULL  
 , Speed REAL  NULL  
 , Latlng CHAR(10)  NULL
@@ -148,7 +144,7 @@ Date
 
 
 CREATE TABLE PIDData (
-MessageId VARCHAR(50)  NOT NULL 
+MessageId INTEGER NOT NULL AUTO_INCREMENT 
 , DeviceId VARCHAR(50)  NULL 
 , ParameterName VARCHAR(50)  NULL  
 , Time DATETIME  NULL   
@@ -215,18 +211,14 @@ Dtc
 );
 
 CREATE TABLE VehicleFaults (
-FaultId VARCHAR(50)  NOT NULL  
+FaultId INTEGER NOT NULL AUTO_INCREMENT 
 , Dtc VARCHAR(50)  NOT NULL  
 , DeviceId VARCHAR(50)  NULL  
-, Level CHAR(10)  NULL  
+, Level VARCHAR(1000)  NULL  
 , DateTime DATETIME  NULL  
-, Type VARCHAR(50)  NULL  
-, DTCStatus CHAR(10)  NULL  
-);
-
-
-ALTER TABLE VehicleFaults ADD CONSTRAINT VehicleFaults_PK PRIMARY KEY CLUSTERED (
-FaultId
+, Type VARCHAR(500)  NULL  
+, DTCStatus VARCHAR(50)  NULL
+, Details VARCHAR(5000)
 );
 
 
@@ -241,7 +233,12 @@ CREATE TABLE MilegeData (
 , DeviceId VARCHAR(50)  NULL  
 );
 
-
+CREATE TABLE TreatmentTypes(
+TreatmentType VARCHAR(100)
+, HoursForTreatment int
+, FromHour int
+,ToHour int
+)
 
 ALTER TABLE MilegeData ADD CONSTRAINT MilegeData_PK PRIMARY KEY CLUSTERED (
 ID
