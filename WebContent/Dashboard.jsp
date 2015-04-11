@@ -59,130 +59,16 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>
-											#
-										</th>
-										<th>
-											Model
-										</th>
-										<th>
-											VehicleId
-										</th>
-										<th>
-											Customer  
-										</th>
-										<th>
-											Next Service
-										</th>
-										<th>
-											Service type
-										</th>
-									</tr>
+										<th>Customer</th><th>VehicleId</th><th>Model</th><th>Total hours</th><th>Hours to treatment</th></tr>
 								</thead>
 								<tbody>
-									<tr>
-									<tr class="danger">
-										<td>
-											1
-										</td>
-										<td>
-											Volvo L120F
-										</td>
-										<td>
-											48-515-39
-										</td>
-										<td>
-											Nir Brosh
-										</td>
-											<td>
-											213 hours
-										</td>
-										<td>
-											2000
-										</td>
-									</tr>
-									<tr class="danger">
-										<td>
-											2
-										</td>
-										<td>
-											Volvo L120F
-										</td>
-										<td>
-											48-515-39
-										</td>
-										<td>
-											Nir Brosh
-										</td>
-											<td>
-											213 hours
-										</td>
-										<td>
-											2000
-										</td>
-									</tr>
-									<tr class="warning">
-										<td>
-											3
-										</td>
-										<td>
-											Volvo L120F
-										</td>
-										<td>
-											48-515-39
-										</td>
-										<td>
-											Nir Brosh
-										</td>
-											<td>
-											213 hours
-										</td>
-										<td>
-											2000
-										</td>
-									</tr>
-									<tr class="success">
-										<td>
-											4
-										</td>
-										<td>
-											Volvo L120F
-										</td>
-										<td>
-											48-515-39
-										</td>
-										<td>
-											Nir Brosh
-										</td>
-											<td>
-											213 hours
-										</td>
-										<td>
-											2000
-										</td>
-									</tr>
-									<tr class="active">
-										<td>
-											5
-										</td>
-										<td>
-											Volvo L120F
-										</td>
-										<td>
-											48-515-39
-										</td>
-										<td>
-											Nir Brosh
-										</td>
-											<td>
-											213 hours
-										</td>
-										<td>
-											2000
-										</td>
-									</tr>
+									<c:forEach items="${vehiclesMaintanece}" var ="vehiclesMaintanece">
+										<tr class='${vehiclesMaintanece.customer.vehicle}'>
+											<td>${vehiclesMaintanece.customer.firstName} ${vehiclesMaintanece.customer.LastName}</td><td>${vehiclesMaintanece.vehicle.vehicleId}</td><td>${vehiclesMaintanece.vehicle.Model}</td><td>${vehiclesMaintanece.totalHours}</td><td>${vehicleFault.device.vehicle.customer.firstName} ${vehiclesMaintanece.hoersToTreatment}</td>
+										</tr>
+								    </c:forEach>
 								</tbody>
-							</table>
+							</table>	
 						</p>
 					</div>
 					<div class="tab-pane" id="panel-3">
@@ -190,34 +76,7 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>
-											#
-										</th>
-										<th>
-											Customer
-										</th>
-										<th>
-											Model
-										</th>
-										<th>
-											VehicleId
-										</th>
-										<th>
-											Engine hours 
-										</th>
-										<th>
-											Engine RPM	r/min										
-										</th>
-										<th>
-											fuel consumption L/H
-										</th>
-										<th>
-											Engine Temp C
-										</th>
-										<th>
-											Location
-										</th>
-									</tr>
+										<th>#</th><th>Customer</th><th>Model</th><th>VehicleId</th><th>Engine hours</th><th>Engine RPM	[r/min]</th><th>fuel consumption [L/H]</th><th>Engine Temp [C]</th><th>Location</th></tr>
 								</thead>
 								<tbody>
 									<tr>
