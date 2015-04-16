@@ -15,13 +15,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class Device
  */
 @WebServlet("/Device")
-public class Device extends HttpServlet {
+public class PrepareDevice extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Device() {
+    public PrepareDevice() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,16 +33,14 @@ public class Device extends HttpServlet {
 		// TODO Auto-generated method stub
 		 DataLayer dl = new DataLayer();
 	        if(dl.connect()){
-	        	/*Customer[] customers = dl.getCustomers();
-	        	request.setAttribute("customers", customers);
-	        	
-	        	Parameter[] parameters = dl.getParameters();
-	        	request.setAttribute("parameters", parameters);*/
-	            RequestDispatcher dispatcher = request.getRequestDispatcher("Devices.jsp");
-	            dispatcher.forward(request, response);
+	        	Device[] devices = dl.getDevices();
+				request.setAttribute("devices", devices);
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("Devices.jsp");
+		        dispatcher.forward(request, response);
+	            dl.close();
 	        }
 	        else {
-	        	System.out.print("coudn't get customers");
+	        	System.out.print("coudn't get devices");
 	        }
 	}
 

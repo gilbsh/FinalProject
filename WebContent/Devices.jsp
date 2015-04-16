@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" %>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,7 +16,8 @@
   	<link rel="shortcut icon" href="img/favicon.png">
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/filter.js"></script>
+	
 </head>
 <body>
 	<div class="container">
@@ -25,28 +27,31 @@
 			<div class="row clearfix">
 			<div class="col-md-1 column"></div>
 				<div class="col-md-11 column">
-					<div class="tabbable" id="tabs-10795">
-						<ul class="nav nav-tabs">
-							<li class="active">
-								<a href="#panel-603078" data-toggle="tab">Add</a>
-							</li>
-							<li>
-								<a href="#panel-411325" data-toggle="tab">Edit</a>
-							</li>
-						</ul>
-						<div class="tab-content">
-							<div class="tab-pane active" id="panel-603078">
-								<p>
-									<%@include file="AddDevice.jsp" %>
-								</p>
-							</div>
-							<div class="tab-pane" id="panel-411325">
-								<p>
-									<%@include file="EditDevice.jsp" %>
-								</p>
-							</div>
-						</div>
+					<div class="input-group"> <span class="input-group-addon">Filter</span>
+					    <input id="filter" type="text" class="form-control" placeholder="Type here...">
 					</div>
+					<table class="table table-striped">
+					    <thead>
+					        <tr>
+								<th>#</th><th>DeviceId</th><th>VehicleId</th><th>Customer</th><th>Model</th><th>Year</th><th>Initial Mileage</th><th>Initial Engine Hours</th><th>Edit Device</th>
+							</tr>
+					    </thead>
+					    <tbody class="searchable">
+					        <c:forEach items="${devices}" var ="device" varStatus="counter">
+								<tr>
+									<td>${counter.count}</td>
+									<td>${device.deviceId}</td>
+									<td>${device.vehicle.vehicleId}</td>
+									<td>${device.vehicle.customer.firstName} ${device.vehicle.customer.lastName}</td>
+									<td>${device.vehicle.model}</td>
+									<td>${device.vehicle.year}</td>
+									<td>${device.initialMileage}</td>
+									<td>${device.initialEngineHours}</td>
+									<td></td>
+								</tr>
+							</c:forEach>
+					    </tbody>
+					</table>
 				</div>
 				</div>
 		</div>

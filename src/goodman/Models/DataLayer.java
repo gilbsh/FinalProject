@@ -297,6 +297,60 @@ public class DataLayer {
 		}
 	}
 	
+	public Device[] getDevices() {
+		List<Device> devices = new ArrayList<Device>();
+		try{
+			Statement stmt = con.createStatement();
+			String query ="select D.DeviceId, D.VehicleId, V.Model, V.Year, D.InitialMileage, D.InitialEngineHours "
+			+ "from Devices D JOIN Vehicles V on D.VehicleId = V.VehicleId";
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()){
+				Device device = new Device();
+				device.setDeviceId(rs.getString("DeviceId"));
+				Double initialEngineHours= rs.getDouble("InitialEngineHours");
+				Double initialMileage= rs.getDouble("InitialMileage");
+				device.setInitialEngineHours(initialEngineHours); 
+				device.setInitialMileage(initialMileage);
+				device.setVehicle(getVehicle(rs.getString("VehicleId")));
+				devices.add(device);
+			}
+			return (Device[])devices.toArray(new Device[devices.size()]);
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
+	
+	public Vehicle getVehicle( String vehicleId){
+		try{
+			Statement stmt = con.createStatement();
+			String query = "SELECT V.VehicleId, V.Manufacturer, V.Model, V.Engine, V.Year, V.HoursToTreatment, V.LastTreatment, V.CustomerId, C.FirstName, C.LastName "
+					+ "FROM Vehicles V JOIN Customers C "
+					+ "ON V.CustomerId=C.CustomerId "
+					+ "WHERE V.VehicleId in ('" + vehicleId +"')";
+			ResultSet rs = stmt.executeQuery(query);
+			Vehicle vehicle = new Vehicle();
+			if(rs.next()){
+				Customer customer = new Customer();
+				customer.setId(rs.getString("CustomerId"));
+				customer.setFirstName(rs.getString("FirstName"));
+				customer.setLastName(rs.getString("LastName"));
+				vehicle.setVehicleId(rs.getString("VehicleId"));
+				vehicle.setManufacturer(rs.getString("Manufacturer"));
+				vehicle.setModel(rs.getString("Model"));
+				vehicle.setEngine(rs.getString("Engine"));
+				vehicle.setYear(rs.getString("Year"));
+				vehicle.setCustomer(customer);
+				}	
+			return vehicle;
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
+	
 	public void close(){
 		try{
 		this.con.close();
@@ -305,6 +359,7 @@ public class DataLayer {
 			System.out.print("Coudln't close connections");
 		}
 	}
+	
 	
 	
 }

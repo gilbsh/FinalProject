@@ -22,21 +22,23 @@ public class Device {
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
 	}
-	public double getInitialEngineHours() {
+	public Double getInitialEngineHours() {
 		return initialEngineHours;
 	}
 	public void setInitialEngineHours(double initialEngineHours) {
 		this.initialEngineHours = initialEngineHours;
 	}
-	public double getInitialMileage() {
+	public Double getInitialMileage() {
 		return initialMileage;
 	}
 	public void setInitialMileage(double initialMileage) {
 		this.initialMileage = initialMileage;
 	}
+	
 	String deviceId;
 	Date purchaseDate;
 	Vehicle vehicle;
-	double initialEngineHours;
-	double initialMileage;	
+	
+	Double initialEngineHours;
+	Double initialMileage;	
 }

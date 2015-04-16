@@ -20,7 +20,7 @@
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 	<script type="text/javascript" src="js/bootstrap-select.js"></script>
-	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/ruleScripts.js"></script>
 </head>
 <body>
 	<div class="container">
