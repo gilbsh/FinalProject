@@ -1,4 +1,6 @@
 package test;
+import java.sql.PreparedStatement;
+
 import junit.framework.Assert;
 import goodman.Models.DataLayer;
 import goodman.Models.User;
@@ -21,5 +23,13 @@ public class DataLayerTest {
 		expected.setLastName("Ben Shalom");
 		expected.setPassword("1234");
 		Assert.assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void editRowTest(){
+		DataLayer dl = new DataLayer();
+		dl.connect();
+		PreparedStatement expected = dl.getEditRowStatement("Devices", "InitialEngineHours", "1111", "34567", "DeviceId");
+		Assert.assertTrue(expected.toString().indexOf("UPDATE Devices SET InitialEngineHours='34567' WHERE DeviceId='1111'")!=-1);
 	}
 }

@@ -364,5 +364,36 @@ public class DataLayer {
 			System.out.print("Coudln't close connections");
 		}
 	}
+	public void editRow(String tableName, String attributeName, String pk,
+			String value, String idColumnName) {
+		PreparedStatement preparedStatement = getEditRowStatement(tableName,attributeName,pk,value,idColumnName);
+		if(preparedStatement!=null){
+			try{
+				preparedStatement.executeUpdate();
+			}
+			catch(Exception ex){
+				System.out.print(ex.getMessage());
+			}
+		}
+	}
+	
+	
+	public PreparedStatement getEditRowStatement(String tableName, String attributeName,
+			String pk, String value,String IdColumnName) {
+		PreparedStatement preparedStatement=null;
+		String query = "UPDATE "+tableName+" "
+				+ "SET "+attributeName+"=?"+" "
+						+ "WHERE "+IdColumnName+"=?";
+		try {
+			preparedStatement = con.prepareStatement(query);
+			preparedStatement.setString(1, value);
+			preparedStatement.setString(2, pk);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.print(e.getMessage());
+			return null;
+		}
+		return preparedStatement;	
+	}
 		
 }

@@ -8,7 +8,9 @@
 	<title>Home Page</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
+	<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 	<link rel="stylesheet" type="text/css" href="css/goodman.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-editable.css">
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
   	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
   	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
@@ -17,6 +19,7 @@
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/filter.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 	
 </head>
 <body>
@@ -33,7 +36,7 @@
 					<table class="table table-striped">
 					    <thead>
 					        <tr>
-								<th>#</th><th>DeviceId</th><th>VehicleId</th><th>Customer</th><th>Model</th><th>Year</th><th>Initial Mileage</th><th>Initial Engine Hours</th><th>Edit Device</th>
+								<th>#</th><th>DeviceId</th><th>VehicleId</th><th>Customer</th><th>Model</th><th>Year</th><th>Initial Mileage</th><th>Initial Engine Hours</th>
 							</tr>
 					    </thead>
 					    <tbody class="searchable">
@@ -46,16 +49,23 @@
 									<td>${device.vehicle.model}</td>
 									<td>${device.vehicle.year}</td>
 									<td>${device.initialMileage}</td>
-									<td>${device.initialEngineHours}</td>
+									<td><a href="#" id="${device.deviceId}" data-type="text" data-pk="${device.deviceId}" data-name="InitialEngineHours" data-url="EditAttribute?tableName=Devices&idColumnName=DeviceId" data-original-title="Enter Initial Engine Hours"> ${device.initialEngineHours}</a></td>
 									<td></td>
 								</tr>
 							</c:forEach>
 					    </tbody>
 					</table>
 				</div>
-				</div>
+			</div>
 		</div>
 	</div>
 </div>
+
+<c:forEach items="${devices}" var ="device" varStatus="counter">
+<script>
+$('#'+"${device.deviceId}").editable();
+</script>
+</c:forEach>
+
 </body>
 </html>
