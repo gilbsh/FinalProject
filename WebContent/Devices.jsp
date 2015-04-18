@@ -48,8 +48,8 @@
 									<td>${device.vehicle.customer.firstName} ${device.vehicle.customer.lastName}</td>
 									<td>${device.vehicle.model}</td>
 									<td>${device.vehicle.year}</td>
-									<td>${device.initialMileage}</td>
-									<td><a href="#" id="${device.deviceId}" data-type="text" data-pk="${device.deviceId}" data-name="InitialEngineHours" data-url="EditAttribute?tableName=Devices&idColumnName=DeviceId" data-original-title="Enter Initial Engine Hours"> ${device.initialEngineHours}</a></td>
+									<td><a href="#" id="initialMileage${device.deviceId}" data-type="text" data-pk="${device.deviceId}" data-name="InitialMileage" data-url="EditAttribute?tableName=Devices&idColumnName=DeviceId" data-original-title="Enter Initial Mileage">${device.initialMileage}</td>
+									<td><a href="#" id="initialEngineHours${device.deviceId}" data-type="text" data-pk="${device.deviceId}" data-name="InitialEngineHours" data-url="EditAttribute?tableName=Devices&idColumnName=DeviceId" data-original-title="Enter Initial Engine Hours"> ${device.initialEngineHours}</a></td>
 									<td></td>
 								</tr>
 							</c:forEach>
@@ -63,7 +63,8 @@
 
 <c:forEach items="${devices}" var ="device" varStatus="counter">
 <script>
-$('#'+"${device.deviceId}").editable();
+$('#initialEngineHours'+"${device.deviceId}").editable();
+$('#initialMileage'+"${device.deviceId}").editable();
 </script>
 </c:forEach>
 
