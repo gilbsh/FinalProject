@@ -351,6 +351,11 @@ public class DataLayer {
 		}
 	}
 	
+/*	public VehicleTreatment[] getVehicleTreatments(String vehicleId){
+		
+		
+	}*/
+	
 	public void close(){
 		try{
 		this.con.close();
@@ -359,7 +364,5 @@ public class DataLayer {
 			System.out.print("Coudln't close connections");
 		}
 	}
-	
-	
-	
+		
 }
