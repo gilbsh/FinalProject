@@ -28,8 +28,8 @@
 		<div class="col-md-12 column">
 		<%@include file="Header.jsp"%>
 			<div class="row clearfix">
-			<div class="col-md-1 column"></div>
-				<div class="col-md-11 column">
+			
+				<div class="col-md-12 column">
 					<div class="input-group"> <span class="input-group-addon">Filter</span>
 					    <input id="filter" type="text" class="form-control" placeholder="Type here...">
 					</div>
