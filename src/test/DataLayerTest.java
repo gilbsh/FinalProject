@@ -24,11 +24,5 @@ public class DataLayerTest {
 		Assert.assertEquals(expected, actual);
 	}
 	
-	@Test
-	public void getVehiclesTest(){
-		DataLayer dl = new DataLayer();
-		dl.connect();
-		Vehicle[] vehicle = dl.getVehicles();
-		Assert.assertTrue(vehicle.length>0);
-	}
+
 }

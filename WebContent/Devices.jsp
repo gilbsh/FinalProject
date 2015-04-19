@@ -33,12 +33,13 @@
 					<table class="table table-striped">
 					    <thead>
 					        <tr>
-								<th>DeviceId</th><th>VehicleId</th><th>Customer</th><th>Model</th><th>Year</th><th>Initial Mileage</th><th>Initial Engine Hours</th><th>Edit Device</th>
+								<th>#</th><th>DeviceId</th><th>VehicleId</th><th>Customer</th><th>Model</th><th>Year</th><th>Initial Mileage</th><th>Initial Engine Hours</th><th>Edit Device</th>
 							</tr>
 					    </thead>
 					    <tbody class="searchable">
 					        <c:forEach items="${devices}" var ="device" varStatus="counter">
 								<tr>
+									<td>${counter.count}</td>
 									<td>${device.deviceId}</td>
 									<td>${device.vehicle.vehicleId}</td>
 									<td>${device.vehicle.customer.firstName} ${device.vehicle.customer.lastName}</td>
