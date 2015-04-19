@@ -2,6 +2,7 @@ package test;
 import junit.framework.Assert;
 import goodman.Models.DataLayer;
 import goodman.Models.User;
+import goodman.Models.Vehicle;
 
 import org.junit.Test;
 
@@ -21,5 +22,13 @@ public class DataLayerTest {
 		expected.setLastName("Ben Shalom");
 		expected.setPassword("1234");
 		Assert.assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void getVehiclesTest(){
+		DataLayer dl = new DataLayer();
+		dl.connect();
+		Vehicle[] vehicle = dl.getVehicles();
+		Assert.assertTrue(vehicle.length>0);
 	}
 }

@@ -46,11 +46,20 @@ public class EditablePage extends HttpServlet {
 	             break;
 	        
 	         case "customer":
-	           
+	        	 System.out.println(pageType);
+		         Customer[] customers = dl.getCustomers();
+				 request.setAttribute("customers", customers);
+				 RequestDispatcher dispatcher1 = request.getRequestDispatcher("Customers.jsp");
+				 dispatcher1.forward(request, response);
 	             break;
 	             
 	         case "vehicle":
-	            
+	        	 System.out.println(pageType);
+	        	 Vehicle[] vehicles = dl.getVehicles();
+				 request.setAttribute("vehicles", vehicles);
+				 //request.setAttribute("pageType", pageType);
+				 RequestDispatcher dispatcher2 = request.getRequestDispatcher("Vehicles.jsp");
+				 dispatcher2.forward(request, response);
 	             break;
 	         
 	         default:

@@ -33,19 +33,17 @@
 					<table class="table table-striped">
 					    <thead>
 					        <tr>
-								<th>DeviceId</th><th>VehicleId</th><th>Customer</th><th>Model</th><th>Year</th><th>Initial Mileage</th><th>Initial Engine Hours</th><th>Edit Device</th>
+								<th>Vehicle Id</th><th>Model</th><th>Engine</th><th>Year</th><th>Customer Name</th>
 							</tr>
 					    </thead>
 					    <tbody class="searchable">
-					        <c:forEach items="${devices}" var ="device" varStatus="counter">
+					        <c:forEach items="${vehicles}" var ="vehicle" varStatus="counter">
 								<tr>
-									<td>${device.deviceId}</td>
-									<td>${device.vehicle.vehicleId}</td>
-									<td>${device.vehicle.customer.firstName} ${device.vehicle.customer.lastName}</td>
-									<td>${device.vehicle.model}</td>
-									<td>${device.vehicle.year}</td>
-									<td>${device.initialMileage}</td>
-									<td>${device.initialEngineHours}</td>
+									<td>${vehicle.vehicleId}</td>
+									<td>${vehicle.manufacturer} ${vehicle.model}</td>
+									<td>${vehicle.engine}</td>
+									<td>${vehicle.year}</td>
+									<td>${vehicle.customer.firstName} ${vehicle.customer.lastName}</td>
 									<td></td>
 								</tr>
 							</c:forEach>
