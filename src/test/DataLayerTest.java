@@ -33,4 +33,12 @@ public class DataLayerTest {
 		PreparedStatement expected = dl.getEditRowStatement("Devices", "InitialEngineHours", "1111", "34567", "DeviceId");
 		Assert.assertTrue(expected.toString().indexOf("UPDATE Devices SET InitialEngineHours='34567' WHERE DeviceId='1111'")!=-1);
 	}
+	
+	@Test
+	public void getVehiclesTest(){
+		DataLayer dl = new DataLayer();
+		dl.connect();
+		Vehicle[] vehicle = dl.getVehicles();
+		Assert.assertTrue(vehicle.length>0);
+	}
 }
