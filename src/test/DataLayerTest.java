@@ -26,9 +26,6 @@ public class DataLayerTest {
 		Assert.assertEquals(expected, actual);
 	}
 	
-<<<<<<< HEAD
-
-=======
 	@Test
 	public void editRowTest(){
 		DataLayer dl = new DataLayer();
@@ -36,5 +33,4 @@ public class DataLayerTest {
 		PreparedStatement expected = dl.getEditRowStatement("Devices", "InitialEngineHours", "1111", "34567", "DeviceId");
 		Assert.assertTrue(expected.toString().indexOf("UPDATE Devices SET InitialEngineHours='34567' WHERE DeviceId='1111'")!=-1);
 	}
->>>>>>> 812da215e93b4b86f026260579a322470fbb6855
 }
