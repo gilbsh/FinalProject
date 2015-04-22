@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import junit.framework.Assert;
 import goodman.Models.DataLayer;
 import goodman.Models.User;
+import goodman.Models.Vehicle;
 
 import org.junit.Test;
 
@@ -31,5 +32,13 @@ public class DataLayerTest {
 		dl.connect();
 		PreparedStatement expected = dl.getEditRowStatement("Devices", "InitialEngineHours", "1111", "34567", "DeviceId");
 		Assert.assertTrue(expected.toString().indexOf("UPDATE Devices SET InitialEngineHours='34567' WHERE DeviceId='1111'")!=-1);
+	}
+	
+	@Test
+	public void getVehiclesTest(){
+		DataLayer dl = new DataLayer();
+		dl.connect();
+		Vehicle[] vehicle = dl.getVehicles();
+		Assert.assertTrue(vehicle.length>0);
 	}
 }

@@ -78,7 +78,7 @@ public class DataLayer {
 			Statement stmt = con.createStatement();
 			String query = "SELECT FirstName,LastName,CustomerId,PhoneNumber,Email FROM Customers";
 			ResultSet rs = stmt.executeQuery(query);
-			List<Customer> customers = new ArrayList<Customer>();
+			List<Customer> customers = new ArrayList<Customer>();			
 			while(rs.next()){
 				String firstName = rs.getString("FirstName");
 				String lastName = rs.getString("LastName");
@@ -165,6 +165,7 @@ public class DataLayer {
 			return null;
 		}
 	}
+	
 	
 	public Vehicle[] getVehicles( String customerId){
 		try{
@@ -315,6 +316,35 @@ public class DataLayer {
 				devices.add(device);
 			}
 			return (Device[])devices.toArray(new Device[devices.size()]);
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
+	
+	public Vehicle[] getVehicles() {
+		List<Vehicle> vehicles = new ArrayList<Vehicle>();
+		try{
+			Statement stmt = con.createStatement();
+			String query = "SELECT V.VehicleId, V.Manufacturer, V.Model, V.Engine, V.Year, V.HoursToTreatment, V.LastTreatment, V.CustomerId, C.FirstName, C.LastName "
+					+ "FROM Vehicles V join Customers C on V.CustomerId = C.CustomerId";
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()){
+				Vehicle vehicle = new Vehicle();
+				vehicle.setVehicleId(rs.getString("VehicleId"));
+				vehicle.setManufacturer(rs.getString("Manufacturer"));
+				vehicle.setModel(rs.getString("Model"));
+				vehicle.setEngine(rs.getString("Engine"));
+				vehicle.setYear(rs.getString("Year"));
+				Customer customer = new Customer();
+				customer.setId(rs.getString("CustomerId"));
+				customer.setFirstName(rs.getString("FirstName"));
+				customer.setLastName(rs.getString("LastName"));
+				vehicle.setCustomer(customer);
+				vehicles.add(vehicle);
+			}
+			return (Vehicle[])vehicles.toArray(new Vehicle[vehicles.size()]);
 		}
 		catch(Exception ex){
 			System.out.print(ex.getMessage());
