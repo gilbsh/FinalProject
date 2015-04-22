@@ -12,8 +12,7 @@
 <body>
 	<div class="container">
 		<div class="row clearfix">
-			<%@include  file="Headline.html" %>
-			
+			<%@include  file="Headline.html" %>			
 			<div class="span8 offset2">
 				<h3 class="text-muted">
 					Please Enter your email and password
