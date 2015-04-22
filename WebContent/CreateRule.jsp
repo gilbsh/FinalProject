@@ -122,10 +122,9 @@
 						</div>
 					</div>
 				</div>
+				<div class="text-center"><button type="submit" class="btn btn-primary btn-lg">Submit Rule</button></div>
 			</form>
 		</div>
-		<button type="submit" class="btn btn-default">Submit</button>
-		<%@include file="Address.html"%>
 	</div>
 </body>
 </html>

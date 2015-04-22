@@ -37,7 +37,6 @@ public class EditablePage extends HttpServlet {
 		if(dl.connect()){
 			switch (pageType) {
 	         case "device":
-	        	 System.out.println(pageType);
 		         Device[] devices = dl.getDevices();
 				 request.setAttribute("devices", devices);
 				 //request.setAttribute("pageType", pageType);
@@ -46,7 +45,6 @@ public class EditablePage extends HttpServlet {
 	             break;
 	        
 	         case "customer":
-	        	 System.out.println(pageType);
 		         Customer[] customers = dl.getCustomers();
 				 request.setAttribute("customers", customers);
 				 RequestDispatcher dispatcher1 = request.getRequestDispatcher("Customers.jsp");
@@ -54,7 +52,6 @@ public class EditablePage extends HttpServlet {
 	             break;
 	             
 	         case "vehicle":
-	        	 System.out.println(pageType);
 	        	 Vehicle[] vehicles = dl.getVehicles();
 				 request.setAttribute("vehicles", vehicles);
 				 //request.setAttribute("pageType", pageType);
