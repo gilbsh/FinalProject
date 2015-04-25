@@ -171,6 +171,14 @@ function initialize() {
 	$("#map-canvas").on("shown.bs.modal", function () {
 	    google.maps.event.trigger(map, "resize");
 	});
+	
+	$(document).ready(function() {
+	    
+	    $('.selectpicker').selectpicker({
+	        size: 4
+	    });
+	});
+
 </script>
 
 </body>
