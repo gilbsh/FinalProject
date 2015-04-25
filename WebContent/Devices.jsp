@@ -21,41 +21,7 @@
 	<script type="text/javascript" src="js/filter.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-	<script>
-	
 
-function exposedDIV() {
-    document.getElementById("hiddenDiv").style.display = "inline";
-}
-
-function hideDIV() {
-    
-    document.getElementById("deviceID").value = '';
-    document.getElementById("InitialMileage").value = '';
-    document.getElementById("InitialEngineHours").value = '';
-    document.getElementById("purchaseDate").value = '';
-    document.getElementById("hiddenDiv").style.display = "none";
-}
-
-$("#mapModal").on("shown.bs.modal", function () {initialize();});
-
-function initialize() {
-	  var myLatlng = new google.maps.LatLng(31.866577,34.887627);
-	  var mapOptions = {
-	    zoom:14,
-	    center: myLatlng
-	  }
-	  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-	  var marker = new google.maps.Marker({
-	      position: myLatlng,
-	      map: map,
-	      title: 'Vehicle Location'
-	  });
-	}
-
-	google.maps.event.addDomListener(window, 'load', initialize);
-</script>
 	
 </head>
 <body>
@@ -137,16 +103,20 @@ function initialize() {
 									<td>${device.vehicle.year}</td>
 									<td><a href="#" id="initialMileage${device.deviceId}" data-type="text" data-pk="${device.deviceId}" data-name="InitialMileage" data-url="EditAttribute?tableName=Devices&idColumnName=DeviceId" data-original-title="Enter Initial Mileage">${device.initialMileage}</td>
 									<td><a href="#" id="initialEngineHours${device.deviceId}" data-type="text" data-pk="${device.deviceId}" data-name="InitialEngineHours" data-url="EditAttribute?tableName=Devices&idColumnName=DeviceId" data-original-title="Enter Initial Engine Hours"> ${device.initialEngineHours}</a></td>
-									<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button></td>
+									<td><input src="img/location.png" type="image"  data-toggle="modal" data-target=".bs-example-modal-lg" width="50" height="25"></td>
 								</tr>
 							</c:forEach>
 					    </tbody>
 					</table>
-					<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
- 						<div class="modal-dialog modal-lg">
+					<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
+ 						<div class="modal-dialog modal-lg" >
   							<div class="modal-content" id="contact-modal">
-    							<div class="modal-body" id="mapModal">
-    								<div id="mapCanvas" style="width: 500px; height: 400px"></div>
+  								<div class="modal-header">
+								    <button type="button" class="close" data-dismiss="modal">×</button>
+								    <h3></h3>
+								</div>
+    							<div class="modal-body" >
+    								<div id="map-canvas" style="width: 500px; height: 400px"></div>
   								</div>
 						    </div>
 						</div>
@@ -164,6 +134,44 @@ $('#initialEngineHours'+"${device.deviceId}").editable();
 $('#initialMileage'+"${device.deviceId}").editable();
 </script>
 </c:forEach>
+	<script>
+	
+
+function exposedDIV() {
+    document.getElementById("hiddenDiv").style.display = "inline";
+}
+
+function hideDIV() {
+    
+    document.getElementById("deviceID").value = '';
+    document.getElementById("InitialMileage").value = '';
+    document.getElementById("InitialEngineHours").value = '';
+    document.getElementById("purchaseDate").value = '';
+    document.getElementById("hiddenDiv").style.display = "none";
+}
+
+
+function initialize() {
+	  var myLatlng = new google.maps.LatLng(31.866577,34.887627);
+	  var mapOptions = {
+	    zoom:14,
+	    center: myLatlng
+	  }
+	  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+	  var marker = new google.maps.Marker({
+	      position: myLatlng,
+	      map: map,
+	      title: 'Vehicle Location'
+	  });
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+	
+	$("#map-canvas").on("shown.bs.modal", function () {
+	    google.maps.event.trigger(map, "resize");
+	});
+</script>
 
 </body>
 </html>
