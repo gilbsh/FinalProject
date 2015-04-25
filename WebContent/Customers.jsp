@@ -26,13 +26,70 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row clearfix">
-			<%@include file="Header.jsp"%>
-			<div class="col-md-12 column">
-				<div class="input-group">
-					<span class="input-group-addon">Filter</span> <input id="filter"
-						type="text" class="form-control" placeholder="Type here...">
-				</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+		<%@include file="Header.jsp"%>
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<div id="hiddenDiv" class="row clearfix" style="display: none;">
+						<form role="form" action="addCustomer" method="post">
+							<div class="col-md-3 column">
+								<div class="form-group">
+									 <label for="customerID">Customer ID</label>
+									 <input type="text" class="form-control" name="customerID" id="customerID" required/>
+								</div>
+								<div class="form-group">
+									<label for="firstName">First Name</label>
+									<input type="text" class="form-control" name="firstName" id="firstName" />
+								</div>
+								<div class="form-group">
+									<label for="lastName">Last Name</label>
+									<input type="text" class="form-control" name="lastName" id="lastName" />
+								</div>
+								<div class="form-group">
+									<label for="vehicle">Vehicles</label><br>
+									<select  class="selectpicker" id="chooseVehicle"  name="vehicle">
+								    	<c:forEach items="${customers}" var ="customer">
+								        	<optgroup label="${customer.firstName} ${customer.lastName}"></optgroup>
+								        	<c:forEach items="${customer.vehicles}" var ="vehicle">
+								   				<option value="${vehicle.vehicleId}">${vehicle.manufacturer}-${vehicle.model}-${vehicle.year}</option>
+								   			</c:forEach>
+								      	</c:forEach>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-3 column">
+								
+								<div class="form-group">
+									<label for="email">Email</label>
+									<input type="text" class="form-control" name="email" id="email"/>
+								</div>
+								<div class="form-group">
+									<label for="phone">Phone</label>
+									<input type="text" class="form-control" name="phone" id="phone"/>
+								</div>
+								<button type="button" class="btn btn-danger" onclick="hideDIV()">cancel</button>
+								<button type="submit" class="btn btn-success">Submit</button>
+								
+							</div>
+							<div class="col-md-6 column">
+							
+							</div>
+						</form>
+					</div>
+					<div class="col-md-12 column">
+					<div class="row clearfix">
+						<div class="col-md-2 column">
+							<button type="button" class="btn btn-primary" onclick="exposedDIV()">Add New Customer</button>
+						</div>
+						<div class="col-md-10 column">
+							<div class="input-group">
+					       		<span class="input-group-addon">Filter</span>
+					    		<input id="filter" type="text" class="form-control" placeholder="Type here...">
+							</div>
+						</div>
+					</div>
+	
 				<table class="table table-striped">
 					<thead>
 						<th>ID</th>
@@ -58,5 +115,27 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<script>
+	
+
+function exposedDIV() {
+    document.getElementById("hiddenDiv").style.display = "inline";
+}
+
+function hideDIV() {
+    
+    document.getElementById("customerID").value = '';
+    document.getElementById("firstName").value = '';
+    document.getElementById("lastName").value = '';
+    document.getElementById("email").value = '';
+    document.getElementById("phone").value = '';
+    document.getElementById("hiddenDiv").style.display = "none";
+}
+
+
+
+</script>
 </body>
 </html>
