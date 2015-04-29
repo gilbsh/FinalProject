@@ -43,10 +43,12 @@ public class CreateRuleServlet extends HttpServlet {
 		String ruleName = request.getParameter("ruleName");
 		String ruleDescription = request.getParameter("ruleDescription");
 		String[] vehicls = request.getParameterValues("vehicls[]");
-		String parameter = request.getParameter("parameter");
+		String parameterName = request.getParameter("parameter");
 		String condition = request.getParameter("condition");
 		String ruleLowValue = request.getParameter("ruleLowValue");
 		String ruleHighValue = request.getParameter("ruleHighValue");		
+		Parameter parameter = new Parameter();
+		parameter.setParameterName(parameterName);
 		
 		Rule rule=new Rule();
 		rule.setRuleName(ruleName);
@@ -56,13 +58,14 @@ public class CreateRuleServlet extends HttpServlet {
         if(dl.connect()){
         	Rule createdRule=dl.createRule(rule);
         	RuleCondition Condition=new RuleCondition();
-        	Condition.setRuleId(createdRule.getRuleId());
-        	Condition.setParameterName(parameter);
+        	Condition.setRule(createdRule);
+        	Condition.setParameter(parameter);
         	Condition.setConditionOperator(condition);
-        	Condition.setLowValue(ruleLowValue);
-        	Condition.setHighValue(ruleHighValue);
+        	Condition.setLowValue(Integer.parseInt(ruleLowValue));
+        	Condition.setHighValue(Integer.parseInt(ruleHighValue));
         	dl.createRuleCondition(createdRule, Condition);
-        	dl.createDeviceRule(rule,vehicls);
+        	dl.createDeviceRule(rule,vehicls);    	
+        	dl.close();
         }
         else {
         	System.out.print("coudn't create rule");

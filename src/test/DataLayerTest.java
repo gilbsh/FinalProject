@@ -1,19 +1,20 @@
 package test;
+
 import java.sql.PreparedStatement;
 
 import junit.framework.Assert;
 import goodman.Models.DataLayer;
+import goodman.Models.QueryGenerator;
+import goodman.Models.RuleAlert;
 import goodman.Models.User;
 import goodman.Models.Vehicle;
 
 import org.junit.Test;
 
-
 public class DataLayerTest {
-	
-	
+
 	@Test
-	public void getUserTest(){
+	public void getUserTest() {
 		DataLayer dl = new DataLayer();
 		dl.connect();
 		User actual = dl.getUser("gilbsh@gmail.com");
@@ -25,20 +26,47 @@ public class DataLayerTest {
 		expected.setPassword("1234");
 		Assert.assertEquals(expected, actual);
 	}
-	
+
 	@Test
-	public void editRowTest(){
-		DataLayer dl = new DataLayer();
-		dl.connect();
-		PreparedStatement expected = dl.getEditRowStatement("Devices", "InitialEngineHours", "1111", "34567", "DeviceId");
-		Assert.assertTrue(expected.toString().indexOf("UPDATE Devices SET InitialEngineHours='34567' WHERE DeviceId='1111'")!=-1);
-	}
-	
-	@Test
-	public void getVehiclesTest(){
+	public void getVehiclesTest() {
 		DataLayer dl = new DataLayer();
 		dl.connect();
 		Vehicle[] vehicle = dl.getVehicles();
-		Assert.assertTrue(vehicle.length>0);
+		dl.close();
+		Assert.assertTrue(vehicle.length > 0);
+	}
+
+	@Test
+	public void editRowTest() {
+		DataLayer dl = new DataLayer();
+		dl.connect();
+		PreparedStatement expected = dl.getEditRowStatement("Devices",
+				"InitialEngineHours", "1111", "34567", "DeviceId");
+		Assert.assertTrue(expected
+				.toString()
+				.indexOf(
+						"UPDATE Devices SET InitialEngineHours='34567' WHERE DeviceId='1111'") != -1);
+		dl.close();
+	}
+
+	
+	@Test
+	public void getElementByIdTest() {
+		DataLayer dl = new DataLayer();
+		dl.connect();
+		PreparedStatement excepted = dl.getElementById("Devices", "DeviceId",
+				"1111");
+		Assert.assertTrue(excepted.toString().indexOf(
+				"SELECT * FROM Devices WHERE DeviceId='1111'") != -1);
+		dl.close();
+	}
+	
+	@Test
+	public void getRuleAlertsTest() {
+		DataLayer dl = new DataLayer();
+		dl.connect();
+		RuleAlert[] ruleAlerts = dl.getRuleAlerts();
+		Assert.assertTrue(ruleAlerts.length>0);
+		dl.close();
 	}
 }

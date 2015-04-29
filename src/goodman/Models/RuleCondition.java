@@ -2,55 +2,40 @@ package goodman.Models;
 
 public class RuleCondition {
 	
-	String RuleId;
-	String ParameterName;
+	Rule Rule;
+	Parameter Parameter;
 	String ConditionOperator;
-	String LowValue;
-	String HighValue;
-
-	public RuleCondition() {
-		}
-
-	public String getRuleId() {
-		return RuleId;
+	int LowValue;
+	int HighValue;
+	public Rule getRule() {
+		return Rule;
 	}
-
-	public void setRuleId(String ruleId) {
-		RuleId = ruleId;
+	public void setRule(Rule rule) {
+		Rule = rule;
 	}
-
-	public String getParameterName() {
-		return ParameterName;
+	public Parameter getParameter() {
+		return Parameter;
 	}
-
-	public void setParameterName(String parameterName) {
-		ParameterName = parameterName;
+	public void setParameter(Parameter parameter) {
+		Parameter = parameter;
 	}
-
 	public String getConditionOperator() {
 		return ConditionOperator;
 	}
-
 	public void setConditionOperator(String conditionOperator) {
 		ConditionOperator = conditionOperator;
 	}
-
-	public String getLowValue() {
+	public int getLowValue() {
 		return LowValue;
 	}
-
-	public void setLowValue(String lowValue) {
+	public void setLowValue(int lowValue) {
 		LowValue = lowValue;
 	}
-
-	public String getHighValue() {
+	public int getHighValue() {
 		return HighValue;
 	}
-
-	public void setHighValue(String highValue) {
+	public void setHighValue(int highValue) {
 		HighValue = highValue;
 	}
-
-	
 
 }

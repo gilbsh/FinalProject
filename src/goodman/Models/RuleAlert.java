@@ -1,31 +1,20 @@
 package goodman.Models;
 
-import java.util.*;
-
 public class RuleAlert {
 	
-	Date RunTime;
-	String RuleId;
-	
-	
-	public RuleAlert(Date runTime, String ruleId) {
-		super();
-		RunTime = runTime;
-		RuleId = ruleId;
+	public RuleCondition getRuleCondition() {
+		return ruleCondition;
 	}
-	public Date getRunTime() {
-		return RunTime;
+	public void setRuleCondition(RuleCondition ruleCondition) {
+		this.ruleCondition = ruleCondition;
 	}
-	public void setRunTime(Date runTime) {
-		RunTime = runTime;
+	public PIDData getPidData() {
+		return pidData;
 	}
-	public String getRuleId() {
-		return RuleId;
+	public void setPidData(PIDData pidData) {
+		this.pidData = pidData;
 	}
-	public void setRuleId(String ruleId) {
-		RuleId = ruleId;
-	}
-	
-	
+	RuleCondition ruleCondition;
+	PIDData pidData;
 
 }

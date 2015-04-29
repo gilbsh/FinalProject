@@ -4,7 +4,22 @@ body{
 	  background-size: cover;
 }
 
-
 .errorMessage{
 	color: red;
+}
+
+
+#mainHeadLine{
+	line-height:100px;
+}
+
+#logo{
+	height:140px;
+	float:left;
+	position:relative;
+	top:-45px;
+}
+
+#pageHeader{
+	margin-top:40px;
 }

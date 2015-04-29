@@ -12,6 +12,10 @@ public class Parameter {
 		this.parameterDescription = parameterDescription;
 	}
 	
+	public Parameter(){
+		
+	}
+	
 		public String getParameterName() {
 		return parameterName;
 	}
