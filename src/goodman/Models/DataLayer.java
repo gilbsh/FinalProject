@@ -308,10 +308,8 @@ public class DataLayer {
 			while(rs.next()){
 				Device device = new Device();
 				device.setDeviceId(rs.getString("DeviceId"));
-				Double initialEngineHours= rs.getDouble("InitialEngineHours");
-				Double initialMileage= rs.getDouble("InitialMileage");
-				device.setInitialEngineHours(initialEngineHours); 
-				device.setInitialMileage(initialMileage);
+				device.setInitialEngineHours(rs.getString("initialEngineHours")); 
+				device.setInitialMileage(rs.getString("initialMileage"));
 				device.setVehicle(getVehicle(rs.getString("VehicleId")));
 				devices.add(device);
 			}
@@ -425,5 +423,19 @@ public class DataLayer {
 		}
 		return preparedStatement;	
 	}
+	public void createNewDevice(Device newDevice) {
+		try{
+			PreparedStatement statement = con.prepareStatement("INSERT INTO Devices(DeviceId, PurchaseDate, VehicleId, InitialEngineHours, InitialMileage) VALUES(?,?,?,?,?)");
+			statement.setString(1,  newDevice.getDeviceId());
+			statement.setString(2,  newDevice.getPurchaseDate());
+			statement.setString(3,  newDevice.getVehicle().getVehicleId());
+			statement.setString(4,  newDevice.getInitialEngineHours());
+			statement.setString(5,  newDevice.getInitialMileage());
+			statement.execute();
+		}
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+				}
+		}
 		
 }

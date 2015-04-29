@@ -51,8 +51,7 @@
 					<div class="form-group">
 						<label class="control-label">Choose Customer</label>
 						<div>
-							<select required id="chooseVehicle" multiple="multiple"
-								name="vehicls[]">
+							<select required id="chooseVehicle" multiple="multiple" name="vehicls[]">
 								<c:forEach items="${customers}" var="customer">
 									<optgroup label="${customer.firstName} ${customer.lastName}"></optgroup>
 									<c:forEach items="${customer.vehicles}" var="vehicle">
@@ -77,8 +76,8 @@
 									</select>
 								</div>
 								<div class="form-group">
-									<label for="ruleCondition">Rule Condition</label><br> <select
-										class="selectpicker" Id="condition" name="condition"
+									<label for="ruleCondition">Rule Condition</label><br>
+									 <select class="selectpicker" Id="condition" name="condition"
 										onchange="disableValues.call(this, event)">
 										<option>Between</option>
 										<option>Not Between</option>

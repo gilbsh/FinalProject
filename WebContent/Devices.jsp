@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
 	<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 	<link rel="stylesheet" type="text/css" href="css/goodman.css">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-editable.css">
+	<link rel="stylesheet" href="css/bootstrap-select.css" type="text/css" />
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
   	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
   	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
@@ -19,10 +19,10 @@
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/filter.js"></script>
+	<script type="text/javascript" src="js/bootstrap-select.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-
-	
+		
 </head>
 <body>
 	<div class="container">
@@ -44,12 +44,13 @@
 								</div>
 								<div class="form-group">
 									<label for="vehicle">Vehicles</label><br>
-									<select  class="selectpicker" id="chooseVehicle"  name="vehicle">
+									<select  class="selectpicker"  name="vehicle">
 								    	<c:forEach items="${customers}" var ="customer">
-								        	<optgroup label="${customer.firstName} ${customer.lastName}"></optgroup>
-								        	<c:forEach items="${customer.vehicles}" var ="vehicle">
-								   				<option value="${vehicle.vehicleId}">${vehicle.manufacturer}-${vehicle.model}-${vehicle.year}</option>
-								   			</c:forEach>
+								        	<optgroup label="${customer.firstName} ${customer.lastName}">
+								        		<c:forEach items="${customer.vehicles}" var ="vehicle">
+								   					<option value="${vehicle.vehicleId}">${vehicle.manufacturer}-${vehicle.model}-${vehicle.year}</option>
+								   				</c:forEach>
+								   			</optgroup>
 								      	</c:forEach>
 									</select>
 								</div>
@@ -64,7 +65,7 @@
 									<label for="InitialEngineHours">Initial Engine Hours</label>
 									<input type="number" class="form-control" name="InitialEngineHours" id="InitialEngineHours" min="0" />
 								</div>
-								<button type="button" class="btn btn-danger" onclick="hideDIV()">cancel</button>
+								<button type="button" class="btn btn-danger" onclick="hideDIV()">Cancel</button>
 								<button type="submit" class="btn btn-success">Submit</button>
 								
 							</div>
@@ -134,7 +135,7 @@ $('#initialEngineHours'+"${device.deviceId}").editable();
 $('#initialMileage'+"${device.deviceId}").editable();
 </script>
 </c:forEach>
-	<script>
+<script>
 	
 
 function exposedDIV() {
@@ -173,11 +174,17 @@ function initialize() {
 	});
 	
 	$(document).ready(function() {
-	    
+	  
 	    $('.selectpicker').selectpicker({
 	        size: 4
 	    });
 	});
+	
+	$("#map-canvas").on('shown', function () {
+		  google.maps.event.trigger(map, 'resize');
+		  map.setCenter(new google.maps.LatLng(31.866577,34.887627));
+		})
+	
 
 </script>
 
