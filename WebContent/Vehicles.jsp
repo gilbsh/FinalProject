@@ -26,9 +26,52 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row clearfix">
-			<%@include file="Header.jsp"%>
-			<div class="col-md-12 column">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+		<%@include file="Header.jsp"%>
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<div id="hiddenDiv" class="row clearfix" style="display: none;">
+						<form role="form" action="addVehicles" method="post">
+							<div class="col-md-3 column">
+								<div class="form-group">
+									 <label for="vehiclesID">Vehicles ID</label>
+									 <input type="text" class="form-control" name="vehiclesID" id="vehiclesID" required/>
+								</div>
+								<div class="form-group">
+									<label for="make">Make</label>
+									<input type="text" class="form-control" name="make" id="make" />
+								</div>
+								<div class="form-group">
+									<label for="model">Model</label>
+									<input type="text" class="form-control" name="model" id="model" />
+								</div>
+							</div>
+							<div class="col-md-3 column">
+								
+								<div class="form-group">
+									<label for="engine">Engine</label>
+									<input type="text" class="form-control" name="engine" id="engine"/>
+								</div>
+								<div class="form-group">
+									<label for="year">Year</label>
+									<input type="text" class="form-control" name="year" id="year"/>
+								</div>
+								<button type="button" class="btn btn-danger" onclick="hideDIV()">cancel</button>
+								<button type="submit" class="btn btn-success">Submit</button>
+								
+							</div>
+							<div class="col-md-6 column">
+							
+							</div>
+						</form>
+					</div>
+					<div class="col-md-12 column">
+					<div class="row clearfix">
+						<div class="col-md-2 column">
+							<button type="button" class="btn btn-primary" onclick="exposedDIV()">Add New Vehicle</button>
+						</div>
+						<div class="col-md-10 column">
 				<div class="input-group">
 					<span class="input-group-addon">Filter</span> <input id="filter"
 						type="text" class="form-control" placeholder="Type here...">
@@ -60,5 +103,27 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<script>
+	
+
+function exposedDIV() {
+    document.getElementById("hiddenDiv").style.display = "inline";
+}
+
+function hideDIV() {
+    
+    document.getElementById("vehiclesID").value = '';
+    document.getElementById("make").value = '';
+    document.getElementById("model").value = '';
+    document.getElementById("engine").value = '';
+    document.getElementById("year").value = '';
+    document.getElementById("hiddenDiv").style.display = "none";
+}
+
+
+
+</script>
 </body>
 </html>

@@ -10,10 +10,10 @@ public class Device {
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
 	}
-	public Date getPurchaseDate() {
+	public String getPurchaseDate() {
 		return purchaseDate;
 	}
-	public void setPurchaseDate(Date purchaseDate) {
+	public void setPurchaseDate(String purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 	public Vehicle getVehicle() {
@@ -22,23 +22,23 @@ public class Device {
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
 	}
-	public Double getInitialEngineHours() {
+	public String getInitialEngineHours() {
 		return initialEngineHours;
 	}
-	public void setInitialEngineHours(double initialEngineHours) {
+	public void setInitialEngineHours(String initialEngineHours) {
 		this.initialEngineHours = initialEngineHours;
 	}
-	public Double getInitialMileage() {
+	public String getInitialMileage() {
 		return initialMileage;
 	}
-	public void setInitialMileage(double initialMileage) {
+	public void setInitialMileage(String initialMileage) {
 		this.initialMileage = initialMileage;
 	}
 	
 	String deviceId;
-	Date purchaseDate;
+	String purchaseDate;
 	Vehicle vehicle;
 	
-	Double initialEngineHours;
-	Double initialMileage;	
+	String initialEngineHours;
+	String initialMileage;	
 }

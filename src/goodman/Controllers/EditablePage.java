@@ -34,18 +34,21 @@ public class EditablePage extends HttpServlet {
 		// TODO Auto-generated method stub
 		String pageType=request.getParameter("pageType");
 		DataLayer dl = new DataLayer();
+		 Customer[] customers;
 		if(dl.connect()){
 			switch (pageType) {
 	         case "device":
 		         Device[] devices = dl.getDevices();
+		         customers = dl.getCustomers();
 				 request.setAttribute("devices", devices);
+				 request.setAttribute("customers", customers);
 				 //request.setAttribute("pageType", pageType);
 				 RequestDispatcher dispatcher = request.getRequestDispatcher("Devices.jsp");
 				 dispatcher.forward(request, response);
 	             break;
 	        
 	         case "customer":
-		         Customer[] customers = dl.getCustomers();
+		         customers = dl.getCustomers();
 				 request.setAttribute("customers", customers);
 				 RequestDispatcher dispatcher1 = request.getRequestDispatcher("Customers.jsp");
 				 dispatcher1.forward(request, response);
