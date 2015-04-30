@@ -75,6 +75,7 @@
 									type="number" class="form-control" name="InitialEngineHours"
 									id="InitialEngineHours" min="0" />
 							</div>
+							<br>
 							<button type="button" class="btn btn-danger" onclick="hideDIV()">Cancel</button>
 							<button type="submit" class="btn btn-success">Submit</button>
 
@@ -192,13 +193,17 @@
 					map : map,
 					title : 'Vehicle Location'
 				});
+
+				$("#myModal").on(
+						"shown.bs.modal",
+						function() {
+							google.maps.event.trigger(map, "resize");
+							map.setCenter(new google.maps.LatLng(31.866577,
+									34.887627));
+						});
 			}
 
 			google.maps.event.addDomListener(window, 'load', initialize);
-
-			$("#map-canvas").on("shown.bs.modal", function() {
-				google.maps.event.trigger(map, "resize");
-			});
 
 			$(document).ready(function() {
 
@@ -206,11 +211,6 @@
 					size : 4
 				});
 			});
-
-			$("#map-canvas").on('shown', function() {
-				google.maps.event.trigger(map, 'resize');
-				map.setCenter(new google.maps.LatLng(31.866577, 34.887627));
-			})
 		</script>
 </body>
 </html>

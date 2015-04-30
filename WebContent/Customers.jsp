@@ -7,9 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home Page</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css"
-	href="css/bootstrap-responsive.css">
+<link rel="stylesheet" type="text/css"	href="css/bootstrap-responsive.css">
 <link rel="stylesheet" type="text/css" href="css/goodman.css">
+
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
 	href="img/apple-touch-icon-144-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="114x114"
@@ -22,6 +22,7 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/filter.js"></script>
+
 
 </head>
 <body>
@@ -44,17 +45,7 @@
 								<label for="lastName">Last Name</label> <input type="text"
 									class="form-control" name="lastName" id="lastName" />
 							</div>
-							<div class="form-group">
-								<label for="vehicle">Vehicles</label><br> <select
-									class="selectpicker" id="chooseVehicle" name="vehicle">
-									<c:forEach items="${customers}" var="customer">
-										<optgroup label="${customer.firstName} ${customer.lastName}"></optgroup>
-										<c:forEach items="${customer.vehicles}" var="vehicle">
-											<option value="${vehicle.vehicleId}">${vehicle.manufacturer}-${vehicle.model}-${vehicle.year}</option>
-										</c:forEach>
-									</c:forEach>
-								</select>
-							</div>
+							
 						</div>
 						<div class="col-md-3 column">
 
@@ -65,8 +56,8 @@
 							<div class="form-group">
 								<label for="phone">Phone</label> <input type="text"
 									class="form-control" name="phone" id="phone" />
-							</div>
-							<button type="button" class="btn btn-danger" onclick="hideDIV()">cancel</button>
+							</div><br>
+							<button type="button" class="btn btn-danger" onclick="hideDIV()">Cancel</button>
 							<button type="submit" class="btn btn-success">Submit</button>
 
 						</div>
