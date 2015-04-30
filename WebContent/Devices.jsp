@@ -157,6 +157,7 @@ function initialize() {
 	  var mapOptions = {
 	    zoom:14,
 	    center: myLatlng
+	    
 	  }
 	  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
@@ -165,13 +166,15 @@ function initialize() {
 	      map: map,
 	      title: 'Vehicle Location'
 	  });
+	  
+	  $("#myModal").on("shown.bs.modal", function () {
+		    google.maps.event.trigger(map, "resize");
+		    map.setCenter(new google.maps.LatLng(31.866577,34.887627));
+		});
 	}
 
 	google.maps.event.addDomListener(window, 'load', initialize);
 	
-	$("#map-canvas").on("shown.bs.modal", function () {
-	    google.maps.event.trigger(map, "resize");
-	});
 	
 	$(document).ready(function() {
 	  
@@ -180,10 +183,7 @@ function initialize() {
 	    });
 	});
 	
-	$("#map-canvas").on('shown', function () {
-		  google.maps.event.trigger(map, 'resize');
-		  map.setCenter(new google.maps.LatLng(31.866577,34.887627));
-		})
+	
 	
 
 </script>

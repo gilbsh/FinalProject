@@ -423,6 +423,7 @@ public class DataLayer {
 		}
 		return preparedStatement;	
 	}
+	
 	public void createNewDevice(Device newDevice) {
 		try{
 			PreparedStatement statement = con.prepareStatement("INSERT INTO Devices(DeviceId, PurchaseDate, VehicleId, InitialEngineHours, InitialMileage) VALUES(?,?,?,?,?)");

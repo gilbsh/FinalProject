@@ -7,21 +7,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home Page</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css"
-	href="css/bootstrap-responsive.css">
+<link rel="stylesheet" type="text/css"	href="css/bootstrap-responsive.css">
 <link rel="stylesheet" type="text/css" href="css/goodman.css">
-<link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="img/apple-touch-icon-144-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114"
-	href="img/apple-touch-icon-114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72"
-	href="img/apple-touch-icon-72-precomposed.png">
-<link rel="apple-touch-icon-precomposed"
-	href="img/apple-touch-icon-57-precomposed.png">
+<link rel="stylesheet" href="css/bootstrap-select.css" type="text/css" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144"	href="img/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"	href="img/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"	href="img/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"	href="img/apple-touch-icon-57-precomposed.png">
 <link rel="shortcut icon" href="img/favicon.png">
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/filter.js"></script>
+<script type="text/javascript" src="js/bootstrap-select.js"></script>
 
 </head>
 <body>
@@ -50,10 +47,11 @@
 									<label for="vehicle">Vehicles</label><br>
 									<select  class="selectpicker" id="chooseVehicle"  name="vehicle">
 								    	<c:forEach items="${customers}" var ="customer">
-								        	<optgroup label="${customer.firstName} ${customer.lastName}"></optgroup>
-								        	<c:forEach items="${customer.vehicles}" var ="vehicle">
-								   				<option value="${vehicle.vehicleId}">${vehicle.manufacturer}-${vehicle.model}-${vehicle.year}</option>
-								   			</c:forEach>
+								        	<optgroup label="${customer.firstName} ${customer.lastName}">
+									        	<c:forEach items="${customer.vehicles}" var ="vehicle">
+									   				<option value="${vehicle.vehicleId}">${vehicle.manufacturer}-${vehicle.model}-${vehicle.year}</option>
+									   			</c:forEach>
+								   			</optgroup>
 								      	</c:forEach>
 									</select>
 								</div>
@@ -134,6 +132,12 @@ function hideDIV() {
     document.getElementById("hiddenDiv").style.display = "none";
 }
 
+$(document).ready(function() {
+	  
+    $('.selectpicker').selectpicker({
+        size: 4
+    });
+});
 
 
 </script>

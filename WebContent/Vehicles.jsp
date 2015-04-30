@@ -10,18 +10,16 @@
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap-responsive.css">
 <link rel="stylesheet" type="text/css" href="css/goodman.css">
-<link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="img/apple-touch-icon-144-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114"
-	href="img/apple-touch-icon-114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72"
-	href="img/apple-touch-icon-72-precomposed.png">
-<link rel="apple-touch-icon-precomposed"
-	href="img/apple-touch-icon-57-precomposed.png">
+<link rel="stylesheet" href="css/bootstrap-select.css" type="text/css" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144"	href="img/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"	href="img/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"	href="img/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"	href="img/apple-touch-icon-57-precomposed.png">
 <link rel="shortcut icon" href="img/favicon.png">
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/filter.js"></script>
+<script type="text/javascript" src="js/bootstrap-select.js"></script>
 
 </head>
 <body>
@@ -73,8 +71,9 @@
 						</div>
 						<div class="col-md-10 column">
 				<div class="input-group">
-					<span class="input-group-addon">Filter</span> <input id="filter"
-						type="text" class="form-control" placeholder="Type here...">
+					<span class="input-group-addon">Filter</span>
+					 <input id="filter" type="text" class="form-control" placeholder="Type here...">
+				</div>
 				</div>
 				<table class="table table-striped">
 					<thead>
@@ -121,6 +120,8 @@ function hideDIV() {
     document.getElementById("year").value = '';
     document.getElementById("hiddenDiv").style.display = "none";
 }
+
+
 
 
 
