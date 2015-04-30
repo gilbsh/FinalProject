@@ -1,6 +1,8 @@
 package goodman.Models;
 
-import java.util.Date;
+import java.sql.Date;
+
+
 
 public class Device {
 	
@@ -10,10 +12,10 @@ public class Device {
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
 	}
-	public String getPurchaseDate() {
+	public Date getPurchaseDate() {
 		return purchaseDate;
 	}
-	public void setPurchaseDate(String purchaseDate) {
+	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 	public Vehicle getVehicle() {
@@ -22,23 +24,23 @@ public class Device {
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
 	}
-	public String getInitialEngineHours() {
+	public Double getInitialEngineHours() {
 		return initialEngineHours;
 	}
-	public void setInitialEngineHours(String initialEngineHours) {
+	public void setInitialEngineHours(double initialEngineHours) {
 		this.initialEngineHours = initialEngineHours;
 	}
-	public String getInitialMileage() {
+	public Double getInitialMileage() {
 		return initialMileage;
 	}
-	public void setInitialMileage(String initialMileage) {
+	public void setInitialMileage(double initialMileage) {
 		this.initialMileage = initialMileage;
 	}
 	
 	String deviceId;
-	String purchaseDate;
+	Date purchaseDate;
 	Vehicle vehicle;
 	
-	String initialEngineHours;
-	String initialMileage;	
+	Double initialEngineHours;
+	Double initialMileage;	
 }

@@ -307,6 +307,21 @@ public class DataLayer {
 	/************************************************************************************
 	 * Create Methods
 	 ************************************************************************************/
+	
+	 public void createNewDevice(Device newDevice) {
+		  try{
+		   PreparedStatement statement = con.prepareStatement("INSERT INTO Devices(DeviceId, PurchaseDate, VehicleId, InitialEngineHours, InitialMileage) VALUES(?,?,?,?,?)");
+		   statement.setString(1,  newDevice.getDeviceId());
+		   statement.setDate(2,  newDevice.getPurchaseDate());
+		   statement.setString(3,  newDevice.getVehicle().getVehicleId());
+		   statement.setDouble(4,  newDevice.getInitialEngineHours());
+		   statement.setDouble(5,  newDevice.getInitialMileage());
+		   statement.execute();
+		  }
+		  catch(Exception ex){
+		   System.out.print(ex.getMessage());
+		    }
+		  }
 
 	public Rule createRule(Rule rule) {
 		try {
