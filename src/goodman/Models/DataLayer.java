@@ -2,6 +2,7 @@ package goodman.Models;
 
 import java.util.*;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +34,7 @@ public class DataLayer {
 		this.password = "finalprojectdb";
 		this.connectionString = new String(url + "/" + dataBaseName);
 	}
-	
+
 	/************************************************************************************
 	 * General Methods
 	 ************************************************************************************/
@@ -56,7 +57,7 @@ public class DataLayer {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
 	public void close() {
 		try {
 			con.close();
@@ -307,21 +308,21 @@ public class DataLayer {
 	/************************************************************************************
 	 * Create Methods
 	 ************************************************************************************/
-	
-	 public void createNewDevice(Device newDevice) {
-		  try{
-		   PreparedStatement statement = con.prepareStatement("INSERT INTO Devices(DeviceId, PurchaseDate, VehicleId, InitialEngineHours, InitialMileage) VALUES(?,?,?,?,?)");
-		   statement.setString(1,  newDevice.getDeviceId());
-		   statement.setDate(2,  newDevice.getPurchaseDate());
-		   statement.setString(3,  newDevice.getVehicle().getVehicleId());
-		   statement.setDouble(4,  newDevice.getInitialEngineHours());
-		   statement.setDouble(5,  newDevice.getInitialMileage());
-		   statement.execute();
-		  }
-		  catch(Exception ex){
-		   System.out.print(ex.getMessage());
-		    }
-		  }
+
+	public void createNewDevice(Device newDevice) {
+		try {
+			PreparedStatement statement = con
+					.prepareStatement("INSERT INTO Devices(DeviceId, PurchaseDate, VehicleId, InitialEngineHours, InitialMileage) VALUES(?,?,?,?,?)");
+			statement.setString(1, newDevice.getDeviceId());
+			statement.setDate(2, newDevice.getPurchaseDate());
+			statement.setString(3, newDevice.getVehicle().getVehicleId());
+			statement.setDouble(4, newDevice.getInitialEngineHours());
+			statement.setDouble(5, newDevice.getInitialMileage());
+			statement.execute();
+		} catch (Exception ex) {
+			System.out.print(ex.getMessage());
+		}
+	}
 
 	public Rule createRule(Rule rule) {
 		try {
@@ -390,17 +391,19 @@ public class DataLayer {
 			while (rs.next()) {
 				RuleAlert ruleAlert = new RuleAlert();
 				ruleAlert.setPidData(getPIDDataById(rs.getString("MessageId")));
-				ruleAlert.setRuleCondition(getRuleConditionById(rs.getString("RuleId"),rs.getString("ParameterName")));
+				ruleAlert.setRuleCondition(getRuleConditionById(
+						rs.getString("RuleId"), rs.getString("ParameterName")));
 				ruleAlerts.add(ruleAlert);
 			}
-			return (RuleAlert[])ruleAlerts.toArray(new RuleAlert[ruleAlerts.size()]);
+			return (RuleAlert[]) ruleAlerts.toArray(new RuleAlert[ruleAlerts
+					.size()]);
 		} catch (Exception ex) {
 			System.out.print(ex.getMessage());
 			return null;
 		}
 
 	}
-	
+
 	/************************************************************************************
 	 * get Dim Classes
 	 ************************************************************************************/
@@ -414,7 +417,7 @@ public class DataLayer {
 			device.setDeviceId(rs.getString("DeviceId"));
 			device.setInitialEngineHours(rs.getLong("InitialEngineHours"));
 			device.setInitialMileage(rs.getDouble("InitialMileage"));
-			//device.setPurchaseDate(rs.getDate("PurchaseDate"));
+			// device.setPurchaseDate(rs.getDate("PurchaseDate"));
 			device.setVehicle(getVehicleById(rs.getString("VehicleId")));
 		}
 		return device;
@@ -470,7 +473,8 @@ public class DataLayer {
 				pidData.setMessageId(rs.getString("MessageId"));
 				pidData.setTime(rs.getTime("Time"));
 				pidData.setValue(rs.getDouble("Value"));
-				pidData.setParameter(getParameterById(rs.getString("ParameterName")));
+				pidData.setParameter(getParameterById(rs
+						.getString("ParameterName")));
 			}
 			return pidData;
 		} catch (Exception ex) {
@@ -497,7 +501,8 @@ public class DataLayer {
 		}
 	}
 
-	public RuleCondition getRuleConditionById(String ruleId, String parameterName) {
+	public RuleCondition getRuleConditionById(String ruleId,
+			String parameterName) {
 		PreparedStatement preparedStatement = null;
 		RuleCondition ruleCondition = new RuleCondition();
 		String query = "SELECT * FROM RuleConditions "
@@ -505,11 +510,13 @@ public class DataLayer {
 		try {
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setString(1, ruleId);
-			preparedStatement.setString(2,parameterName);
+			preparedStatement.setString(2, parameterName);
 			ResultSet rs = preparedStatement.executeQuery();
-			if(rs.next()){
-				ruleCondition.setConditionOperator(rs.getString("ConditionOperator"));
-				ruleCondition.setParameter(getParameterById(rs.getString("ParameterName")));
+			if (rs.next()) {
+				ruleCondition.setConditionOperator(rs
+						.getString("ConditionOperator"));
+				ruleCondition.setParameter(getParameterById(rs
+						.getString("ParameterName")));
 				ruleCondition.setRule(getRuleById(rs.getString("RuleId")));
 				ruleCondition.setLowValue(rs.getInt("LowValue"));
 				ruleCondition.setHighValue(rs.getInt("HighValue"));
@@ -567,18 +574,18 @@ public class DataLayer {
 
 	public PreparedStatement getElementById(String tableName,
 			String IdColumnName, String value) {
-			PreparedStatement preparedStatement = null;
-			String query = "SELECT * FROM " + tableName + " " + "WHERE "
-					+ IdColumnName + "=?";
-			try {
-				preparedStatement = con.prepareStatement(query);
-				preparedStatement.setString(1, value);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				System.out.print(e.getMessage());
-				return null;
-			}
-			return preparedStatement;
+		PreparedStatement preparedStatement = null;
+		String query = "SELECT * FROM " + tableName + " " + "WHERE "
+				+ IdColumnName + "=?";
+		try {
+			preparedStatement = con.prepareStatement(query);
+			preparedStatement.setString(1, value);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.print(e.getMessage());
+			return null;
+		}
+		return preparedStatement;
 	}
 
 	public PreparedStatement getEditRowStatement(String tableName,
@@ -598,4 +605,83 @@ public class DataLayer {
 		return preparedStatement;
 	}
 
+	public GraphObj[] getGraphData(Date endDate, String[] vehicles,
+			String parameterName, String aggregationType, String timeResolution)
+			throws SQLException {
+		// TODO Auto-generated method stubpn
+		Statement stmt = con.createStatement();
+		String query = null;
+		int i;
+		String vehiclesIn = "(";
+		for (i = 0; i < vehicles.length - 1; i++) {
+			vehiclesIn += "'" + vehicles[i] + "',";
+		}
+		vehiclesIn += "'" + vehicles[i] + "')";
+
+		switch (timeResolution) {
+		case "Day":
+			query = "SELECT VehicleId ,Date(Time) as Time,"
+					+ aggregationType
+					+ "(value) as value "
+					+ "FROM PIDData P join Devices D "
+					+ "on P.DeviceId=D.DeviceId "
+					+ "where ParameterName='"
+					+ parameterName
+					+ "' "
+					+ "and VehicleId in "
+					+ vehiclesIn
+					+ " "
+					+ "and Time Between DATE_SUB('2015-03-11' ,INTERVAL 30 DAY) "
+					// +
+					// "and Time Between DATE_SUB('"+endDate+"' ,INTERVAL 30 DAY) and '"+endDate+"' "
+					+ "group by VehicleId,Hour(Time)"
+					+ "order by VehicleId, Hour(Time)";
+
+			break;
+
+		case "Hour":
+			query = "SELECT VehicleId,Hour(Time) as Time," + aggregationType
+					+ "(value) as value " + "FROM PIDData P join Devices D "
+					+ "on P.DeviceId=D.DeviceId " + "where ParameterName='"
+					+ parameterName + "' " + "and VehicleId in " + vehiclesIn
+					+ " " + "and Date(Time)='2015-03-11' "
+					// + "and Date(Time)='"+endDate+"' "
+					+ "group by VehicleId,Hour(Time)"
+					+ "order by VehicleId, Hour(Time)";
+
+			break;
+		}
+
+		List<GraphObj> graphObjs = new ArrayList<>();
+		ResultSet rs = stmt.executeQuery(query);
+		GraphObj graphObj1 = new GraphObj();
+		graphObj1.setVehicle(getVehicleById("41790"));
+		graphObj1.setParam(parameterName);
+		Map<String, String> val1 = new HashMap<String, String>();
+
+		val1.put("19","16.22222222222222");
+		graphObj1.setValues(val1);
+		val1.put("20","20.5");
+		graphObj1.setValues(val1);
+		val1.put("21","9.722222222222221");
+		graphObj1.setValues(val1);
+		val1.put("22","7.428571428571429");
+		graphObj1.setValues(val1);
+		graphObjs.add(graphObj1);
+		
+		GraphObj graphObj2 = new GraphObj();
+		graphObj2.setVehicle(getVehicleById("41820"));
+		graphObj2.setParam(parameterName);
+		Map<String, String> val2 = new HashMap<String, String>();	
+		val2.put("20","8.375");
+		graphObj2.setValues(val2);
+		val2.put("10","5");
+		graphObj2.setValues(val2);
+		graphObjs.add(graphObj2);
+		
+
+		return (GraphObj[]) graphObjs.toArray(new GraphObj[graphObjs.size()]);
+			
+		}
+	
 }
