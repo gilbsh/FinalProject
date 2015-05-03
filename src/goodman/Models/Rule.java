@@ -2,44 +2,40 @@ package goodman.Models;
 
 public class Rule {
 	
-	String RuleId;
-	String RuleName;
-	String RuleDescription; 
-	User RuleUser;
-	RuleCondition Condition;
-	
-	public Rule() {
-	}
-	
+	String ruleId;
+	String ruleName;
+	String ruleDescription; 
+	User ruleUser;
+	RuleCondition condition;
 	public String getRuleId() {
-		return RuleId;
+		return ruleId;
 	}
 	public void setRuleId(String ruleId) {
-		RuleId = ruleId;
+		this.ruleId = ruleId;
 	}
 	public String getRuleName() {
-		return RuleName;
+		return ruleName;
 	}
 	public void setRuleName(String ruleName) {
-		RuleName = ruleName;
+		this.ruleName = ruleName;
 	}
 	public String getRuleDescription() {
-		return RuleDescription;
+		return ruleDescription;
 	}
 	public void setRuleDescription(String ruleDescription) {
-		RuleDescription = ruleDescription;
+		this.ruleDescription = ruleDescription;
 	}
 	public User getRuleUser() {
-		return RuleUser;
+		return ruleUser;
 	}
 	public void setRuleUser(User ruleUser) {
-		RuleUser = ruleUser;
+		this.ruleUser = ruleUser;
 	}
 	public RuleCondition getCondition() {
-		return Condition;
+		return condition;
 	}
 	public void setCondition(RuleCondition condition) {
-		Condition = condition;
+		this.condition = condition;
 	}
 	
 }

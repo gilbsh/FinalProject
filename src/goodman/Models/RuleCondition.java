@@ -1,41 +1,65 @@
 package goodman.Models;
 
+
 public class RuleCondition {
 	
-	Rule Rule;
-	Parameter Parameter;
-	String ConditionOperator;
-	int LowValue;
-	int HighValue;
+	Rule rule;
+	Parameter parameter;
+	String conditionOperator;
+	int lowValue;
+	int highValue;
+	RuleAlert[] ruleAlerts;
+	String ruleNaturalLanguage;
+	
+	public String getRuleNaturalLanguage() {
+		return ruleNaturalLanguage;
+	}
+	public void setRuleNaturalLanguage() {
+		String values = conditionOperator.equals("Between") || conditionOperator.equals("Not Between") ?
+				(lowValue+" AND "+highValue) : 
+					conditionOperator.equals("<") ? String.valueOf(lowValue) : 
+						String.valueOf(highValue);
+		
+		
+		ruleNaturalLanguage = rule.getRuleName()+" - " + parameter.getParameterName() +" "+ conditionOperator +" "+values;
+				
+	}
 	public Rule getRule() {
-		return Rule;
+		return rule;
 	}
 	public void setRule(Rule rule) {
-		Rule = rule;
+		this.rule = rule;
 	}
 	public Parameter getParameter() {
-		return Parameter;
+		return parameter;
 	}
 	public void setParameter(Parameter parameter) {
-		Parameter = parameter;
+		this.parameter = parameter;
 	}
 	public String getConditionOperator() {
-		return ConditionOperator;
+		return conditionOperator;
 	}
 	public void setConditionOperator(String conditionOperator) {
-		ConditionOperator = conditionOperator;
+		this.conditionOperator = conditionOperator;
 	}
 	public int getLowValue() {
-		return LowValue;
+		return lowValue;
 	}
 	public void setLowValue(int lowValue) {
-		LowValue = lowValue;
+		this.lowValue = lowValue;
 	}
 	public int getHighValue() {
-		return HighValue;
+		return highValue;
 	}
 	public void setHighValue(int highValue) {
-		HighValue = highValue;
+		this.highValue = highValue;
 	}
+	public RuleAlert[] getRuleAlerts() {
+		return ruleAlerts;
+	}
+	public void setRuleAlerts(RuleAlert[] ruleAlerts) {
+		this.ruleAlerts = ruleAlerts;
+	}
+	
 
 }

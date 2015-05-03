@@ -5,26 +5,40 @@
 			type="text" class="form-control" placeholder="Type here...">
 	</div>
 	<div class="panel-group" id="panel-447438">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<a class="panel-title collapsed" data-toggle="collapse"
-					data-parent="#panel-447438" href="#panel-element-269879">Collapsible
-					Group Item #1</a>
+	<br>
+		<c:forEach items="${ruleConditions}" var="ruleCondition">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="panel-title collapsed" data-toggle="collapse"
+						data-parent="#parent${ruleCondition.rule.ruleId}"
+						href="#rule${ruleCondition.rule.ruleId}">
+						${ruleCondition.ruleNaturalLanguage}</a>
+				</div>
+				<div id="rule${ruleCondition.rule.ruleId}"
+					class="panel-collapse collapse">
+					<div class="panel-body">
+						<table class="table table-striped table-hover">
+							<thead>
+								<tr>
+									<th>Vehicle</th>
+									<th>Parameter</th>
+									<th>Value</th>
+								</tr>
+							</thead>
+							<tbody ID="searchable3">
+								<c:forEach items="${ruleCondition.ruleAlerts}" var="ruleAlert">
+									<tr>
+										<td>${ruleAlert.pidData.device.vehicle.model}</td>
+										<td>${ruleAlert.pidData.parameter.parameterName}</td>
+										<td>${ruleAlert.pidData.value}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
-			<div id="panel-element-269879" class="panel-collapse collapse">
-				<div class="panel-body">Anim pariatur cliche...</div>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<a class="panel-title" data-toggle="collapse"
-					data-parent="#panel-447438" href="#panel-element-824088">Collapsible
-					Group Item #2</a>
-			</div>
-			<div id="panel-element-824088" class="panel-collapse in">
-				<div class="panel-body">Anim pariatur cliche...</div>
-			</div>
-		</div>
+		</c:forEach>
 	</div>
 	</p>
 </div>
