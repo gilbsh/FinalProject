@@ -18,7 +18,6 @@ DROP TABLE IF EXISTS Parameters;
 DROP TABLE IF EXISTS RuleAlerts;
 
 
-
 CREATE TABLE RuleAlerts (
 DateTime DATETIME  NOT NULL  
 , Value VARCHAR(50)  NULL  
@@ -101,11 +100,14 @@ Email
 
 CREATE TABLE GPSData (
 Id INTEGER NOT NULL AUTO_INCREMENT 
-, Time DATETIME  NULL  
-, Speed REAL  NULL  
-, Latlng CHAR(10)  NULL
-, Location VARCHAR(200) NULL
 , DeviceId VARCHAR(50)  NULL  
+, Time DATETIME  NULL
+, Location VARCHAR(500) NULL
+, Speed REAL  NULL  
+, RPM real
+, Direction varchar(200)
+, Alarm varhcar(200)
+, Latlng varchar(100)  NULL
 );
 
 

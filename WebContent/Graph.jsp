@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,105 +37,84 @@
 	<div class="container">
 		<div class="row clearfix">
 			<%@include file="Header.jsp"%>
-			<div class="col-md-12 column">
 				<h3>Explore your vehicles...</h3>
 				<form role="form" action="graphData" method="post">
-					<div class="col-md-3 column">
+					<div class="col-md-4 column">
 						<div class="control-group select optional">
-								<label for="vehicle">Vehicles</label><br>
-								 <select  id="chooseVehicle" multiple="multiple" name="vehicls[]" size="2">
-									<c:forEach items="${customers}" var="customer">
-										<optgroup label="${customer.firstName} ${customer.lastName}">
-											<c:forEach items="${customer.vehicles}" var="vehicle">
-												<option value="${vehicle.vehicleId}">${vehicle.manufacturer}-${vehicle.model}-${vehicle.year}</option>
-											</c:forEach>
-										</optgroup>
-									</c:forEach>
-								</select><br>
-								<label for="Parameter">Parameter</label><br> <select
-										class="selectpicker" name="parameter">
-										<c:forEach items="${parameters}" var="parameter">
-											<option value="${parameter.parameterName}">${parameter.parameterName}</option>
+							<label for="vehicle">Vehicles</label><br> <select required
+								id="chooseVehicle" multiple="multiple" name="vehicls[]" size="2">
+								<c:forEach items="${customers}" var="customer">
+									<optgroup label="${customer.firstName} ${customer.lastName}">
+										<c:forEach items="${customer.vehicles}" var="vehicle">
+											<option value="${vehicle.vehicleId}">${vehicle.manufacturer}-${vehicle.model}-${vehicle.year}</option>
 										</c:forEach>
-								</select>
-							</div>
+									</optgroup>
+								</c:forEach>
+							</select><br> <label for="Parameter">Parameter</label><br> <select
+								class="selectpicker" name="parameter">
+								<c:forEach items="${parameters}" var="parameter">
+									<option value="${parameter.parameterName}">${parameter.parameterName}</option>
+								</c:forEach>
+							</select>
+						</div>
 					</div>
-					
+
 					<div class="col-md-3 column">
 						<div class="form-group">
-									<label for="aggregationType">Aggregation Type</label><br>
-									 <select class="selectpicker" Id="aggregationType" name="aggregationType">
-									
-										<option>MAX</option>
-										<option>MIN</option>
-										<option>AVG</option>
+							<label for="aggregationType">Aggregation Type</label><br> <select
+								class="selectpicker" Id="aggregationType" name="aggregationType">
+								<option>MAX</option>
+								<option>MIN</option>
+								<option>AVG</option>
+							</select> <label for="timeResolution ">Time Resolution</label><br> <select
+								class="selectpicker" Id="timeResolution" name="timeResolution">
+								<option>Day</option>
+								<option>Hour</option>
+								<option>Minute</option>
+							</select>
+						</div>
+					</div>
 
-									</select>
-									<label for="timeResolution ">Time Resolution</label><br>
-									 <select class="selectpicker" Id="timeResolution" name="timeResolution">
-										<option>Day</option>
-										<option>Hour</option>
-										<option>Minute</option>
-									</select>
-								</div>
-					</div>
-			
 					<div class="col-md-2 column">
-						<label for="endDate">End Date</label>
-						 <input	type="date" class="form-control" name="endDate"
-									id="endDate" />
-						<br><button type="submit" class="btn btn-primary">Execute</button>
+						<label for="endDate">End Date</label> <input type="date" required
+							class="form-control" name="endDate" id="endDate" /> <br>
+						<button type="submit" class="btn btn-primary">Execute</button>
 					</div>
-					</form>
-					</div>
-					<div>
-						<div id="chart" ></div>
-					</div>
-					
-				
+				</form>
 			</div>
-			<%@include file="Address.html"%>
+			<br>
+			<div class="row clearfix">
+				<div class="text-center">
+					<h3>${headLine}</h3>
+				</div>
+				<div id="chart"></div>
+			</div>
+			<div class="row clearfix">
+				<%@include file="Address.html"%>
+			</div>
 		</div>
-	</div>
 </body>
 
 <script>
-	var chart = c3.generate({
-		data : {
-			x : 'x',
-			//        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-			columns : [
-					[ 'x', '2013-01-01', '2013-01-02', '2013-01-03',
-							'2013-01-04', '2013-01-05', '2013-01-06' ],
-					//            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
-					[ 'data1', 30, 200, 100, 400, 150, 250 ],
-					[ 'data2', 130, 340, 200, 500, 250, 350 ] ]
-		},
-		axis : {
-			x : {
-				type : 'timeseries',
-				tick : {
-					format : '%m-%d-%y'
-				}
-			}
-		}
-	});
-	
 	$(document).ready(function() {
-		
 		$('#chooseVehicle').multiselect({
-	        enableFiltering: true,
-	        enableClickableOptGroups: true,
-	        
-	    });
+			enableFiltering : true,
+			enableClickableOptGroups : true,
+		});
 
 		$('.selectpicker').selectpicker({
 			size : 4
 		});
-		
-		$('#chart').css("position","")
+
+		$('#chart').css("position", "")
 	});
 </script>
 
-	
+	<script>
+		var obj = ${chart};
+		console.log(obj);
+		var chart = c3.generate(obj);
+		$("#chart").children(":first").css( "overflow", "visible" );
+	</script>
+
 </html>

@@ -8,11 +8,21 @@ public class VehicleFault {
 	
 	DTC dtc;
 	String level;
-	Time dateTime;
+	String dateTime;
 	String type;
 	String dtcStatus;
 	String details;
+	Location location;
 	
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 	public String getDetails() {
 		return details;
 	}
@@ -65,15 +75,13 @@ public class VehicleFault {
 	}
 
 
-	public Date getDateTime() {
+	public String getDateTime() {
 		return dateTime;
 	}
 
-
-	public void setDateTime(Time dateTime) {
-		this.dateTime = dateTime;
+	public void setDateTime(Date date,Time time) {
+			this.dateTime = String.valueOf(date)+" "+String.valueOf(time);
 	}
-
 
 	public String getType() {
 		return type;

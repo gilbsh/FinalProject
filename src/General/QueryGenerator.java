@@ -1,4 +1,4 @@
-package goodman.Models;
+package General;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

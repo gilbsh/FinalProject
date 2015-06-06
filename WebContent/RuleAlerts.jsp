@@ -20,7 +20,9 @@
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
+									<th>Time</th>
 									<th>Vehicle</th>
+									<th>Customer</th>
 									<th>Parameter</th>
 									<th>Value</th>
 								</tr>
@@ -28,7 +30,9 @@
 							<tbody ID="searchable3">
 								<c:forEach items="${ruleCondition.ruleAlerts}" var="ruleAlert">
 									<tr>
-										<td>${ruleAlert.pidData.device.vehicle.model}</td>
+										<td>${ruleAlert.pidData.time}</td>
+										<td>${ruleAlert.pidData.device.vehicle.manufacturer} - ${ruleAlert.pidData.device.vehicle.model}</td>
+										<td>${ruleAlert.pidData.device.vehicle.customer.firstName} - ${ruleAlert.pidData.device.vehicle.customer.lastName}</td>
 										<td>${ruleAlert.pidData.parameter.parameterName}</td>
 										<td>${ruleAlert.pidData.value}</td>
 									</tr>

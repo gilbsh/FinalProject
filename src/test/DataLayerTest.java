@@ -1,10 +1,12 @@
 package test;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import junit.framework.Assert;
+import goodman.Models.Chart;
 import goodman.Models.DataLayer;
-import goodman.Models.QueryGenerator;
 import goodman.Models.RuleAlert;
 import goodman.Models.RuleCondition;
 import goodman.Models.User;
@@ -13,6 +15,8 @@ import goodman.Models.Vehicle;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import General.QueryGenerator;
 
 public class DataLayerTest {
 	static DataLayer dl;
@@ -65,9 +69,22 @@ public class DataLayerTest {
 	}
 	
 	
-	@Test
+/*	@Test
 	public void getRuleConditionsWithAlertsTest(){
 		RuleCondition[] ruleConditions = dl.getRuleConditionsWithAlerts();
 		Assert.assertTrue(ruleConditions.length>0);
+	}*/
+	
+	@Test
+	public void getDailylyGraphDataTest() throws SQLException{
+		Chart chart = dl.getDailyGraphData(Date.valueOf("2015-03-12"), new String[]{"41703"},"Engine RPM(rpm)" , "Max");
+		Assert.assertTrue(chart!=null);		
 	}
+	
+	@Test
+	public void geHourlyGraphDataTest() throws SQLException{
+		Chart chart = dl.getHourlyGraphData(Date.valueOf("2015-05-24"), new String[]{"41703"},"Engine RPM(rpm)" , "Max");
+		Assert.assertTrue(chart!=null);		
+	}
+			
 }

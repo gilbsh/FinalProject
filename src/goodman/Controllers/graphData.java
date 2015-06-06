@@ -1,9 +1,12 @@
 package goodman.Controllers;
 
+import goodman.Models.Chart;
+import goodman.Models.Customer;
 import goodman.Models.DataLayer;
 import goodman.Models.Device;
 import goodman.Models.GraphObj;
 import goodman.Models.Parameter;
+import goodman.Models.Vehicle;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -17,6 +20,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import General.GeneralResource;
 
 /**
  * Servlet implementation class graphData
@@ -44,37 +49,56 @@ public class graphData extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		Date endDate= null;
-		String[] vehicls = request.getParameterValues("vehicls[]");
+		String[] vehicles = request.getParameterValues("vehicls[]");
 		String parameterName = request.getParameter("parameter");
 		String aggregationType = request.getParameter("aggregationType");
 		String timeResolution = request.getParameter("timeResolution");
-		/*SimpleDateFormat formatter = new SimpleDateFormat("mm/dd/yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			endDate = new Date(formatter.parse(
-			request.getParameter("endDate")).getTime());
+			endDate = new Date(formatter.parse(request.getParameter("endDate")).getTime());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
+		
+		String headLine = String.valueOf(endDate)+" - "+parameterName+" - "+aggregationType+" - "+timeResolution+"ly";
+		request.setAttribute("headLine", headLine);
 		
 		DataLayer dl = new DataLayer();
-		if (dl.connect()) {
-			GraphObj[] graphObjs=null;
-			try {
-				graphObjs=dl.getGraphData(endDate,vehicls,parameterName,aggregationType,timeResolution);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(dl.connect()){
+		    Customer[] customers = dl.getCustomers();
+			request.setAttribute("customers", customers);
+			Vehicle[] allVehicles = dl.getVehicles();
+			request.setAttribute("vehicles", allVehicles);
+			Parameter[] parameters = dl.getParameters();
+        	request.setAttribute("parameters", parameters);
+			Chart chart=null;
+			switch(timeResolution){
+				case "Day" :
+				try {
+					chart = dl.getDailyGraphData(endDate, vehicles, parameterName, aggregationType);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					break;
+				case "Hour" :
+				try {
+					chart=dl.getHourlyGraphData(endDate, vehicles, parameterName, aggregationType);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					break;
+					
 			}
 			
-			request.setAttribute("graphObjs", graphObjs);
+			String chatrJson = GeneralResource.convertObjectToJson(chart);
+			request.setAttribute("chart", chatrJson);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("Graph.jsp");
 			dispatcher.forward(request, response);
-	        dl.close();
-		} else {
-			System.out.print("coudn't get vehicle data");
+	        dl.close();		
 		}
 	}
 

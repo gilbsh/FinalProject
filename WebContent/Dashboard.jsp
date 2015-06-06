@@ -9,6 +9,8 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap-responsive.css">
+	<link rel="stylesheet" type="text/css"
+	href="css/jquery.webui-popover.css">
 <link rel="stylesheet" type="text/css" href="css/goodman.css">
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
 	href="img/apple-touch-icon-144-precomposed.png">
@@ -22,6 +24,9 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/filter.js"></script>
+<script type="text/javascript" src="js/jquery.webui-popover.js"></script>
+<script
+	src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 </head>
 <body>
 	<div class="container">

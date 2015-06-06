@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import General.GeneralResource;
+
 public class DataLayer {
 	String url;
 	String userName;
@@ -134,13 +136,7 @@ public class DataLayer {
 	public VehicleFault[] getVehicleFaults() {
 		try {
 			Statement stmt = con.createStatement();
-			String query = "SELECT VF.FaultId,VF.DateTime,VF.Dtc,VF.DTCStatus,VF.Level,VF.Details,VF.Type,V.VehicleId,V.Manufacturer,V.Model,C.CustomerId,C.FirstName,C.LastName,DTCs.DtcPriority,DTCs.DtcCssClass "
-					+ "FROM VehicleFaults VF "
-					+ "JOIN Devices D on VF.DeviceId=D.DeviceId "
-					+ "JOIN Vehicles V on D.VehicleId = V.VehicleId "
-					+ "JOIN Customers C on V.CustomerId=C.CustomerId "
-					+ "JOIN DTCs on DTCs.Dtc = VF.Dtc "
-					+ "ORDER BY DTCs.DtcPriority " + "LIMIT 30";
+			String query = "Call GetVehicleFaults();";
 			ResultSet rs = stmt.executeQuery(query);
 			List<VehicleFault> vehicleFaults = new ArrayList<>();
 			while (rs.next()) {
@@ -152,6 +148,8 @@ public class DataLayer {
 				customer.setId(rs.getString("CustomerId"));
 				customer.setFirstName(rs.getString("FirstName"));
 				customer.setLastName(rs.getString("LastName"));
+				customer.setPhone(rs.getString("PhoneNumber"));
+				customer.setEmail(rs.getString("Email"));
 				vehicle.setVehicleId(rs.getString("VehicleId"));
 				vehicle.setCustomer(customer);
 				vehicle.setManufacturer(rs.getString("Manufacturer"));
@@ -160,9 +158,11 @@ public class DataLayer {
 				dtc.setDtcCssClass(rs.getString("DtcCssClass"));
 				dtc.setDtcPriority(Integer.parseInt(rs.getString("DtcPriority")));
 				dtc.setDtc(rs.getString("Dtc"));
+				String latlng = rs.getString("Latlng");
+				vehicleFault.setLocation(GeneralResource.getLocation(latlng));
 				vehicleFault.setDtc(dtc);
 				vehicleFault.setDevice(device);
-				vehicleFault.setDateTime(rs.getTime("DateTime"));
+				vehicleFault.setDateTime(rs.getDate("DateTime"),rs.getTime("DateTime"));
 				vehicleFault.setLevel(rs.getString("Level"));
 				vehicleFault.setDtcStatus(rs.getString("DTCStatus"));
 				vehicleFault.setType(rs.getString("Type"));
@@ -386,7 +386,7 @@ public class DataLayer {
 		List<RuleAlert> ruleAlerts = new ArrayList<RuleAlert>();
 		try {
 			Statement stmt = con.createStatement();
-			String query = "SELECT * FROM RuleAlerts LIMIT 50";
+			String query = "SELECT * FROM RuleAlerts LIMIT 2";
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				RuleAlert ruleAlert = new RuleAlert();
@@ -402,50 +402,64 @@ public class DataLayer {
 			return null;
 		}
 	}
-	
+
 	public RuleAlert[] getRuleAlerts(RuleCondition ruleCondition) {
 		List<RuleAlert> ruleAlerts = new ArrayList<RuleAlert>();
 		try {
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM RuleAlerts Where RuleId=? and ParameterName=? LIMIT 20");
+			PreparedStatement stmt = con
+					.prepareStatement("SELECT RA.RuleId,RA.ParameterName,RA.MessageId"
+							+ " FROM RuleAlerts RA"
+							+ " Join PIDData P"
+							+ " on RA.MessageId = P.MessageId "
+							+ " Where RA.RuleId = ?"
+							+ " and RA.ParameterName= ?"
+							+ "	Order By P.Time Desc "
+							+ "LIMIT 5");
 			stmt.setString(1, ruleCondition.getRule().getRuleId());
 			stmt.setString(2, ruleCondition.getParameter().getParameterName());
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				RuleAlert ruleAlert = new RuleAlert();
 				ruleAlert.setPidData(getPIDDataById(rs.getString("MessageId")));
-				ruleAlert.setRuleCondition(getRuleConditionById(rs.getString("RuleId"),rs.getString("ParameterName")));
+				ruleAlert.setRuleCondition(getRuleConditionById(
+						rs.getString("RuleId"), rs.getString("ParameterName")));
 				ruleAlerts.add(ruleAlert);
 			}
-			return (RuleAlert[])ruleAlerts.toArray(new RuleAlert[ruleAlerts.size()]);
+			return (RuleAlert[]) ruleAlerts.toArray(new RuleAlert[ruleAlerts
+					.size()]);
 		} catch (Exception ex) {
 			System.out.print(ex.getMessage());
 			return null;
 		}
 	}
-	
-	public RuleCondition[] getRuleConditionsWithAlerts(){
+
+	public RuleCondition[] getRuleConditionsWithAlerts() {
 		List<RuleCondition> ruleConditions = new ArrayList<RuleCondition>();
 		try {
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM RuleConditions");
+			PreparedStatement stmt = con
+					.prepareStatement("SELECT * FROM RuleConditions");
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				RuleCondition ruleCondition = new RuleCondition();
 				ruleCondition.setRule(getRuleById(rs.getString("RuleId")));
-				ruleCondition.setParameter(getParameterById(rs.getString("ParameterName")));
-				ruleCondition.setConditionOperator(rs.getString("ConditionOperator"));
+				ruleCondition.setParameter(getParameterById(rs
+						.getString("ParameterName")));
+				ruleCondition.setConditionOperator(rs
+						.getString("ConditionOperator"));
 				ruleCondition.setLowValue(rs.getInt("LowValue"));
 				ruleCondition.setHighValue(rs.getInt("HighValue"));
 				ruleCondition.setRuleAlerts(getRuleAlerts(ruleCondition));
 				ruleCondition.setRuleNaturalLanguage();
-				if(ruleCondition.getRuleAlerts().length>0){
+				if (ruleCondition.getRuleAlerts().length > 0) {
 					ruleConditions.add(ruleCondition);
 				}
 			}
-			return (RuleCondition[])ruleConditions.toArray(new RuleCondition[ruleConditions.size()]);
+			return (RuleCondition[]) ruleConditions
+					.toArray(new RuleCondition[ruleConditions.size()]);
 		} catch (Exception ex) {
 			System.out.print(ex.getMessage());
 			return null;
-		}		
+		}
 	}
 
 	/************************************************************************************
@@ -515,7 +529,7 @@ public class DataLayer {
 			if (rs.next()) {
 				pidData.setDevice(getDeviceById(rs.getString("DeviceId")));
 				pidData.setMessageId(rs.getString("MessageId"));
-				pidData.setTime(rs.getTime("Time"));
+				pidData.setTime(rs.getDate("Time"),rs.getTime("Time"));
 				pidData.setValue(rs.getDouble("Value"));
 				pidData.setParameter(getParameterById(rs
 						.getString("ParameterName")));
@@ -649,83 +663,161 @@ public class DataLayer {
 		return preparedStatement;
 	}
 
-	public GraphObj[] getGraphData(Date endDate, String[] vehicles,
-			String parameterName, String aggregationType, String timeResolution)
-			throws SQLException {
-		// TODO Auto-generated method stubpn
-		Statement stmt = con.createStatement();
-		String query = null;
-		int i;
-		String vehiclesIn = "(";
-		for (i = 0; i < vehicles.length - 1; i++) {
-			vehiclesIn += "'" + vehicles[i] + "',";
-		}
-		vehiclesIn += "'" + vehicles[i] + "')";
+	public Chart getDailyGraphData() {
+		return null;
+	}
 
-		switch (timeResolution) {
-		case "Day":
-			query = "SELECT VehicleId ,Date(Time) as Time,"
-					+ aggregationType
-					+ "(value) as value "
-					+ "FROM PIDData P join Devices D "
-					+ "on P.DeviceId=D.DeviceId "
-					+ "where ParameterName='"
-					+ parameterName
-					+ "' "
-					+ "and VehicleId in "
-					+ vehiclesIn
-					+ " "
-					+ "and Time Between DATE_SUB('2015-03-11' ,INTERVAL 30 DAY) "
-					// +
-					// "and Time Between DATE_SUB('"+endDate+"' ,INTERVAL 30 DAY) and '"+endDate+"' "
-					+ "group by VehicleId,Hour(Time)"
-					+ "order by VehicleId, Hour(Time)";
-
-			break;
-
-		case "Hour":
-			query = "SELECT VehicleId,Hour(Time) as Time," + aggregationType
-					+ "(value) as value " + "FROM PIDData P join Devices D "
+	public Chart getDailyGraphData(Date endDate, String[] vehicles,
+			String parameterName, String aggregationType) throws SQLException {
+		Tick tick = new Tick();
+		tick.setFormat("%Y-%m-%d");
+		AxisX axisX = new AxisX();
+		axisX.setType("timeseries");
+		axisX.setTick(tick);
+		Axis axis = new Axis();
+		axis.setX(axisX);
+		ChartData data = new ChartData();
+		data.setX("x");
+		final int number = 15;
+		String query;
+		String[][] columns = new String[vehicles.length + 1][];
+		columns[0] = GeneralResource.getDaysBackArray(endDate, number);
+		for (int i = 0; i < vehicles.length; i++) {
+			Vehicle vehicle = getVehicleById(vehicles[i]);
+			String[] values = new String[number + 1];
+			values[0] = vehicle.getManufacturer()+" - "+ vehicle.getModel();
+			query = "SELECT VehicleId ,Date(Time) as Time," + aggregationType
+					+ "(Value) as Value " + "FROM PIDData P join Devices D "
 					+ "on P.DeviceId=D.DeviceId " + "where ParameterName='"
-					+ parameterName + "' " + "and VehicleId in " + vehiclesIn
-					+ " " + "and Date(Time)='2015-03-11' "
-					// + "and Date(Time)='"+endDate+"' "
-					+ "group by VehicleId,Hour(Time)"
+					+ parameterName + "' " + "and VehicleId in('" + vehicles[i]
+					+ "') " + "and Time Between DATE_SUB('" + endDate
+					+ "' ,INTERVAL 15 DAY) and '" + endDate + "' "
+					+ "group by VehicleId,Hour(Time) "
 					+ "order by VehicleId, Hour(Time)";
 
-			break;
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(query);
+			while (rs.next()) {
+				Date date = Date.valueOf(rs.getString("Time"));
+				double value = rs.getDouble("Value");
+				int location = GeneralResource
+						.getDateLocation(date, columns[0]);
+				if (location != -1) {
+					values[location] = String.valueOf(value);
+				}
+			}
+			columns[i+1]=values;
 		}
 
-		List<GraphObj> graphObjs = new ArrayList<>();
-		ResultSet rs = stmt.executeQuery(query);
-		GraphObj graphObj1 = new GraphObj();
-		graphObj1.setVehicle(getVehicleById("41790"));
-		graphObj1.setParam(parameterName);
-		Map<String, String> val1 = new HashMap<String, String>();
-
-		val1.put("19","16.22222222222222");
-		graphObj1.setValues(val1);
-		val1.put("20","20.5");
-		graphObj1.setValues(val1);
-		val1.put("21","9.722222222222221");
-		graphObj1.setValues(val1);
-		val1.put("22","7.428571428571429");
-		graphObj1.setValues(val1);
-		graphObjs.add(graphObj1);
-		
-		GraphObj graphObj2 = new GraphObj();
-		graphObj2.setVehicle(getVehicleById("41820"));
-		graphObj2.setParam(parameterName);
-		Map<String, String> val2 = new HashMap<String, String>();	
-		val2.put("20","8.375");
-		graphObj2.setValues(val2);
-		val2.put("10","5");
-		graphObj2.setValues(val2);
-		graphObjs.add(graphObj2);
-		
-
-		return (GraphObj[]) graphObjs.toArray(new GraphObj[graphObjs.size()]);
-			
-		}
+		data.setColumns(columns);
+		Chart chart = new Chart();
+		chart.setData(data);
+		chart.setAxis(axis);
+		return chart;
+	}
 	
+	public Chart getHourlyGraphData(Date endDate, String[] vehicles,
+			String parameterName, String aggregationType) throws SQLException {
+		Map<String,String> map = new HashMap<>();
+		final int number = 24;
+		ChartData data = new ChartData();
+		String query;
+		String[][] columns = new String[vehicles.length*2][];
+		
+		for (int i = 0; i < vehicles.length; i++) {
+			String[] values = new String[number+1];
+			Vehicle vehicle = getVehicleById(vehicles[i]);
+			values[0]=vehicle.getManufacturer()+" - "+ vehicle.getModel();
+			String[] keys = GeneralResource.getNumbersArray(number,vehicles[i]);
+			map.put(vehicle.getManufacturer()+" - "+ vehicle.getModel(),vehicles[i]);
+			columns[i] = keys;
+			query = "SELECT VehicleId,Hour(Time) as Time," +
+					 aggregationType + "(value) as value " + "FROM PIDData P join Devices D "
+					 + "on P.DeviceId=D.DeviceId " + "where ParameterName='" + parameterName +
+					 "' and VehicleId in ('" + vehicles[i] + "') " +
+					 "and Date(Time)='"+endDate+"' " +
+					 "group by VehicleId,Hour(Time)" + "order by VehicleId, Hour(Time)";
+
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(query);
+			while (rs.next()) {
+				int hour = rs.getInt("Time") +1;
+				double value = rs.getDouble("Value");
+				values[hour] = String.valueOf(value);
+			}
+			columns[vehicles.length+i]=values;
+		}
+
+		data.setColumns(columns);
+		data.setXs(map);
+		Chart chart = new Chart();
+		chart.setData(data);
+		return chart;
+	}
+
+	/*
+	 * public GraphObj[] getGraphData(Date endDate, String[] vehicles, String
+	 * parameterName, String aggregationType, String timeResolution) throws
+	 * SQLException { // TODO Auto-generated method stubpn Statement stmt =
+	 * con.createStatement(); String query = null; int i; String vehiclesIn =
+	 * "("; for (i = 0; i < vehicles.length - 1; i++) { vehiclesIn += "'" +
+	 * vehicles[i] + "',"; } vehiclesIn += "'" + vehicles[i] + "')";
+	 * 
+	 * switch (timeResolution) { case "Day": for (i = 0; i < vehicles.length -
+	 * 1; i++) { query = "SELECT VehicleId ,Date(Time) as Time," +
+	 * aggregationType + "(value) as value " + "FROM PIDData P join Devices D "
+	 * + "on P.DeviceId=D.DeviceId " + "where ParameterName='" + parameterName +
+	 * "' " + "and VehicleId in " + vehiclesIn + " " +
+	 * "and Time Between DATE_SUB('2015-03-11' ,INTERVAL 15 DAY) " // + //
+	 * "and Time Between DATE_SUB('"
+	 * +endDate+"' ,INTERVAL 30 DAY) and '"+endDate+"' " +
+	 * "group by VehicleId,Hour(Time)" + "order by VehicleId, Hour(Time)"; }
+	 * 
+	 * break;
+	 * 
+	 * case "Hour": query = "SELECT VehicleId,Hour(Time) as Time," +
+	 * aggregationType + "(value) as value " + "FROM PIDData P join Devices D "
+	 * + "on P.DeviceId=D.DeviceId " + "where ParameterName='" + parameterName +
+	 * "' " + "and VehicleId in " + vehiclesIn + " " +
+	 * "and Date(Time)='2015-03-11' " // + "and Date(Time)='"+endDate+"' " +
+	 * "group by VehicleId,Hour(Time)" + "order by VehicleId, Hour(Time)";
+	 * 
+	 * break; } return null; }
+	 */
+
+	public Chart getGraphTest() {
+
+		Tick tick = new Tick();
+		tick.setFormat("%Y-%m-%d");
+		AxisX axisX = new AxisX();
+		axisX.setType("timeseries");
+		axisX.setTick(tick);
+		Axis axis = new Axis();
+		axis.setX(axisX);
+		ChartData data = new ChartData();
+		data.setX("x");
+		String[][] columns = new String[3][];
+		columns[0] = GeneralResource.getDaysBackArray(
+				Date.valueOf("2013-01-06"), 15);
+		columns[1] = GeneralResource.getNumbersArray(15, "Data1");
+		columns[2] = GeneralResource.getNumbersArray(15, "Data2");
+		data.setColumns(columns);
+		Chart chart = new Chart();
+		chart.setData(data);
+		chart.setAxis(axis);
+		return chart;
+
+		/*
+		 * Map<String,String> keyValue = new HashMap<String,String>();
+		 * keyValue.put("data1","x1"); keyValue.put("data2", "x1");
+		 * data.setXs(keyValue); String[][] columns = new
+		 * String[][]{{"x1","2013-01-01"
+		 * ,"2013-01-02","2013-01-03","2013-01-04","2013-01-05"},{"data1", "30",
+		 * "200", "100", "400", "150", "250"},{"data2", "20", "180", "240",
+		 * "100", "190"}}; data.setColumns(columns); chart.setData(data);
+		 * 
+		 * return chart;
+		 */
+	}
+
 }
