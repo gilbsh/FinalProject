@@ -10,6 +10,8 @@ body{
 
 #mainHeadLine{
 	line-height:100px;
+	font-family: -webkit-pictograph;
+  	font-size: 43px;
 }
 
 #logo{

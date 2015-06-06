@@ -15,7 +15,7 @@
 		<div class="row clearfix">
 			<%@include file="Headline.html"%>
 			<div class="span8 offset2">
-				<h3 class="text-muted">Please Enter your email and password</h3>
+				<h4>Please enter your email and password</h3>
 				<form role="form" action="LoginServlet" method="post">
 					<div class="form-group">
 						<label for="rmail">Email address</label><input name="email"
@@ -27,7 +27,7 @@
 							type="password" class="form-control" id="exampleInputPassword1"
 							required />
 					</div>
-					<button type="submit" class="btn btn-default">Log In</button>
+					<button type="submit" class="btn btn-primary btn-lg">Log In</button>
 				</form>
 				<div class="errorMessage">${message}</div>
 			</div>

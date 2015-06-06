@@ -21,7 +21,7 @@ public class RuleCondition {
 						String.valueOf(highValue);
 		
 		
-		ruleNaturalLanguage = rule.getRuleUser().getEmail()+" - "+rule.getRuleName()+" - " + parameter.getParameterName() +" "+ conditionOperator +" "+values;			
+		ruleNaturalLanguage = rule.getRuleUser().getFirstName()+" "+rule.getRuleUser().getLastName()+" - "+rule.getRuleName()+" - " + parameter.getParameterName() +" "+ conditionOperator +" "+values;			
 	}
 	public Rule getRule() {
 		return rule;
