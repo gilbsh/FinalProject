@@ -42,7 +42,8 @@ public class graphData extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if (request.getSession(true).getAttribute("currentSessionUser") == null)
+			response.sendRedirect("Login.jsp");
 	}
 
 	/**
@@ -62,9 +63,8 @@ public class graphData extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		String headLine = String.valueOf(endDate)+" - "+parameterName+" - "+aggregationType+" - "+timeResolution+"ly";
-		request.setAttribute("headLine", headLine);
-		
+		String resolution="";
+
 		DataLayer dl = new DataLayer();
 		if(dl.connect()){
 		    Customer[] customers = dl.getCustomers();
@@ -77,6 +77,7 @@ public class graphData extends HttpServlet {
 			switch(timeResolution){
 				case "Day" :
 				try {
+					resolution="Daily";
 					chart = dl.getDailyGraphData(endDate, vehicles, parameterName, aggregationType);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -85,6 +86,7 @@ public class graphData extends HttpServlet {
 					break;
 				case "Hour" :
 				try {
+					resolution="Hourly";
 					chart=dl.getHourlyGraphData(endDate, vehicles, parameterName, aggregationType);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -92,8 +94,9 @@ public class graphData extends HttpServlet {
 				}
 					break;
 					
-			}
-			
+			}		
+			String headLine = String.valueOf(endDate)+" - "+parameterName+" - "+aggregationType+" - "+resolution;
+			request.setAttribute("headLine", headLine);
 			String chatrJson = GeneralResource.convertObjectToJson(chart);
 			request.setAttribute("chart", chatrJson);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("Graph.jsp");
@@ -101,5 +104,4 @@ public class graphData extends HttpServlet {
 	        dl.close();		
 		}
 	}
-
 }

@@ -77,7 +77,7 @@ public class DataLayerTest {
 	
 	@Test
 	public void getDailylyGraphDataTest() throws SQLException{
-		Chart chart = dl.getDailyGraphData(Date.valueOf("2015-03-12"), new String[]{"41703"},"Engine RPM(rpm)" , "Max");
+		Chart chart = dl.getDailyGraphData(Date.valueOf("2015-06-06"), new String[]{"41703"},"Vehicle Speed Sensor(km/h)" , "Max");
 		Assert.assertTrue(chart!=null);		
 	}
 	

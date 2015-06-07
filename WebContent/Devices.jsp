@@ -108,7 +108,6 @@
 								<th>Year</th>
 								<th>Initial Mileage</th>
 								<th>Initial Engine Hours</th>
-								<th>Location</th>
 							</tr>
 						</thead>
 						<tbody class="searchable">
@@ -132,29 +131,10 @@
 										data-url="EditAttribute?tableName=Devices&idColumnName=DeviceId"
 										data-original-title="Enter Initial Engine Hours">
 											${device.initialEngineHours}</a></td>
-									<td><input src="img/location.png" type="image"
-										data-toggle="modal" data-target=".bs-example-modal-lg"
-										width="50" height="25"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-					<div class="modal fade bs-example-modal-lg" tabindex="-1"
-						role="dialog" aria-labelledby="myLargeModalLabel"
-						aria-hidden="true" id="myModal">
-						<div class="modal-dialog modal-lg">
-							<div class="modal-content" id="contact-modal">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">×</button>
-									<h3></h3>
-								</div>
-								<div class="modal-body">
-									<div id="map-canvas" style="width: 500px; height: 400px"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
 				</div>
 			</div>
 		</div>
@@ -178,32 +158,6 @@
 				document.getElementById("purchaseDate").value = '';
 				document.getElementById("hiddenDiv").style.display = "none";
 			}
-
-			function initialize() {
-				var myLatlng = new google.maps.LatLng(31.866577, 34.887627);
-				var mapOptions = {
-					zoom : 14,
-					center : myLatlng
-				}
-				var map = new google.maps.Map(document
-						.getElementById('map-canvas'), mapOptions);
-
-				var marker = new google.maps.Marker({
-					position : myLatlng,
-					map : map,
-					title : 'Vehicle Location'
-				});
-
-				$("#myModal").on(
-						"shown.bs.modal",
-						function() {
-							google.maps.event.trigger(map, "resize");
-							map.setCenter(new google.maps.LatLng(31.866577,
-									34.887627));
-						});
-			}
-
-			google.maps.event.addDomListener(window, 'load', initialize);
 
 			$(document).ready(function() {
 

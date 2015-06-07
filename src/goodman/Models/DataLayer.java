@@ -663,9 +663,6 @@ public class DataLayer {
 		return preparedStatement;
 	}
 
-	public Chart getDailyGraphData() {
-		return null;
-	}
 
 	public Chart getDailyGraphData(Date endDate, String[] vehicles,
 			String parameterName, String aggregationType) throws SQLException {
@@ -692,8 +689,8 @@ public class DataLayer {
 					+ parameterName + "' " + "and VehicleId in('" + vehicles[i]
 					+ "') " + "and Time Between DATE_SUB('" + endDate
 					+ "' ,INTERVAL 15 DAY) and '" + endDate + "' "
-					+ "group by VehicleId,Hour(Time) "
-					+ "order by VehicleId, Hour(Time)";
+					+ "group by VehicleId,Date(Time) "
+					+ "order by VehicleId, Date(Time)";
 
 			Statement statement = con.createStatement();
 			ResultSet rs = statement.executeQuery(query);
@@ -754,70 +751,4 @@ public class DataLayer {
 		chart.setData(data);
 		return chart;
 	}
-
-	/*
-	 * public GraphObj[] getGraphData(Date endDate, String[] vehicles, String
-	 * parameterName, String aggregationType, String timeResolution) throws
-	 * SQLException { // TODO Auto-generated method stubpn Statement stmt =
-	 * con.createStatement(); String query = null; int i; String vehiclesIn =
-	 * "("; for (i = 0; i < vehicles.length - 1; i++) { vehiclesIn += "'" +
-	 * vehicles[i] + "',"; } vehiclesIn += "'" + vehicles[i] + "')";
-	 * 
-	 * switch (timeResolution) { case "Day": for (i = 0; i < vehicles.length -
-	 * 1; i++) { query = "SELECT VehicleId ,Date(Time) as Time," +
-	 * aggregationType + "(value) as value " + "FROM PIDData P join Devices D "
-	 * + "on P.DeviceId=D.DeviceId " + "where ParameterName='" + parameterName +
-	 * "' " + "and VehicleId in " + vehiclesIn + " " +
-	 * "and Time Between DATE_SUB('2015-03-11' ,INTERVAL 15 DAY) " // + //
-	 * "and Time Between DATE_SUB('"
-	 * +endDate+"' ,INTERVAL 30 DAY) and '"+endDate+"' " +
-	 * "group by VehicleId,Hour(Time)" + "order by VehicleId, Hour(Time)"; }
-	 * 
-	 * break;
-	 * 
-	 * case "Hour": query = "SELECT VehicleId,Hour(Time) as Time," +
-	 * aggregationType + "(value) as value " + "FROM PIDData P join Devices D "
-	 * + "on P.DeviceId=D.DeviceId " + "where ParameterName='" + parameterName +
-	 * "' " + "and VehicleId in " + vehiclesIn + " " +
-	 * "and Date(Time)='2015-03-11' " // + "and Date(Time)='"+endDate+"' " +
-	 * "group by VehicleId,Hour(Time)" + "order by VehicleId, Hour(Time)";
-	 * 
-	 * break; } return null; }
-	 */
-
-	public Chart getGraphTest() {
-
-		Tick tick = new Tick();
-		tick.setFormat("%Y-%m-%d");
-		AxisX axisX = new AxisX();
-		axisX.setType("timeseries");
-		axisX.setTick(tick);
-		Axis axis = new Axis();
-		axis.setX(axisX);
-		ChartData data = new ChartData();
-		data.setX("x");
-		String[][] columns = new String[3][];
-		columns[0] = GeneralResource.getDaysBackArray(
-				Date.valueOf("2013-01-06"), 15);
-		columns[1] = GeneralResource.getNumbersArray(15, "Data1");
-		columns[2] = GeneralResource.getNumbersArray(15, "Data2");
-		data.setColumns(columns);
-		Chart chart = new Chart();
-		chart.setData(data);
-		chart.setAxis(axis);
-		return chart;
-
-		/*
-		 * Map<String,String> keyValue = new HashMap<String,String>();
-		 * keyValue.put("data1","x1"); keyValue.put("data2", "x1");
-		 * data.setXs(keyValue); String[][] columns = new
-		 * String[][]{{"x1","2013-01-01"
-		 * ,"2013-01-02","2013-01-03","2013-01-04","2013-01-05"},{"data1", "30",
-		 * "200", "100", "400", "150", "250"},{"data2", "20", "180", "240",
-		 * "100", "190"}}; data.setColumns(columns); chart.setData(data);
-		 * 
-		 * return chart;
-		 */
-	}
-
 }

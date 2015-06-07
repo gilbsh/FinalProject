@@ -34,26 +34,30 @@ public class graph extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
-		DataLayer dl = new DataLayer();
-		 Customer[] customers;
-		if(dl.connect()){
-		    customers = dl.getCustomers();
-			request.setAttribute("customers", customers);
-			Vehicle[] vehicles = dl.getVehicles();
-			request.setAttribute("vehicles", vehicles);
-			Parameter[] parameters = dl.getParameters();
-        	request.setAttribute("parameters", parameters);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("Graph.jsp");
-			dispatcher.forward(request, response);
-	        dl.close();
-		}
+		if (request.getSession(true).getAttribute("currentSessionUser") == null)
+			response.sendRedirect("Login.jsp");
 		else {
-        	System.out.print("coudn't get page");
-        }
-		
+			DataLayer dl = new DataLayer();
+			Customer[] customers;
+			if (dl.connect()) {
+				customers = dl.getCustomers();
+				request.setAttribute("customers", customers);
+				Vehicle[] vehicles = dl.getVehicles();
+				request.setAttribute("vehicles", vehicles);
+				Parameter[] parameters = dl.getParameters();
+				request.setAttribute("parameters", parameters);
+				RequestDispatcher dispatcher = request
+						.getRequestDispatcher("Graph.jsp");
+				dispatcher.forward(request, response);
+				dl.close();
+			} else {
+				System.out.print("coudn't get page");
+			}
+		}
+
 	}
 
 	/**
