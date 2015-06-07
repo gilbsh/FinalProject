@@ -1,4 +1,66 @@
 body{
-	background-image: url("../img/background.jpg");
-	min-width:1180px;
+
+	background-image: url("../img/Chatter-background-white-HNM-blue-gradient-blue-gear.png");
+	  background-size: cover;
 }
+
+.errorMessage{
+	color: red;
+}
+
+#mainHeadLine{
+	line-height:100px;
+	font-family: -webkit-pictograph;
+  	font-size: 43px;
+}
+
+#logo{
+	height:140px;
+	float:left;
+	position:relative;
+	top:-45px;
+}
+
+#pageHeader{
+	margin-top:40px;
+}
+
+#chart {
+	position: relative;
+}
+
+#chart svg {
+	overflow-x:visible;
+}
+
+a.tooltip span {
+    font-size: 10px;
+    position:absolute;
+    z-index: 999;
+    white-space:nowrap;
+    bottom:9999px;
+    left: 50%;
+    background:#000;
+    color:#e0e0e0;
+    padding:0px 7px;
+    line-height: 24px;
+    height: 24px;
+     
+    opacity: 0; 
+    transition:opacity 0.4s ease-out; 
+    }       
+     
+a.tooltip span::before {
+    content: "";
+    display: block;
+    border-left: 6px solid #000000;
+    border-top: 6px solid transparent;
+    position: absolute;
+    top: -6px;
+    left: 0px;
+    }
+     
+a.tooltip:hover span {
+    opacity: 1;
+    bottom:-35px;
+    }
