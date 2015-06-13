@@ -8,8 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import General.GeneralResource;
+
+/************************************************************************************
+ * Constructors
+ ************************************************************************************/
 
 public class DataLayer {
 	String url;
@@ -221,6 +224,65 @@ public class DataLayer {
 			return null;
 		}
 	}
+	
+	public RuleAlert[] getRuleAlerts(RuleCondition ruleCondition) {
+		List<RuleAlert> ruleAlerts = new ArrayList<RuleAlert>();
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("SELECT RA.RuleId,RA.ParameterName,RA.MessageId"
+							+ " FROM RuleAlerts RA"
+							+ " Join PIDData P"
+							+ " on RA.MessageId = P.MessageId "
+							+ " Where RA.RuleId = ?"
+							+ " and RA.ParameterName= ?"
+							+ "	Order By P.Time Desc "
+							+ "LIMIT 5");
+			stmt.setString(1, ruleCondition.getRule().getRuleId());
+			stmt.setString(2, ruleCondition.getParameter().getParameterName());
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				RuleAlert ruleAlert = new RuleAlert();
+				ruleAlert.setPidData(getPIDDataById(rs.getString("MessageId")));
+				ruleAlert.setRuleCondition(getRuleConditionById(
+						rs.getString("RuleId"), rs.getString("ParameterName")));
+				ruleAlerts.add(ruleAlert);
+			}
+			return (RuleAlert[]) ruleAlerts.toArray(new RuleAlert[ruleAlerts
+					.size()]);
+		} catch (Exception ex) {
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
+
+	public RuleCondition[] getRuleConditionsWithAlerts() {
+		List<RuleCondition> ruleConditions = new ArrayList<RuleCondition>();
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("SELECT * FROM RuleConditions");
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				RuleCondition ruleCondition = new RuleCondition();
+				ruleCondition.setRule(getRuleById(rs.getString("RuleId")));
+				ruleCondition.setParameter(getParameterById(rs
+						.getString("ParameterName")));
+				ruleCondition.setConditionOperator(rs
+						.getString("ConditionOperator"));
+				ruleCondition.setLowValue(rs.getInt("LowValue"));
+				ruleCondition.setHighValue(rs.getInt("HighValue"));
+				ruleCondition.setRuleAlerts(getRuleAlerts(ruleCondition));
+				ruleCondition.setRuleNaturalLanguage();
+				if (ruleCondition.getRuleAlerts().length > 0) {
+					ruleConditions.add(ruleCondition);
+				}
+			}
+			return (RuleCondition[]) ruleConditions
+					.toArray(new RuleCondition[ruleConditions.size()]);
+		} catch (Exception ex) {
+			System.out.print(ex.getMessage());
+			return null;
+		}
+	}
 
 	public Vehicle[] getVehicles(String customerId) {
 		try {
@@ -379,86 +441,6 @@ public class DataLayer {
 			}
 		} catch (Exception ex) {
 			System.out.print(ex.getMessage());
-		}
-	}
-
-	public RuleAlert[] getRuleAlerts() {
-		List<RuleAlert> ruleAlerts = new ArrayList<RuleAlert>();
-		try {
-			Statement stmt = con.createStatement();
-			String query = "SELECT * FROM RuleAlerts LIMIT 2";
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				RuleAlert ruleAlert = new RuleAlert();
-				ruleAlert.setPidData(getPIDDataById(rs.getString("MessageId")));
-				ruleAlert.setRuleCondition(getRuleConditionById(
-						rs.getString("RuleId"), rs.getString("ParameterName")));
-				ruleAlerts.add(ruleAlert);
-			}
-			return (RuleAlert[]) ruleAlerts.toArray(new RuleAlert[ruleAlerts
-					.size()]);
-		} catch (Exception ex) {
-			System.out.print(ex.getMessage());
-			return null;
-		}
-	}
-
-	public RuleAlert[] getRuleAlerts(RuleCondition ruleCondition) {
-		List<RuleAlert> ruleAlerts = new ArrayList<RuleAlert>();
-		try {
-			PreparedStatement stmt = con
-					.prepareStatement("SELECT RA.RuleId,RA.ParameterName,RA.MessageId"
-							+ " FROM RuleAlerts RA"
-							+ " Join PIDData P"
-							+ " on RA.MessageId = P.MessageId "
-							+ " Where RA.RuleId = ?"
-							+ " and RA.ParameterName= ?"
-							+ "	Order By P.Time Desc "
-							+ "LIMIT 5");
-			stmt.setString(1, ruleCondition.getRule().getRuleId());
-			stmt.setString(2, ruleCondition.getParameter().getParameterName());
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				RuleAlert ruleAlert = new RuleAlert();
-				ruleAlert.setPidData(getPIDDataById(rs.getString("MessageId")));
-				ruleAlert.setRuleCondition(getRuleConditionById(
-						rs.getString("RuleId"), rs.getString("ParameterName")));
-				ruleAlerts.add(ruleAlert);
-			}
-			return (RuleAlert[]) ruleAlerts.toArray(new RuleAlert[ruleAlerts
-					.size()]);
-		} catch (Exception ex) {
-			System.out.print(ex.getMessage());
-			return null;
-		}
-	}
-
-	public RuleCondition[] getRuleConditionsWithAlerts() {
-		List<RuleCondition> ruleConditions = new ArrayList<RuleCondition>();
-		try {
-			PreparedStatement stmt = con
-					.prepareStatement("SELECT * FROM RuleConditions");
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				RuleCondition ruleCondition = new RuleCondition();
-				ruleCondition.setRule(getRuleById(rs.getString("RuleId")));
-				ruleCondition.setParameter(getParameterById(rs
-						.getString("ParameterName")));
-				ruleCondition.setConditionOperator(rs
-						.getString("ConditionOperator"));
-				ruleCondition.setLowValue(rs.getInt("LowValue"));
-				ruleCondition.setHighValue(rs.getInt("HighValue"));
-				ruleCondition.setRuleAlerts(getRuleAlerts(ruleCondition));
-				ruleCondition.setRuleNaturalLanguage();
-				if (ruleCondition.getRuleAlerts().length > 0) {
-					ruleConditions.add(ruleCondition);
-				}
-			}
-			return (RuleCondition[]) ruleConditions
-					.toArray(new RuleCondition[ruleConditions.size()]);
-		} catch (Exception ex) {
-			System.out.print(ex.getMessage());
-			return null;
 		}
 	}
 
@@ -662,7 +644,11 @@ public class DataLayer {
 		}
 		return preparedStatement;
 	}
-
+	
+	
+	/************************************************************************************/
+	/* all chart creation */
+	/************************************************************************************/
 
 	public Chart getDailyGraphData(Date endDate, String[] vehicles,
 			String parameterName, String aggregationType) throws SQLException {
